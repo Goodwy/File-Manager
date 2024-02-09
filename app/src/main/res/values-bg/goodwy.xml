@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_g">Right Files</string>
+    <string name="app_launcher_name_g">Файлове</string>
+    <string name="storage_used">%1$s of %2$s Free</string>
+    <string name="used">Използва</string>
+    <string name="system">Система</string>
+    <string name="apps">Приложения</string>
+    <string name="manage_storage">Управление на съхранението</string>
+    <string name="show_folder_icons">Показване на икони на папки</string>
+    <string name="access_app_ops_service">Моля, дайте достъп на нашето приложение Usage, без него не можем да знаем размера на всички приложения.</string>
+    <string name="show_home_button">Показване на бутона Home</string>
+    <string name="cannot_be_inserted_into_itself">Един обект не може да бъде вмъкнат в себе си</string>
+    <string name="show_only_filename">Покажи само името на файла/папката</string>
+</resources>

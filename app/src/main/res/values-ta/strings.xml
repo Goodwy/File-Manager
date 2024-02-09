@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">எளிய கோப்பு நிர்வாகி</string>
+    <string name="app_launcher_name">கோப்பு நிர்வாகி</string>
+    <string name="press_back_again">வெளியேற மீண்டும் பின் அழுத்து</string>
+    <string name="go_to_home_folder">முகப்பு அடைவுக்குச் செல்</string>
+    <string name="set_as_home_folder">முகப்பு அடைவாக அமை</string>
+    <string name="home_folder_updated">முகப்பு அடைவு புதுப்பிக்கப்பட்டது</string>
+    <string name="copy_path">நகலகத்திற்குப் பாதையை நகலெடு</string>
+    <string name="path_copied">பாதை நகலெடுக்கப்பட்டது</string>
+    <string name="select_audio_file">ஒலி கோப்பைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="search_folder">அடைவில் தேடு</string>
+    <string name="rooted_device_only">இந்த செயல்பாடு ரூட் செய்யப்பட்ட சாதனங்களில் மட்டுமே இயங்குகிறது</string>
+    <string name="recents">சமீபத்தியவை</string>
+    <string name="show_recents">சமீபத்தியவற்றைக் காட்டு</string>
+    <string name="pdf_viewer">PDF Viewer</string>
+    <string name="invert_colors">Invert colors</string>
+    <!-- Open as -->
+    <string name="open_as">இவ்வாறு திற</string>
+    <string name="text_file">உரை கோப்பு</string>
+    <string name="image_file">படக் கோப்பு</string>
+    <string name="audio_file">ஒலி கோப்பு</string>
+    <string name="video_file">காணொளி கோப்பு</string>
+    <string name="other_file">பிற கோப்பு</string>
+    <!-- Compression -->
+    <string name="compress">சுருக்கு</string>
+    <string name="compress_pro">சுருக்கு (Pro)</string>
+    <string name="decompress">சுருக்குநீக்கு</string>
+    <string name="compress_as">இவ்வாறு சுருக்கு</string>
+    <string name="compressing">சுருக்குகிறது…</string>
+    <string name="decompressing">சுருக்குநீக்குகிறது…</string>
+    <string name="compression_successful">சுருக்கம் வெற்றி</string>
+    <string name="decompression_successful">சுருக்குநீக்கம் வெற்றி</string>
+    <string name="compressing_failed">சுருக்கம் தோல்வி</string>
+    <string name="decompressing_failed">சுருக்குநீக்கம் தோல்வி</string>
+    <!-- Favorites -->
+    <string name="manage_favorites">அபிமானவையை நிர்வகி</string>
+    <string name="go_to_favorite">அபிமானதிற்குச் செல்</string>
+    <string name="favorites_activity_placeholder">எங்கிருந்தும் எளிதாக அணுகுவதற்கு அபிமானவைக்கு அடிக்கடி பயன்படுத்தப்படும் அடைவுகளை நீங்கள் சேர்க்கலாம்.</string>
+    <!-- File Editor -->
+    <string name="file_editor">கோப்பு திருத்தி</string>
+    <!-- Storage analysis -->
+    <string name="storage_analysis">சேமிப்பிட பகுப்பாய்வு</string>
+    <string name="images">படங்கள்</string>
+    <string name="videos">காணொளிகள்</string>
+    <string name="audio">ஒலி</string>
+    <string name="documents">ஆவணங்கள்</string>
+    <string name="downloads">பதிவிறக்கங்கள்</string>
+    <string name="archives">காப்பகங்கள்</string>
+    <string name="others">மற்றவை</string>
+    <string name="storage_free">மீதம்</string>
+    <string name="total_storage">மொத்த சேமிப்பிடம்: %s</string>
+    <!-- Settings -->
+    <string name="enable_root_access">ரூட் அணுகலை இயக்கு</string>
+    <string name="press_back_twice">செயலியை வெளியேற இரண்டு முறை பின் அழுத்த கோரு</string>
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
+</resources>

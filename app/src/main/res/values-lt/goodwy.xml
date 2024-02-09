@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_g">Right Files</string>
+    <string name="app_launcher_name_g">Failai</string>
+    <string name="storage_used">%1$s iš %2$s Nemokama</string>
+    <string name="used">Naudotas</string>
+    <string name="system">Sistema</string>
+    <string name="apps">Įrangos</string>
+    <string name="manage_storage">Tvarkyti saugyklą</string>
+    <string name="show_folder_icons">Rodyti aplankų piktogramas</string>
+    <string name="access_app_ops_service">Prašome suteikti mūsų programėlei Usage prieigą, be jos negalime sužinoti visų programėlių dydžio.</string>
+    <string name="show_home_button">Rodyti namų mygtuką</string>
+    <string name="cannot_be_inserted_into_itself">Objekto negalima įterpti į save</string>
+    <string name="show_only_filename">Rodyti tik failo / aplanko pavadinimą</string>
+</resources>

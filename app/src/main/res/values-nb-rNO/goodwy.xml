@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_g">Right Files</string>
+    <string name="app_launcher_name_g">Filer</string>.
+    <string name="storage_used">%1$s av %2$s gratis</string>
+    <string name="used">Brukt</string>
+    <string name="system">System</string>
+    <string name="apps">Apper</string>
+    <string name="manage_storage">Administrasjon av lagring</string>
+    <string name="show_folder_icons">Vis mappeikoner</string>
+    <string name="access_app_ops_service">Vennligst gi appen vår brukstilgang, uten den kan vi ikke vite størrelsen på alle appene.</string>
+    <string name="show_home_button">Vis Hjem-knappen</string>
+    <string name="cannot_be_inserted_into_itself">Et objekt kan ikke settes inn i seg selv</string>
+    <string name="show_only_filename">Vis bare fil-/mappenavn</string>
+</resources>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.goodwy.filemanager.fragments.ItemsFragment xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/items_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/items_coordinator"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/items_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/items_swipe_refresh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
+                    android:id="@+id/items_fastscroller"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:supportSwipeToRefresh="true"
+                    app:trackMarginStart="54dp">
+
+                    <com.goodwy.commons.views.MyRecyclerView
+                        android:id="@+id/items_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingHorizontal="@dimen/activity_padding_left_right"
+                        android:clipToPadding="false"
+                        android:paddingTop="54dp"
+                        android:layoutAnimation="@anim/layout_animation"
+                        android:scrollbars="none"
+                        app:layoutManager="com.goodwy.commons.views.MyGridLayoutManager" />
+
+                </com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller>
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+            <com.goodwy.commons.views.Breadcrumbs
+                android:id="@+id/breadcrumbs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/breadcrumbs_bg"
+                android:paddingStart="@dimen/normal_margin"
+                android:paddingTop="@dimen/normal_margin"
+                android:paddingEnd="@dimen/small_margin"
+                android:paddingBottom="@dimen/smaller_margin" />
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/progress_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:indeterminate="true"
+                android:visibility="gone"
+                app:hideAnimationBehavior="outward"
+                app:showAnimationBehavior="inward"
+                app:showDelay="250"
+                tools:visibility="visible" />
+
+            <com.goodwy.commons.views.MyTextView
+                android:id="@+id/items_placeholder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/breadcrumbs"
+                android:layout_centerHorizontal="true"
+                android:alpha="0.8"
+                android:gravity="center"
+                android:paddingStart="@dimen/activity_margin"
+                android:paddingEnd="@dimen/activity_margin"
+                android:text="@string/no_items_found"
+                android:textSize="@dimen/bigger_text_size"
+                android:textStyle="italic"
+                android:visibility="gone" />
+
+            <com.goodwy.commons.views.MyTextView
+                android:id="@+id/items_placeholder_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/items_placeholder"
+                android:layout_centerHorizontal="true"
+                android:alpha="0.8"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:padding="@dimen/activity_margin"
+                android:text="@string/type_2_characters"
+                android:textSize="@dimen/bigger_text_size"
+                android:textStyle="italic"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <com.goodwy.commons.views.MyFloatingActionButton
+            android:id="@+id/items_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/activity_margin"
+            android:src="@drawable/ic_plus_vector" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</com.goodwy.filemanager.fragments.ItemsFragment>

@@ -1,0 +1,981 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/storage_holder"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:paddingBottom="16dp"
+    tools:ignore="HardcodedText">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/free_space_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="16dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:id="@+id/free_space_holder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:paddingTop="@dimen/normal_margin">
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/main_storage_usage_progressbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/storage_name"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:layout_marginBottom="@dimen/medium_margin"
+                android:max="100"
+                android:visibility="gone"
+                app:trackThickness="8dp" />
+
+            <com.goodwy.commons.views.MyTextView
+                android:id="@+id/storage_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@+id/total_space"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textSize="@dimen/bigger_text_size"
+                android:text="@string/internal" />
+
+            <com.goodwy.commons.views.MyTextView
+                android:id="@+id/total_space"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/storage_name"
+                android:layout_alignBottom="@+id/storage_name"
+                android:layout_marginEnd="18dp"
+                android:layout_alignParentEnd="true"
+                android:textSize="@dimen/bigger_text_size"
+                android:gravity="center_vertical|end"
+                android:alpha="0.6"
+                tools:text="64 GB of 128 GB Used" />
+
+            <com.goodwy.commons.views.MyTextView
+                android:id="@+id/free_space_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@+id/free_space_label"
+                android:layout_alignBaseline="@+id/free_space_label"
+                android:layout_alignBottom="@+id/free_space_label"
+                android:text="…"
+                android:textSize="@dimen/bigger_text_size"
+                android:alpha="0.6"
+                android:visibility="gone"
+                tools:text="23 GB" />
+
+            <com.goodwy.commons.views.MyTextView
+                android:id="@+id/free_space_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/normal_margin"
+                android:layout_below="@+id/main_storage_progressbar"
+                android:layout_marginStart="@dimen/medium_margin"
+                android:text="@string/storage_free"
+                android:textSize="@dimen/bigger_text_size"
+                android:alpha="0.6"
+                android:visibility="gone" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/main_storage_progressbar"
+                android:layout_width="match_parent"
+                android:layout_height="18dp"
+                android:layout_below="@+id/storage_name"
+                android:layout_marginStart="@dimen/activity_margin"
+                android:layout_marginTop="@dimen/normal_margin"
+                android:layout_marginEnd="@dimen/activity_margin"
+                app:cardBackgroundColor="@color/gray_ios"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:id="@+id/main_storage_progressbar_wrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    tools:ignore="PxUsage">
+
+                    <FrameLayout
+                        android:id="@+id/apps_progress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@color/red_ios"
+                        tools:layout_width="80dp" />
+
+                    <FrameLayout
+                        android:id="@+id/image_divider"
+                        android:layout_width="2px"
+                        android:layout_height="match_parent"
+                        android:background="@color/hint_black" />
+
+                    <FrameLayout
+                        android:id="@+id/image_progress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@color/orange_ios"
+                        tools:layout_width="30dp" />
+
+                    <FrameLayout
+                        android:id="@+id/video_divider"
+                        android:layout_width="2px"
+                        android:layout_height="match_parent"
+                        android:background="@color/hint_black" />
+
+                    <FrameLayout
+                        android:id="@+id/video_progress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@color/yellow_ios"
+                        tools:layout_width="50dp" />
+
+                    <FrameLayout
+                        android:id="@+id/audio_divider"
+                        android:layout_width="2px"
+                        android:layout_height="match_parent"
+                        android:background="@color/hint_black" />
+
+                    <FrameLayout
+                        android:id="@+id/audio_progress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@color/green_ios"
+                        tools:layout_width="40dp" />
+
+                    <FrameLayout
+                        android:id="@+id/document_divider"
+                        android:layout_width="2px"
+                        android:layout_height="match_parent"
+                        android:background="@color/hint_black" />
+
+                    <FrameLayout
+                        android:id="@+id/documents_progress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@color/cyan_ios"
+                        tools:layout_width="20dp" />
+
+                    <FrameLayout
+                        android:id="@+id/archive_divider"
+                        android:layout_width="2px"
+                        android:layout_height="match_parent"
+                        android:background="@color/hint_black" />
+
+                    <FrameLayout
+                        android:id="@+id/archives_progress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@color/blue_ios"
+                        tools:layout_width="8dp" />
+
+                    <FrameLayout
+                        android:id="@+id/other_divider"
+                        android:layout_width="2px"
+                        android:layout_height="match_parent"
+                        android:background="@color/hint_black" />
+
+                    <FrameLayout
+                        android:id="@+id/others_progress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@color/purple_ios"
+                        tools:layout_width="10dp" />
+
+                    <FrameLayout
+                        android:id="@+id/system_divider"
+                        android:layout_width="2px"
+                        android:layout_height="match_parent"
+                        android:background="@color/hint_black" />
+
+                    <FrameLayout
+                        android:id="@+id/system_progress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@color/gray_light_ios"
+                        tools:layout_width="40dp" />
+
+                    <FrameLayout
+                        android:id="@+id/system_end_divider"
+                        android:layout_width="2px"
+                        android:layout_height="match_parent"
+                        android:background="@color/hint_black" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:id="@+id/main_storage_decryption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/main_storage_progressbar"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="@dimen/activity_margin"
+                android:orientation="horizontal">
+
+                <com.goodwy.commons.views.MySquareImageView
+                    android:id="@+id/apps_decryption_image"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_marginStart="@dimen/tiny_margin"
+                    android:layout_marginTop="1dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_oval"
+                    android:tint="@color/red_ios"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <com.goodwy.commons.views.MyTextView
+                    android:id="@+id/apps_decryption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/small_margin"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:text="@string/apps"
+                    android:textSize="@dimen/smaller_text_size"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <com.goodwy.commons.views.MySquareImageView
+                    android:id="@+id/image_decryption_image"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_marginStart="@dimen/tiny_margin"
+                    android:layout_marginTop="1dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_oval"
+                    android:tint="@color/orange_ios"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <com.goodwy.commons.views.MyTextView
+                    android:id="@+id/image_decryption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/small_margin"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:textSize="@dimen/smaller_text_size"
+                    android:text="@string/images"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <com.goodwy.commons.views.MySquareImageView
+                    android:id="@+id/video_decryption_image"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_marginStart="@dimen/tiny_margin"
+                    android:layout_marginTop="1dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_oval"
+                    android:tint="@color/yellow_ios"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <com.goodwy.commons.views.MyTextView
+                    android:id="@+id/video_decryption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/small_margin"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:textSize="@dimen/smaller_text_size"
+                    android:text="@string/videos"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <com.goodwy.commons.views.MySquareImageView
+                    android:id="@+id/audio_decryption_image"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_marginStart="@dimen/tiny_margin"
+                    android:layout_marginTop="1dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_oval"
+                    android:tint="@color/green_ios"
+                    android:visibility="gone" />
+
+                <com.goodwy.commons.views.MyTextView
+                    android:id="@+id/audio_decryption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/small_margin"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:textSize="@dimen/smaller_text_size"
+                    android:text="@string/audio"
+                    android:visibility="gone" />
+
+                <com.goodwy.commons.views.MySquareImageView
+                    android:id="@+id/documents_decryption_image"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_marginStart="@dimen/tiny_margin"
+                    android:layout_marginTop="1dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_oval"
+                    android:tint="@color/cyan_ios"
+                    android:visibility="gone" />
+
+                <com.goodwy.commons.views.MyTextView
+                    android:id="@+id/documents_decryption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/small_margin"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:textSize="@dimen/smaller_text_size"
+                    android:text="@string/documents"
+                    android:visibility="gone" />
+
+                <com.goodwy.commons.views.MySquareImageView
+                    android:id="@+id/archives_decryption_image"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_marginStart="@dimen/tiny_margin"
+                    android:layout_marginTop="1dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_oval"
+                    android:tint="@color/blue_ios"
+                    android:visibility="gone" />
+
+                <com.goodwy.commons.views.MyTextView
+                    android:id="@+id/archives_decryption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/small_margin"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:textSize="@dimen/smaller_text_size"
+                    android:text="@string/archives"
+                    android:visibility="gone" />
+
+                <com.goodwy.commons.views.MySquareImageView
+                    android:id="@+id/others_decryption_image"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_marginStart="@dimen/tiny_margin"
+                    android:layout_marginTop="1dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_oval"
+                    android:tint="@color/purple_ios"
+                    android:visibility="gone" />
+
+                <com.goodwy.commons.views.MyTextView
+                    android:id="@+id/others_decryption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/small_margin"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:text="@string/others"
+                    android:textSize="@dimen/smaller_text_size"
+                    android:visibility="gone" />
+
+                <com.goodwy.commons.views.MySquareImageView
+                    android:id="@+id/system_decryption_image"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_marginStart="@dimen/tiny_margin"
+                    android:layout_marginTop="1dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_oval"
+                    android:tint="@color/gray_light_ios"
+                    android:visibility="gone" />
+
+                <com.goodwy.commons.views.MyTextView
+                    android:id="@+id/system_decryption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/small_margin"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:text="@string/system"
+                    android:textSize="@dimen/smaller_text_size"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <include
+                android:id="@+id/main_divider"
+                layout="@layout/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="18dp"
+                android:layout_below="@+id/main_storage_decryption" />
+
+            <RelativeLayout
+                android:id="@+id/manage_storage_holder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:layout_below="@+id/main_divider"
+                android:layout_toStartOf="@+id/expandButtonHolder"
+                android:layout_alignParentStart="true"
+                android:paddingStart="18dp"
+                android:paddingEnd="@dimen/medium_margin">
+
+                <com.goodwy.commons.views.MyTextView
+                    android:id="@+id/manage_storage_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="@dimen/smaller_margin"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/manage_storage"
+                    android:textSize="@dimen/bigger_text_size" />
+
+                <com.goodwy.commons.views.MySquareImageView
+                    android:id="@+id/manage_storage_chevron"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:padding="4dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:alpha="0.6"
+                    android:src="@drawable/ic_chevron_right_vector" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/expandButtonHolder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:layout_alignTop="@+id/manage_storage_holder"
+                android:layout_alignBottom="@+id/manage_storage_holder"
+                android:layout_alignParentEnd="true"
+                android:paddingStart="@dimen/activity_margin"
+                android:paddingEnd="@dimen/medium_margin"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/expandButtonLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hide"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/smaller_text_size"
+                    android:alpha="0.6" />
+
+                <com.goodwy.commons.views.MySquareImageView
+                    android:id="@+id/expand_button"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical"
+                    android:alpha="0.6"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_chevron_up_vector" />
+            </LinearLayout>
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <RelativeLayout
+        android:id="@+id/apps_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:paddingStart="@dimen/bigger_margin"
+        android:paddingTop="@dimen/normal_margin"
+        android:paddingEnd="@dimen/normal_margin"
+        android:paddingBottom="@dimen/normal_margin"
+        app:layout_constraintTop_toBottomOf="@+id/free_space_card">
+
+        <com.goodwy.commons.views.MySquareImageView
+            android:id="@+id/apps_image"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:padding="6dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/squircle"
+            android:backgroundTint="#313B55"
+            android:src="@drawable/ic_app_colors" />
+
+        <com.goodwy.commons.views.MyTextView
+            android:id="@+id/apps_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/apps_image"
+            android:layout_marginStart="@dimen/normal_margin"
+            android:text="@string/apps"
+            android:textSize="@dimen/bigger_text_size" />
+
+        <com.goodwy.commons.views.MyTextView
+            android:id="@+id/apps_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/apps_chevron"
+            android:layout_centerVertical="true"
+            android:alpha="0.6"
+            android:text="…"
+            android:textSize="@dimen/bigger_text_size"
+            tools:text="25 GB" />
+
+        <com.goodwy.commons.views.MySquareImageView
+            android:id="@+id/apps_chevron"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:padding="6dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:alpha="0.6"
+            android:src="@drawable/ic_chevron_right_vector" />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/apps_progressbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/apps_label"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:layout_marginBottom="@dimen/medium_margin"
+            android:max="100"
+            android:visibility="gone"
+            app:trackThickness="2dp" />
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/apps_divider"
+        layout="@layout/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginHorizontal="22dp"
+        app:layout_constraintTop_toBottomOf="@+id/apps_holder" />
+
+    <RelativeLayout
+        android:id="@+id/images_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:paddingStart="@dimen/bigger_margin"
+        android:paddingTop="@dimen/normal_margin"
+        android:paddingEnd="@dimen/normal_margin"
+        android:paddingBottom="@dimen/normal_margin"
+        app:layout_constraintTop_toBottomOf="@+id/apps_divider">
+
+        <com.goodwy.commons.views.MySquareImageView
+            android:id="@+id/images_image"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:padding="5dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/squircle"
+            android:backgroundTint="@color/orange_ios"
+            android:src="@drawable/ic_images" />
+
+        <com.goodwy.commons.views.MyTextView
+            android:id="@+id/images_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/images_image"
+            android:layout_marginStart="@dimen/normal_margin"
+            android:text="@string/images"
+            android:textSize="@dimen/bigger_text_size" />
+
+        <com.goodwy.commons.views.MyTextView
+            android:id="@+id/images_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/images_chevron"
+            android:layout_centerVertical="true"
+            android:alpha="0.6"
+            android:text="…"
+            android:textSize="@dimen/bigger_text_size"
+            tools:text="6 GB" />
+
+        <com.goodwy.commons.views.MySquareImageView
+            android:id="@+id/images_chevron"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:padding="6dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:alpha="0.6"
+            android:src="@drawable/ic_chevron_right_vector" />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/images_progressbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/images_label"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:layout_marginBottom="@dimen/medium_margin"
+            android:max="100"
+            android:visibility="gone"
+            app:trackThickness="2dp" />
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/images_divider"
+        layout="@layout/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginHorizontal="22dp"
+        app:layout_constraintTop_toBottomOf="@+id/images_holder" />
+
+    <RelativeLayout
+        android:id="@+id/videos_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:paddingStart="@dimen/bigger_margin"
+        android:paddingTop="@dimen/normal_margin"
+        android:paddingEnd="@dimen/normal_margin"
+        android:paddingBottom="@dimen/normal_margin"
+        app:layout_constraintTop_toBottomOf="@+id/images_divider">
+
+        <com.goodwy.commons.views.MySquareImageView
+            android:id="@+id/videos_image"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:padding="5dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/squircle"
+            android:backgroundTint="@color/yellow_ios"
+            android:src="@drawable/ic_film" />
+
+        <com.goodwy.commons.views.MyTextView
+            android:id="@+id/videos_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/videos_image"
+            android:layout_marginStart="@dimen/normal_margin"
+            android:text="@string/videos"
+            android:textSize="@dimen/bigger_text_size" />
+
+        <com.goodwy.commons.views.MyTextView
+            android:id="@+id/videos_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/videos_chevron"
+            android:layout_centerVertical="true"
+            android:alpha="0.6"
+            android:text="…"
+            android:textSize="@dimen/bigger_text_size"
+            tools:text="15 GB" />
+
+        <com.goodwy.commons.views.MySquareImageView
+            android:id="@+id/videos_chevron"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:padding="6dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:alpha="0.6"
+            android:src="@drawable/ic_chevron_right_vector" />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/videos_progressbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/videos_label"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:layout_marginBottom="@dimen/medium_margin"
+            android:max="100"
+            android:visibility="gone"
+            app:trackThickness="2dp" />
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/videos_divider"
+        layout="@layout/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginHorizontal="22dp"
+        app:layout_constraintTop_toBottomOf="@+id/videos_holder" />
+
+    <RelativeLayout
+        android:id="@+id/audio_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:paddingStart="@dimen/bigger_margin"
+        android:paddingTop="@dimen/normal_margin"
+        android:paddingEnd="@dimen/normal_margin"
+        android:paddingBottom="@dimen/normal_margin"
+        app:layout_constraintTop_toBottomOf="@+id/videos_divider">
+
+        <com.goodwy.commons.views.MySquareImageView
+            android:id="@+id/audio_image"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:padding="5dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/squircle"
+            android:backgroundTint="@color/green_ios"
+            android:src="@drawable/ic_itunes_note" />
+
+        <com.goodwy.commons.views.MyTextView
+            android:id="@+id/audio_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/audio_image"
+            android:layout_marginStart="@dimen/normal_margin"
+            android:text="@string/audio"
+            android:textSize="@dimen/bigger_text_size" />
+
+        <com.goodwy.commons.views.MyTextView
+            android:id="@+id/audio_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/audio_chevron"
+            android:layout_centerVertical="true"
+            android:alpha="0.6"
+            android:text="…"
+            android:textSize="@dimen/bigger_text_size"
+            tools:text="14 GB" />
+
+        <com.goodwy.commons.views.MySquareImageView
+            android:id="@+id/audio_chevron"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:padding="6dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:alpha="0.6"
+            android:src="@drawable/ic_chevron_right_vector" />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/audio_progressbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/audio_label"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:layout_marginBottom="@dimen/medium_margin"
+            android:max="100"
+            android:visibility="gone"
+            app:trackThickness="2dp" />
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/audios_divider"
+        layout="@layout/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginHorizontal="22dp"
+        app:layout_constraintTop_toBottomOf="@+id/audio_holder" />
+
+    <RelativeLayout
+        android:id="@+id/documents_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:paddingStart="@dimen/bigger_margin"
+        android:paddingTop="@dimen/normal_margin"
+        android:paddingEnd="@dimen/normal_margin"
+        android:paddingBottom="@dimen/normal_margin"
+        app:layout_constraintTop_toBottomOf="@+id/audios_divider">
+
+        <com.goodwy.commons.views.MySquareImageView
+            android:id="@+id/documents_image"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:padding="4dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/squircle"
+            android:backgroundTint="@color/cyan_ios"
+            android:src="@drawable/ic_document" />
+
+        <com.goodwy.commons.views.MyTextView
+            android:id="@+id/documents_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/documents_image"
+            android:layout_marginStart="@dimen/normal_margin"
+            android:text="@string/documents"
+            android:textSize="@dimen/bigger_text_size" />
+
+        <com.goodwy.commons.views.MyTextView
+            android:id="@+id/documents_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/documents_chevron"
+            android:layout_centerVertical="true"
+            android:alpha="0.6"
+            android:text="…"
+            android:textSize="@dimen/bigger_text_size"
+            tools:text="3 GB" />
+
+        <com.goodwy.commons.views.MySquareImageView
+            android:id="@+id/documents_chevron"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:padding="6dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:alpha="0.6"
+            android:src="@drawable/ic_chevron_right_vector" />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/documents_progressbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/documents_label"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:layout_marginBottom="@dimen/medium_margin"
+            android:max="100"
+            android:visibility="gone"
+            app:trackThickness="2dp" />
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/documents_divider"
+        layout="@layout/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginHorizontal="22dp"
+        app:layout_constraintTop_toBottomOf="@+id/documents_holder" />
+
+    <RelativeLayout
+        android:id="@+id/archives_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:paddingStart="@dimen/bigger_margin"
+        android:paddingTop="@dimen/normal_margin"
+        android:paddingEnd="@dimen/normal_margin"
+        android:paddingBottom="@dimen/normal_margin"
+        app:layout_constraintTop_toBottomOf="@+id/documents_divider">
+
+        <com.goodwy.commons.views.MySquareImageView
+            android:id="@+id/archives_image"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:padding="5dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/squircle"
+            android:backgroundTint="@color/blue_ios"
+            android:src="@drawable/ic_file_zipper" />
+
+        <com.goodwy.commons.views.MyTextView
+            android:id="@+id/archives_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/archives_image"
+            android:layout_marginStart="@dimen/normal_margin"
+            android:text="@string/archives"
+            android:textSize="@dimen/bigger_text_size" />
+
+        <com.goodwy.commons.views.MyTextView
+            android:id="@+id/archives_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/archives_chevron"
+            android:layout_centerVertical="true"
+            android:alpha="0.6"
+            android:text="…"
+            android:textSize="@dimen/bigger_text_size"
+            tools:text="2 GB" />
+
+        <com.goodwy.commons.views.MySquareImageView
+            android:id="@+id/archives_chevron"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:padding="6dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:alpha="0.6"
+            android:src="@drawable/ic_chevron_right_vector" />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/archives_progressbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/archives_label"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:layout_marginBottom="@dimen/medium_margin"
+            android:max="100"
+            android:visibility="gone"
+            app:trackThickness="2dp" />
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/archives_divider"
+        layout="@layout/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginHorizontal="22dp"
+        app:layout_constraintTop_toBottomOf="@+id/archives_holder" />
+
+    <RelativeLayout
+        android:id="@+id/others_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:paddingStart="@dimen/bigger_margin"
+        android:paddingTop="@dimen/normal_margin"
+        android:paddingEnd="@dimen/normal_margin"
+        android:paddingBottom="@dimen/normal_margin"
+        app:layout_constraintTop_toBottomOf="@+id/archives_divider">
+
+        <com.goodwy.commons.views.MySquareImageView
+            android:id="@+id/others_image"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:padding="5dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/squircle"
+            android:backgroundTint="@color/purple_ios"
+            android:src="@drawable/ic_question_round" />
+
+        <com.goodwy.commons.views.MyTextView
+            android:id="@+id/others_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/others_image"
+            android:layout_marginStart="@dimen/normal_margin"
+            android:text="@string/others"
+            android:textSize="@dimen/bigger_text_size" />
+
+        <com.goodwy.commons.views.MyTextView
+            android:id="@+id/others_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/others_chevron"
+            android:layout_centerVertical="true"
+            android:alpha="0.6"
+            android:text="…"
+            android:textSize="@dimen/bigger_text_size"
+            tools:text="2 GB" />
+
+        <com.goodwy.commons.views.MySquareImageView
+            android:id="@+id/others_chevron"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:padding="6dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:alpha="0.6"
+            android:src="@drawable/ic_chevron_right_vector" />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/others_progressbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/others_label"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:layout_marginBottom="@dimen/medium_margin"
+            android:max="100"
+            android:visibility="gone"
+            app:trackThickness="2dp" />
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

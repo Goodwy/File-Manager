@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="package_name">com.goodwy.filemanager</string>
+
+    <!-- Release notes -->
+    <string name="release_500">
+        Improved interface\n
+        Automatic theme change\n
+        Added "Show only file/folder name" setting\n
+        Fixed bugs, improved stability
+    </string>
+
+</resources>

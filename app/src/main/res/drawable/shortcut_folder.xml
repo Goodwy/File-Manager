@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/shortcut_folder_background">
+        <shape android:shape="oval">
+            <solid android:color="@color/color_primary" />
+        </shape>
+    </item>
+
+    <item
+        android:id="@+id/shortcut_folder_image"
+        android:bottom="@dimen/smaller_margin"
+        android:drawable="@drawable/ic_folder_vector"
+        android:left="@dimen/smaller_margin"
+        android:right="@dimen/smaller_margin"
+        android:top="@dimen/smaller_margin" />
+
+</layer-list>

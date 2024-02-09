@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_g">Right Files</string>
+    <string name="app_launcher_name_g">Файли</string>
+    <string name="storage_used">Доступно %1$s із %2$s</string>
+    <string name="used">Зайнято</string>
+    <string name="system">Система</string>
+    <string name="apps">Додатки</string>
+    <string name="manage_storage">Управляти сховищем</string>
+    <string name="show_folder_icons">Показувати іконки на папках</string>
+    <string name="access_app_ops_service">Надайте застосунку доступ до історії використання, без нього ми не зможемо дізнатися розмір усіх застосунків.</string>
+    <string name="show_home_button">Показувати кнопку Додому</string>
+    <string name="cannot_be_inserted_into_itself">Об\'єкт не може бути вставлений в себе</string>
+    <string name="show_only_filename">Показувати лише ім\'я файлу або папки</string>
+</resources>

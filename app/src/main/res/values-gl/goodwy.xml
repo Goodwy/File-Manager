@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_g">Right Files</string>
+    <string name="app_launcher_name_g">Ficheiros</string>
+    <string name="storage_used">%1$s de %2$s gratuíto</string>
+    <string name="used">Usado</string>
+    <string name="system">Sistema</string>
+    <string name="apps">Aplicacións</string>
+    <string name="manage_storage">Xestionar almacenamento</string>
+    <string name="show_folder_icons">Mostrar iconas de cartafol</string>
+    <string name="access_app_ops_service">Concédenos acceso de uso á nosa aplicación, sen ela, non podemos saber o tamaño de todas as aplicacións.</string>
+    <string name="show_home_button">Mostrar botón Inicio</string>
+    <string name="cannot_be_inserted_into_itself">Non se pode inserir un obxecto en si mesmo</string>
+    <string name="show_only_filename">Mostra só o nome do ficheiro/cartafol</string>
+</resources>

@@ -1,0 +1,1 @@
+Filhanterare för att enkelt söka och hantera dina filer och mappar

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_g">Right Files</string>
+    <string name="app_launcher_name_g">فائلیں</string>
+    <string name="storage_used">%1$s از %2$s مفت</string>
+    <string name="used">استعمال کیا جاتا ہے</string>
+    <string name="system">سسٹم</string>
+    <string name="apps">ایپس</string>
+    <string name="manage_storage">اسٹوریج کا نظم کریں</string>
+    <string name="show_folder_icons">فولڈر آئیکنز دکھائیں</string>
+    <string name="access_app_ops_service">براہ کرم ہماری ایپ کے استعمال تک رسائی دیں، اس کے بغیر، ہم تمام ایپس کا سائز نہیں جان سکتے۔</string>
+    <string name="show_home_button">ہوم بٹن دکھائیں</string>
+    <string name="cannot_be_inserted_into_itself">کسی چیز کو اپنے اندر نہیں ڈالا جا سکتا</string>
+    <string name="show_only_filename">صرف فائل/فولڈر کا نام دکھائیں۔</string>
+</resources>

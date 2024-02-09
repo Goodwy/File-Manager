@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/manage_favorites_coordinator"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/manage_favorites_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/color_primary"
+        app:menu="@menu/menu_favorites"
+        app:title="@string/manage_favorites"
+        app:titleTextAppearance="@style/AppTheme.ActionBar.TitleTextStyle" />
+
+    <RelativeLayout
+        android:id="@+id/manage_favorites_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <com.goodwy.commons.views.MyRecyclerView
+            android:id="@+id/manage_favorites_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            app:layoutManager="com.goodwy.commons.views.MyLinearLayoutManager"
+            tools:itemCount="4"
+            tools:listitem="@layout/item_manage_favorite" />
+
+        <com.goodwy.commons.views.MyTextView
+            android:id="@+id/manage_favorites_placeholder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:alpha="0.8"
+            android:gravity="center"
+            android:lineSpacingExtra="@dimen/tiny_margin"
+            android:paddingStart="@dimen/activity_margin"
+            android:paddingTop="@dimen/activity_margin"
+            android:paddingEnd="@dimen/activity_margin"
+            android:text="@string/favorites_activity_placeholder"
+            android:textSize="@dimen/bigger_text_size"
+            android:textStyle="italic"
+            android:visibility="gone" />
+
+        <com.goodwy.commons.views.MyTextView
+            android:id="@+id/manage_favorites_placeholder_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/manage_favorites_placeholder"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/ripple_all_corners"
+            android:gravity="center"
+            android:padding="@dimen/normal_margin"
+            android:text="@string/add_favorites"
+            android:textSize="@dimen/bigger_text_size"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

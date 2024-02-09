@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Simpel filhanterare</string>
+    <string name="app_launcher_name">Filhanterare</string>
+    <string name="press_back_again">Tryck på tillbaka igen för att avsluta</string>
+    <string name="go_to_home_folder">Gå till hemappen</string>
+    <string name="set_as_home_folder">Ange som hemapp</string>
+    <string name="home_folder_updated">Hemappen har uppdaterats</string>
+    <string name="copy_path">Kopiera sökväg till Urklipp</string>
+    <string name="path_copied">Sökvägen har kopierats</string>
+    <string name="select_audio_file">Välj en ljudfil</string>
+    <string name="search_folder">Sök i mappen</string>
+    <string name="rooted_device_only">Åtgärden fungerar bara på rotade enheter</string>
+    <string name="recents">Nyss</string>
+    <string name="show_recents">Visa nyligen</string>
+    <string name="pdf_viewer">PDF-läsare</string>
+    <string name="invert_colors">Invertera färger</string>
+    <!-- Open as -->
+    <string name="open_as">Öppna som</string>
+    <string name="text_file">Textfil</string>
+    <string name="image_file">Bildfil</string>
+    <string name="audio_file">Ljudfil</string>
+    <string name="video_file">Videofil</string>
+    <string name="other_file">Annan fil</string>
+    <!-- Compression -->
+    <string name="compress">Komprimera</string>
+    <string name="compress_pro">Komprimera (Pro)</string>
+    <string name="decompress">Packa upp</string>
+    <string name="compress_as">Komprimera som</string>
+    <string name="compressing">Komprimerar…</string>
+    <string name="decompressing">Packar upp…</string>
+    <string name="compression_successful">Komprimeringen lyckades</string>
+    <string name="decompression_successful">Uppackningen lyckades</string>
+    <string name="compressing_failed">Komprimeringen misslyckades</string>
+    <string name="decompressing_failed">Uppackningen misslyckades</string>
+    <!-- Favorites -->
+    <string name="manage_favorites">Hantera favoriter</string>
+    <string name="go_to_favorite">Gå till favorit</string>
+    <string name="favorites_activity_placeholder">Du kan lägga till ofta använda mappar i favoriter för enkel åtkomst överallt.</string>
+    <!-- File Editor -->
+    <string name="file_editor">Filredigerare</string>
+    <!-- Storage analysis -->
+    <string name="storage_analysis">Lagringsanalys</string>
+    <string name="images">Bilder</string>
+    <string name="videos">Videor</string>
+    <string name="audio">Ljud</string>
+    <string name="documents">Dokument</string>
+    <string name="downloads">Nedladdningar</string>
+    <string name="archives">Arkiv</string>
+    <string name="others">Annat</string>
+    <string name="storage_free">ledigt</string>
+    <string name="total_storage">Total lagring: %s</string>
+    <!-- Settings -->
+    <string name="enable_root_access">Aktivera rotåtkomst</string>
+    <string name="press_back_twice">Krävs att trycka tillbaka två gånger för att lämna appen</string>
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
+</resources>

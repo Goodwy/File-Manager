@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_g">Right Files</string>
+    <string name="app_launcher_name_g">文件</string>
+    <string name="storage_used">%1$s（共 %2$s）免费</string>
+    <string name="used">二手</string>
+    <string name="system">系统</string>
+    <string name="apps">应用</string>
+    <string name="manage_storage">管理存储</string>
+    <string name="show_folder_icons">显示文件夹图标</string>
+    <string name="access_app_ops_service">请授予我们的应用程序使用权限，没有它，我们无法知道所有应用程序的大小。</string>
+    <string name="show_home_button">显示主页按钮</string>
+    <string name="cannot_be_inserted_into_itself">对象不能插入到自身中</string>
+    <string name="show_only_filename">仅显示文件/文件夹名称</string>
+</resources>

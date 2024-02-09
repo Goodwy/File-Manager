@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_g">Right Files</string>
+    <string name="app_launcher_name_g">Files</string>
+    <string name="storage_used">%1$s of %2$s Free</string>
+    <string name="used">Used</string>
+    <string name="system">System</string>
+    <string name="apps">Apps</string>
+    <string name="manage_storage">Manage storage</string>
+    <string name="show_folder_icons">Show folder icons</string>
+    <string name="access_app_ops_service">Please grant our app Usage access, without it, we can\'t know the size of all the apps.</string>
+    <string name="show_home_button">Show Home button</string>
+    <string name="cannot_be_inserted_into_itself">An object cannot be inserted into itself</string>
+    <string name="show_only_filename">Show only file/folder name</string>
+</resources>

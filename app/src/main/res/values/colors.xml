@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_accent">#67ADCC</color>
+
+    <color name="red_ios">#FF6861</color> <!--apps-->
+    <color name="orange_ios">#FF9E0B</color> <!--images-->
+    <color name="yellow_ios">#FED709</color> <!--video-->
+    <color name="green_ios">#30DB5B</color> <!--audio-->
+    <color name="cyan_ios">#5BBCE4</color> <!--documents-->
+    <color name="blue_ios">#0B84FF</color> <!--archives-->
+    <color name="purple_ios">#C878F1</color> <!--others-->
+    <color name="pink_ios">#E6FF375F</color>
+    <color name="brown_ios">#AC8E68</color>
+    <color name="gray_ios">#FF8E8E93</color> <!--free-->
+    <color name="gray_light_ios">#C7C7CC</color> <!--system-->
+
+    <color name="breadcrumbs_bg">#CC000000</color>
+</resources>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Gestor de archivos sencillo</string>
+    <string name="app_launcher_name">Administrador de archivos</string>
+    <string name="press_back_again">Presione atrás de nuevo para salir</string>
+    <string name="go_to_home_folder">Ir a carpeta principal</string>
+    <string name="set_as_home_folder">Establecer como carpeta principal</string>
+    <string name="home_folder_updated">Carpeta principal actualizada</string>
+    <string name="copy_path">Copiar ruta al portapapeles</string>
+    <string name="path_copied">Ruta copiada</string>
+    <string name="select_audio_file">Por favor, seleccione un archivo de audio</string>
+    <string name="search_folder">Buscar carpeta</string>
+    <string name="rooted_device_only">Esta operación solo funciona en dispositivos rooteados</string>
+    <string name="recents">Recientes</string>
+    <string name="show_recents">Mostrar recientes</string>
+    <string name="pdf_viewer">Lector PDF</string>
+    <string name="invert_colors">Invertir colores</string>
+    <!-- Open as -->
+    <string name="open_as">Abrir como</string>
+    <string name="text_file">Archivo de texto</string>
+    <string name="image_file">Imagen</string>
+    <string name="audio_file">Archivo de audio</string>
+    <string name="video_file">Video</string>
+    <string name="other_file">Otro tipo de archivo</string>
+    <!-- Compression -->
+    <string name="compress">Comprimir</string>
+    <string name="compress_pro">Comprimir (Pro)</string>
+    <string name="decompress">Descomprimir</string>
+    <string name="compress_as">Comprimir como</string>
+    <string name="compressing">Comprimiendo…</string>
+    <string name="decompressing">Descomprimiendo…</string>
+    <string name="compression_successful">Compresión exitosa</string>
+    <string name="decompression_successful">Descompresión exitosa</string>
+    <string name="compressing_failed">Compresión fallida</string>
+    <string name="decompressing_failed">Descompresión fallida</string>
+    <!-- Favorites -->
+    <string name="manage_favorites">Administrar favoritos</string>
+    <string name="go_to_favorite">Ir a favoritos</string>
+    <string name="favorites_activity_placeholder">Puede agregar carpetas de uso frecuente a favoritos para facilitar el acceso desde cualquier lugar.</string>
+    <!-- File Editor -->
+    <string name="file_editor">Editor de archivos</string>
+    <!-- Storage analysis -->
+    <string name="storage_analysis">Análisis de almacenamiento</string>
+    <string name="images">Imágenes</string>
+    <string name="videos">Vídeos</string>
+    <string name="audio">Audio</string>
+    <string name="documents">Documentos</string>
+    <string name="downloads">Descargas</string>
+    <string name="archives">Archivos</string>
+    <string name="others">Otros</string>
+    <string name="storage_free">libre</string>
+    <string name="total_storage">Almacenamiento total: %s</string>
+    <!-- Settings -->
+    <string name="enable_root_access">Activar acceso root</string>
+    <string name="press_back_twice">Se requiere presionar el botón atras dos veces para salir de la app</string>
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
+</resources>

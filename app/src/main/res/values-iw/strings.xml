@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">מנהל קבצים פשוט</string>
+    <string name="app_launcher_name">מנהל קבצים</string>
+    <string name="press_back_again">לחץ שוב אחורה כדי לצאת</string>
+    <string name="go_to_home_folder">עבור לתיקיית הבית</string>
+    <string name="set_as_home_folder">הגדר כתיקיית בית</string>
+    <string name="home_folder_updated">תיקיית הבית עודכנה</string>
+    <string name="copy_path">העתק נתיב ללוח</string>
+    <string name="path_copied">הנתיב הועתק</string>
+    <string name="select_audio_file">אנא בחר קובץ שמע</string>
+    <string name="search_folder">‪חיפוש תיקייה</string>
+    <string name="rooted_device_only">פעולה זו פועלת רק במכשירים עם רוט</string>
+    <string name="recents">אחרונים</string>
+    <string name="show_recents">הצג את האחרונים</string>
+    <string name="pdf_viewer">‎מציג PDF</string>
+    <string name="invert_colors">הפוך צבעים</string>
+    <!-- Open as -->
+    <string name="open_as">פתח כ</string>
+    <string name="text_file">קובץ טקסט</string>
+    <string name="image_file">קובץ תמונה</string>
+    <string name="audio_file">קובץ שמע</string>
+    <string name="video_file">קובץ וידיאו</string>
+    <string name="other_file">קובץ אחר</string>
+    <!-- Compression -->
+    <string name="compress">לדחוס</string>
+    <string name="compress_pro">דחיסה (פרו)</string>
+    <string name="decompress">לבטל דחיסה</string>
+    <string name="compress_as">דחוס כ</string>
+    <string name="compressing">דוחס…</string>
+    <string name="decompressing">משחרר דחיסה…</string>
+    <string name="compression_successful">הדחיסה הצליחה</string>
+    <string name="decompression_successful">שחרור הדחיסה הצליח</string>
+    <string name="compressing_failed">הדחיסה נכשלה</string>
+    <string name="decompressing_failed">פעולת שחרור הדחיסה נכשל</string>
+    <!-- Favorites -->
+    <string name="manage_favorites">נהל מועדפים</string>
+    <string name="go_to_favorite">עבור למועדפים</string>
+    <string name="favorites_activity_placeholder">‪אתה יכול להוסיף תיקיות בשימוש תכוף למועדפים לגישה נוחה מכל מקום.</string>
+    <!-- File Editor -->
+    <string name="file_editor">עורך הקבצים</string>
+    <!-- Storage analysis -->
+    <string name="storage_analysis">ניתוח אחסון</string>
+    <string name="images">תמונות</string>
+    <string name="videos">וידיאו</string>
+    <string name="audio">שמע</string>
+    <string name="documents">מסמכים</string>
+    <string name="downloads">הורדות</string>
+    <string name="archives">ארכיון</string>
+    <string name="others">אחרים</string>
+    <string name="storage_free">חינם</string>
+    <string name="total_storage">שטח אחסון כולל: %s</string>
+    <!-- Settings -->
+    <string name="enable_root_access">אפשר גישת שורש</string>
+    <string name="press_back_twice">דרוש לחיצה על חזרה פעמיים כדי לצאת מהאפליקציה דרוש לחיצה על חזרה פעמיים כדי לצאת מהאפליקציה</string>
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
+</resources>

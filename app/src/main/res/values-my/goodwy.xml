@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_g">Right Files</string>
+    <string name="app_launcher_name_g">ဖို</string>
+    <string name="storage_used">%2$s မှ %1$s အခမဲ့</string>
+    <string name="used">အသုံးပြုခံ့</string>
+    <string name="system">စနစ်</string>
+    <string name="apps">အက်ပ်များ</string>
+    <string name="manage_storage">သိုလှောင်မှုကို စီမံပါ။</string>
+    <string name="show_folder_icons">ဖိုဒါအိုင်ကွန်များကို ပြပါ။</string>
+    <string name="access_app_ops_service">ကျေးဇူးပြု၍ ကျွန်ုပ်တို့၏အက်ပ်အား အသုံးပြုခွင့်ကို ခွင့်ပြုပါ၊ ၎င်းမရှိဘဲ၊ ကျွန်ုပ်တို့သည် အက်ပ်အားလုံး၏အရွယ်အစားကို မသိနိုင်ပါ။</string>
+    <string name="show_home_button">ပင်မခလုတ်ကို ပြပါ။</string>
+    <string name="cannot_be_inserted_into_itself">အရာဝတ္ထုတစ်ခုကို သူ့အလိုလို ထည့်သွင်းလို့မရပါဘူး။</string>
+    <string name="show_only_filename">ဖိုင်/ဖိုင်တွဲအမည်ကိုသာ ပြပါ။</string>
+</resources>

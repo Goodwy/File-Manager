@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_g">Right Files</string>
+    <string name="app_launcher_name_g">Ffeiliau</string>
+    <string name="storage_used"> %1$s o %2$s Rhad ac am ddim</string>
+    <string name="used">Defnyddio</string>
+    <string name="system">System</string>
+    <string name="apps">Apiau</string>
+    <string name="manage_storage">Rheoli storfa</string>
+    <string name="show_folder_icons">Dangos eiconau ffolder</string>
+    <string name="access_app_ops_service">Rhowch fynediad i\'n Ap Defnydd, hebddo, ni allwn wybod maint yr holl apiau.</string>
+    <string name="show_home_button">Botwm Dangos Cartref</string>
+    <string name="cannot_be_inserted_into_itself">Ni ellir mewnosod gwrthrych ynddo\'i hun</string>
+    <string name="show_only_filename">Dangos enw ffeil/ffolder yn unig</string>
+</resources>

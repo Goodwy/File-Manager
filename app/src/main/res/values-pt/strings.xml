@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Simple File Manager</string>
+    <string name="app_launcher_name">Gestor de ficheiros</string>
+    <string name="press_back_again">Prima novamente para sair</string>
+    <string name="go_to_home_folder">Ir para a pasta pessoal</string>
+    <string name="set_as_home_folder">Definir como pasta pessoal</string>
+    <string name="home_folder_updated">Pasta pessoal atualizada</string>
+    <string name="copy_path">Copiar caminho para a área de transferência</string>
+    <string name="path_copied">Caminho copiado</string>
+    <string name="select_audio_file">Selecione um ficheiro de áudio</string>
+    <string name="search_folder">Pesquisar pasta</string>
+    <string name="rooted_device_only">Esta operação apenas funciona em dispositivos com root</string>
+    <string name="recents">Recentes</string>
+    <string name="show_recents">Mostrar recentes</string>
+    <string name="pdf_viewer">Visualizador de PDF</string>
+    <string name="invert_colors">Inverter Cores</string>
+    <!-- Open as -->
+    <string name="open_as">Abrir como</string>
+    <string name="text_file">Texto</string>
+    <string name="image_file">Imagem</string>
+    <string name="audio_file">Áudio</string>
+    <string name="video_file">Vídeo</string>
+    <string name="other_file">Outro tipo</string>
+    <!-- Compression -->
+    <string name="compress">Compactar</string>
+    <string name="compress_pro">Compactar (Pro)</string>
+    <string name="decompress">Descompactar</string>
+    <string name="compress_as">Compactar como</string>
+    <string name="compressing">A compactar…</string>
+    <string name="decompressing">A descompactar…</string>
+    <string name="compression_successful">Compactação terminada</string>
+    <string name="decompression_successful">Descompactação terminada</string>
+    <string name="compressing_failed">Falha ao compactar</string>
+    <string name="decompressing_failed">Falha ao descompactar</string>
+    <!-- Favorites -->
+    <string name="manage_favorites">Gerir favoritos</string>
+    <string name="go_to_favorite">Ir para favorito</string>
+    <string name="favorites_activity_placeholder">Pode adicionar pastas como favoritos para um acesso mais rápido.</string>
+    <!-- File Editor -->
+    <string name="file_editor">Editor de ficheiros</string>
+    <!-- Storage analysis -->
+    <string name="storage_analysis">Análise ao armazenamento</string>
+    <string name="images">Imagens</string>
+    <string name="videos">Vídeos</string>
+    <string name="audio">Áudio</string>
+    <string name="documents">Documentos</string>
+    <string name="downloads">Descargas</string>
+    <string name="archives">Arquivos</string>
+    <string name="others">Outros</string>
+    <string name="storage_free">livre</string>
+    <string name="total_storage">Armazenamento total: %s</string>
+    <!-- Settings -->
+    <string name="enable_root_access">Conceder acesso root</string>
+    <string name="press_back_twice">Premir duas vezes a tecla Back para sair da aplicação</string>
+    <!--
+        Não encontrou todas as cadeias a traduzir? Existem mais algumas em
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
+</resources>

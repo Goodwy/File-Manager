@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Prosty menedżer plików</string>
+    <string name="app_launcher_name">Menedżer plików</string>
+    <string name="press_back_again">Naciśnij ponownie przycisk wstecz, aby wyjść</string>
+    <string name="go_to_home_folder">Przejdź do folderu domowego</string>
+    <string name="set_as_home_folder">Ustaw jako folder domowy</string>
+    <string name="home_folder_updated">Folder domowy zaktualizowany</string>
+    <string name="copy_path">Kopiuj ścieżkę do schowka</string>
+    <string name="path_copied">Skopiowano ścieżkę</string>
+    <string name="select_audio_file">Wybierz plik audio</string>
+    <string name="search_folder">Przeszukaj folder</string>
+    <string name="rooted_device_only">Ta operacja działa tylko na zrootowanych urządzeniach</string>
+    <string name="recents">Ostatnie</string>
+    <string name="show_recents">Pokaż ostatnie</string>
+    <string name="pdf_viewer">Czytnik PDF</string>
+    <string name="invert_colors">Odwróć kolory</string>
+    <!-- Open as -->
+    <string name="open_as">Otwórz jako</string>
+    <string name="text_file">Plik tekstowy</string>
+    <string name="image_file">Plik graficzny</string>
+    <string name="audio_file">Plik audio</string>
+    <string name="video_file">Plik wideo</string>
+    <string name="other_file">Inny plik</string>
+    <!-- Compression -->
+    <string name="compress">Spakuj</string>
+    <string name="compress_pro">Spakuj (Pro)</string>
+    <string name="decompress">Rozpakuj</string>
+    <string name="compress_as">Spakuj jako</string>
+    <string name="compressing">Pakowanie…</string>
+    <string name="decompressing">Rozpakowywanie…</string>
+    <string name="compression_successful">Pakowanie powiodło się</string>
+    <string name="decompression_successful">Rozpakowywanie powiodło się</string>
+    <string name="compressing_failed">Pakowanie nie powiodło się</string>
+    <string name="decompressing_failed">Rozpakowywanie nie powiodło się</string>
+    <!-- Favorites -->
+    <string name="manage_favorites">Zarządzaj ulubionymi</string>
+    <string name="go_to_favorite">Przejdź do ulubionego</string>
+    <string name="favorites_activity_placeholder">Możesz dodać często używane foldery do ulubionych, aby mieć do nich łatwy dostęp z dowolnego miejsca.</string>
+    <!-- File Editor -->
+    <string name="file_editor">Edytor plików</string>
+    <!-- Storage analysis -->
+    <string name="storage_analysis">Analiza pamięci</string>
+    <string name="images">Obrazy</string>
+    <string name="videos">Wideo</string>
+    <string name="audio">Audio</string>
+    <string name="documents">Dokumenty</string>
+    <string name="downloads">Pobrane</string>
+    <string name="archives">Archiwa</string>
+    <string name="others">Inne</string>
+    <string name="storage_free">wolne</string>
+    <string name="total_storage">Całkowita pamięć: %s</string>
+    <!-- Settings -->
+    <string name="enable_root_access">Włącz dostęp do roota</string>
+    <string name="press_back_twice">Wymagaj dwukrotnego naciśnięcia przycisku Wstecz, aby wyjść z aplikacji</string>
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
+</resources>

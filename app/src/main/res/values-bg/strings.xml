@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Обикновен Файлов Мениджър</string>
+    <string name="app_launcher_name">Файлов Мениджър</string>
+    <string name="press_back_again">Натиснете назад отново, за да излезете</string>
+    <string name="go_to_home_folder">Към началната папка</string>
+    <string name="set_as_home_folder">Задаване като начална папка</string>
+    <string name="home_folder_updated">Началната папка е актуализирана</string>
+    <string name="copy_path">Копиране на път в клипборда</string>
+    <string name="path_copied">Пътят е копиран</string>
+    <string name="select_audio_file">Моля, изберете аудио файл</string>
+    <string name="search_folder">Търсене на папка</string>
+    <string name="rooted_device_only">Тази операция работи само на root устройства</string>
+    <string name="recents">Скорошни</string>
+    <string name="show_recents">Показване на скорошни</string>
+    <string name="pdf_viewer">PDF Визуализатор</string>
+    <string name="invert_colors">Обръщане на цветове</string>
+    <!-- Open as -->
+    <string name="open_as">Отвори като</string>
+    <string name="text_file">Текстов файл</string>
+    <string name="image_file">Снимка</string>
+    <string name="audio_file">Аудио файл</string>
+    <string name="video_file">Видео файл</string>
+    <string name="other_file">Друг тип файл</string>
+    <!-- Compression -->
+    <string name="compress">Компресиране</string>
+    <string name="compress_pro">Компресиране (Pro)</string>
+    <string name="decompress">Декомпресиране</string>
+    <string name="compress_as">Компресиране като</string>
+    <string name="compressing">Компресира се…</string>
+    <string name="decompressing">Декомпресира се…</string>
+    <string name="compression_successful">Компресирането е успешно</string>
+    <string name="decompression_successful">Декомпресирането е успешно</string>
+    <string name="compressing_failed">Неуспешно компресиране</string>
+    <string name="decompressing_failed">Неуспешно декомпресиране</string>
+    <!-- Favorites -->
+    <string name="manage_favorites">Управление на любими</string>
+    <string name="go_to_favorite">Към любими</string>
+    <string name="favorites_activity_placeholder">Можете да добавяте често използвани папки към любими за лесен достъп от всякъде.</string>
+    <!-- File Editor -->
+    <string name="file_editor">Файлов редактор</string>
+    <!-- Storage analysis -->
+    <string name="storage_analysis">Анализ на съхранението</string>
+    <string name="images">Изображения</string>
+    <string name="videos">Видеа</string>
+    <string name="audio">Audio</string>
+    <string name="documents">Documents</string>
+    <string name="downloads">Downloads</string>
+    <string name="archives">Архиви</string>
+    <string name="others">Други</string>
+    <string name="storage_free">free</string>
+    <string name="total_storage">Общо място за съхранение: %s</string>
+    <!-- Settings -->
+    <string name="enable_root_access">Активиране на root достъп</string>
+    <string name="press_back_twice">Натискане два пъти Назад за излизане от приложението</string>
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
+</resources>

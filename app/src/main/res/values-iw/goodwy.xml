@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_g">Right Files</string>
+    <string name="app_launcher_name_g">קבצים</string>
+    <string name="storage_used">%1$s מתוך %2$s בחינם</string>
+    <string name="used">להשתמש</string>
+    <string name="system">מערכת</string>
+    <string name="apps">אפליקציות</string>
+    <string name="manage_storage">נהל אחסון</string>
+    <string name="show_folder_icons">הצג סמלי תיקיה</string>
+    <string name="access_app_ops_service">אנא הענק לאפליקציה שלנו גישת שימוש, בלעדיה, איננו יכולים לדעת את הגודל של כל האפליקציות.</string>
+    <string name="show_home_button">הצג את לחצן הבית</string>
+    <string name="cannot_be_inserted_into_itself">לא ניתן להכניס אובייקט לתוך עצמו</string>
+    <string name="show_only_filename">הצג רק שם קובץ/תיקיה</string>
+</resources>

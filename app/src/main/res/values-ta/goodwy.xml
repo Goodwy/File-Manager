@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_g">Right Files</string>
+    <string name="app_launcher_name_g">கோப்புகள்</string>
+    <string name="storage_used">%2$s இல் %1$s இலவசம்</string>
+    <string name="used">பரபரப்பு</string>
+    <string name="system">அமைப்பு</string>
+    <string name="apps">பயன்பாடுகள்</string>
+    <string name="manage_storage">சேமிப்பகத்தை நிர்வகி</string>
+    <string name="show_folder_icons">கோப்புறை ஐகான்களைக் காட்டு</string>
+    <string name="access_app_ops_service">எங்கள் பயன்பாட்டு பயன்பாட்டு அணுகலை வழங்கவும், அது இல்லாமல், எல்லா பயன்பாடுகளின் அளவையும் எங்களால் அறிய முடியாது.</string>
+    <string name="show_home_button">முகப்பு பொத்தானைக் காட்டு</string>
+    <string name="cannot_be_inserted_into_itself">ஒரு பொருளை தன்னுள் நுழைக்க முடியாது</string>
+    <string name="show_only_filename">கோப்பு/கோப்புறை பெயரை மட்டும் காட்டு</string>
+</resources>

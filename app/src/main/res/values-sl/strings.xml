@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Enostaven upravitelj datotek</string>
+    <string name="app_launcher_name">Upravitelj datotek</string>
+    <string name="press_back_again">Za izhod ponovno pritisnite Nazaj</string>
+    <string name="go_to_home_folder">Pojdi v domačo mapo</string>
+    <string name="set_as_home_folder">Nastavi kot domačo mapo</string>
+    <string name="home_folder_updated">Posodobljena mapa domov</string>
+    <string name="copy_path">Kopiraj poti v odložišče</string>
+    <string name="path_copied">Pot skopirana</string>
+    <string name="select_audio_file">Izberi zvočno datoteko</string>
+    <string name="search_folder">Iskanje mape</string>
+    <string name="rooted_device_only">Ta operacija deluje samo v rootanih napravah</string>
+    <string name="recents">Nedavno</string>
+    <string name="show_recents">Prikaži nedavne</string>
+    <string name="pdf_viewer">Pregledovalnik PDF</string>
+    <string name="invert_colors">Obrni barve</string>
+    <!-- Open as -->
+    <string name="open_as">Odpri kot</string>
+    <string name="text_file">Datoteka z besedilom</string>
+    <string name="image_file">Slikovna datoteka</string>
+    <string name="audio_file">Zvokovna datoteka</string>
+    <string name="video_file">Video datoteka</string>
+    <string name="other_file">Druga datoteka</string>
+    <!-- Compression -->
+    <string name="compress">Stisni</string>
+    <string name="compress_pro">Stisni (Pro)</string>
+    <string name="decompress">Razširi</string>
+    <string name="compress_as">Stisni kot</string>
+    <string name="compressing">Stiskanje…</string>
+    <string name="decompressing">Razširjanje…</string>
+    <string name="compression_successful">Stiskanje uspešno</string>
+    <string name="decompression_successful">Razširjanje uspešno</string>
+    <string name="compressing_failed">Stiskanje ni uspelo</string>
+    <string name="decompressing_failed">Razširjanje ni uspelo</string>
+    <!-- Favorites -->
+    <string name="manage_favorites">Upravljanje priljubljenih</string>
+    <string name="go_to_favorite">Pojdi med priljubljene</string>
+    <string name="favorites_activity_placeholder">Pogosto uporabljene mape lahko dodate med priljubljene in do njih enostavno dostopate od kjer koli.</string>
+    <!-- File Editor -->
+    <string name="file_editor">Urejevalnik datotek</string>
+    <!-- Storage analysis -->
+    <string name="storage_analysis">Analiza shranjevanja</string>
+    <string name="images">Slike</string>
+    <string name="videos">Video</string>
+    <string name="audio">Zvok</string>
+    <string name="documents">Dokumenti</string>
+    <string name="downloads">Prenosi</string>
+    <string name="archives">Arhivi</string>
+    <string name="others">Ostali</string>
+    <string name="storage_free">prosto</string>
+    <string name="total_storage">Skupno prostora za shranjevanje: %s</string>
+    <!-- Settings -->
+    <string name="enable_root_access">Omogoči root (korenski) dostop</string>
+    <string name="press_back_twice">Dvakratni pritisk nazaj za izhod iz aplikacije</string>
+</resources>

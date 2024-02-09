@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_g">Right Files</string>
+    <string name="app_launcher_name_g">파일</string>
+    <string name="storage_used">%1$s 중 %2$s 사용 가능</string>
+    <string name="used">사용</string>
+    <string name="system">시스템</string>
+    <string name="apps">앱</string>
+    <string name="manage_storage">스토리지 관리</string>
+    <string name="show_folder_icons">폴더 아이콘 표시</string>
+    <string name="access_app_ops_service">앱 사용 액세스 권한을 부여해 주세요. 이 권한이 없으면 모든 앱의 크기를 알 수 없습니다.</string>
+    <string name="show_home_button">홈 버튼 표시</string>
+    <string name="cannot_be_inserted_into_itself">개체를 자체에 삽입할 수 없습니다</string>
+    <string name="show_only_filename">파일/폴더 이름만 표시</string>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_g">Right Files</string>
+    <string name='app_launcher_name_g'>फ़ाइलें</string>
+    <string name='storage_used'>%1$s में से %2$s निःशुल्क</string>
+    <string name="used">प्रयुक्त</string>
+    <string name='system'>सिस्टम</string>
+    <string name='apps'>ऐप्स</string>
+    <string name='manage_storage'>भंडारण प्रबंधित करें</string>
+    <string name='show_folder_icons'>फ़ोल्डर आइकन दिखाएँ</string>
+    <string name='access_app_ops_service'>कृपया हमारे ऐप को उपयोग की पहुंच प्रदान करें, इसके बिना, हम सभी ऐप्स का आकार नहीं जान सकते।</string>
+    <string name='show_home_button'>होम बटन दिखाएँ</string>
+    <string name="cannot_be_inserted_into_itself">कोई ऑब्जेक्ट स्वयं में सम्मिलित नहीं किया जा सकता</string>
+    <string name="show_only_filename">केवल फ़ाइल/फ़ोल्डर नाम दिखाएँ</string>
+</resources>

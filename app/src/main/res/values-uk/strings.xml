@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Простий Менеджер Файлів</string>
+    <string name="app_launcher_name">Менеджер Файлів</string>
+    <string name="press_back_again">Для виходу натисніть Назад ще раз</string>
+    <string name="go_to_home_folder">Перейти у домашню теку</string>
+    <string name="set_as_home_folder">Встановити як домашню теку</string>
+    <string name="home_folder_updated">Домашню теку оновлено</string>
+    <string name="copy_path">Скопіювати шлях у буфер обміну</string>
+    <string name="path_copied">Шлях скопійовано</string>
+    <string name="select_audio_file">Будь ласка, оберіть аудіо файл</string>
+    <string name="search_folder">Шукати теку</string>
+    <string name="rooted_device_only">Ця команда працює лише на пристроях з root-доступом</string>
+    <string name="recents">Останні</string>
+    <string name="show_recents">Показати останні</string>
+    <string name="pdf_viewer">Переглядач PDF</string>
+    <string name="invert_colors">Інвертувати кольори</string>
+    <!-- Open as -->
+    <string name="open_as">Відкрити як файл</string>
+    <string name="text_file">Текстовий</string>
+    <string name="image_file">Зображення</string>
+    <string name="audio_file">Аудіо</string>
+    <string name="video_file">Відео</string>
+    <string name="other_file">Інший тип</string>
+    <!-- Compression -->
+    <string name="compress">Стиснути</string>
+    <string name="compress_pro">Стиснути (Pro)</string>
+    <string name="decompress">Розпакувати</string>
+    <string name="compress_as">Стиснути як</string>
+    <string name="compressing">Триває стиснення…</string>
+    <string name="decompressing">Триває розпакування…</string>
+    <string name="compression_successful">Успішно стиснено</string>
+    <string name="decompression_successful">Успішно розпаковано</string>
+    <string name="compressing_failed">Не вдалося стиснути</string>
+    <string name="decompressing_failed">Не вдалося розпакувати</string>
+    <!-- Favorites -->
+    <string name="manage_favorites">Керувати вибраним</string>
+    <string name="go_to_favorite">Перейти у вибране</string>
+    <string name="favorites_activity_placeholder">Ви можете додати теки, які часто відкриваєте, у вибране, щоб швидко отримати до них доступ.</string>
+    <!-- File Editor -->
+    <string name="file_editor">Редактор файлів</string>
+    <!-- Storage analysis -->
+    <string name="storage_analysis">Аналіз сховища</string>
+    <string name="images">Зображення</string>
+    <string name="videos">Відео</string>
+    <string name="audio">Аудіо</string>
+    <string name="documents">Документи</string>
+    <string name="downloads">Завантажене</string>
+    <string name="archives">Архіви</string>
+    <string name="others">Інше</string>
+    <string name="storage_free">вільно</string>
+    <string name="total_storage">Всього пам\'яті: %s</string>
+    <!-- Settings -->
+    <string name="enable_root_access">Активувати root-доступ</string>
+    <string name="press_back_twice">Натисніть Назад двічі, щоб вийти з додатка</string>
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
+</resources>

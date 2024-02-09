@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_g">Right Files</string>
+    <string name="app_launcher_name_g">Dateien</string>
+    <string name="storage_used">%1$s von %2$s Frei</string>
+    <string name="used">Gebraucht</string>
+    <string name="system">System</string>
+    <string name="apps">Apps</string>
+    <string name="manage_storage">Speicher verwalten</string>
+    <string name="show_folder_icons">Ordnersymbole anzeigen</string>
+    <string name="access_app_ops_service">Bitte gewähren Sie unserer App Usage Zugriff, ohne diesen können wir die Größe aller Apps nicht erkennen.</string>
+    <string name="show_home_button">Home-Button anzeigen</string>
+    <string name="cannot_be_inserted_into_itself">Ein Objekt kann nicht in sich selbst eingefügt werden</string>
+    <string name="show_only_filename">Nur Datei-/Ordnernamen anzeigen</string>
+</resources>

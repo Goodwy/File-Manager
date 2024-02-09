@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_g">Right Files</string>
+    <string name="app_launcher_name_g">ファイル</string>
+    <string name="storage_used">%1$sが%2$s空いている</string>
+    <string name="used">中古</string>
+    <string name="system">システム</string>
+    <string name="apps">アプリ</string>
+    <string name="manage_storage">ストレージの管理</string>
+    <string name="show_folder_icons">フォルダアイコンの表示</string>
+    <string name="access_app_ops_service">私たちのアプリにUsageアクセス権を与えてください。</string>
+    <string name="show_home_button">ホームボタンの表示</string>
+    <string name="cannot_be_inserted_into_itself">オブジェクト自体に挿入することはできません</string>
+    <string name="show_only_filename">ファイル/フォルダ名のみ表示</string>
+</resources>

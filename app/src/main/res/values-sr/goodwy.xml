@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_g">Right Files</string>
+    <string name="app_launcher_name_g">Датотеке</string>
+    <string name="storage_used">%1$с од %2$с бесплатно</string>
+    <string name="used">Заузет</string>
+    <string name="system">Систем</string>
+    <string name="apps">Апликације</string>
+    <string name="manage_storage">Управљајте складиштем</string>
+    <string name="show_folder_icons">Прикажи иконе директоријума</string>
+    <string name="access_app_ops_service">Одобрите нашој апликацији приступ коришћењу, без тога не можемо знати величину свих апликација.</string>
+    <string name="show_home_button">Прикажи дугме Почетна</string>
+    <string name="cannot_be_inserted_into_itself">Објекат се не може убацити у себе</string>
+    <string name="show_only_filename">Прикажи само име датотеке/директоријума</string>
+</resources>

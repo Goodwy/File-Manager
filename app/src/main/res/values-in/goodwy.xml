@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_g">Right Files</string>
+    <string name="app_launcher_name_g">Mengajukan</string>
+    <string name="storage_used">%1$s dari %2$s Gratis</string>
+    <string name="used">Digunakan</string>
+    <string name="system">Sistem</string>
+    <string name="apps">Aplikasi</string>
+    <string name="manage_storage">Mengelola penyimpanan</string>
+    <string name="show_folder_icons">Tampilkan ikon folder</string>
+    <string name="access_app_ops_service">Silakan berikan akses Penggunaan aplikasi kami, tanpa itu, kami tidak dapat mengetahui ukuran semua aplikasi.</string>
+    <string name="show_home_button">Tampilkan tombol Beranda</string>
+    <string name="cannot_be_inserted_into_itself">Suatu objek tidak dapat dimasukkan ke dalam dirinya sendiri</string>
+    <string name="show_only_filename">Tampilkan hanya nama file/folder</string>
+</resources>

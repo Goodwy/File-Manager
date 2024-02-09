@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_g">Right Files</string>
+    <string name="app_launcher_name_g">Αρχεία</string>
+    <string name="storage_used">%1$s από %2$s Δωρεάν</string>
+    <string name="used">Μεταχειρισμένος</string>
+    <string name="system">Σύστημα</string>
+    <string name="apps">Εφαρμογές</string>
+    <string name="manage_storage">Διαχείριση αποθήκευσης</string>
+    <string name="show_folder_icons">Εμφάνιση εικονιδίων φακέλων</string>
+    <string name="access_app_ops_service">Παρακαλούμε να χορηγήσετε στην εφαρμογή μας την πρόσβαση Usage, χωρίς αυτήν, δεν μπορούμε\Nνα γνωρίζουμε το μέγεθος όλων των εφαρμογών.</string>
+    <string name="show_home_button">Εμφάνιση του κουμπιού Home</string>
+    <string name="cannot_be_inserted_into_itself">Ένα αντικείμενο δεν μπορεί να εισαχθεί στον εαυτό του</string>
+    <string name="show_only_filename">Εμφάνιση μόνο ονόματος αρχείου/φακέλου</string>
+</resources>
