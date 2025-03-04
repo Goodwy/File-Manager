@@ -1,5 +1,6 @@
 package com.goodwy.filemanager.adapters
 
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.util.TypedValue
@@ -21,7 +22,7 @@ import com.goodwy.filemanager.activities.SimpleActivity
 import com.goodwy.filemanager.databinding.ItemDecompressionListFileDirBinding
 import com.goodwy.filemanager.extensions.config
 import com.goodwy.filemanager.models.ListItem
-import java.util.*
+import java.util.Locale
 
 class DecompressItemsAdapter(activity: SimpleActivity, var listItems: MutableList<ListItem>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
     MyRecyclerViewAdapter(activity, recyclerView, itemClick) {
@@ -95,7 +96,7 @@ class DecompressItemsAdapter(activity: SimpleActivity, var listItems: MutableLis
             if (listItem.isDirectory) {
                 itemIcon.setImageDrawable(folderDrawable)
             } else {
-                val drawable = fileDrawables.getOrElse(fileName.substringAfterLast(".").lowercase(), { fileDrawable })
+                val drawable = fileDrawables.getOrElse(fileName.substringAfterLast(".").lowercase(Locale.getDefault()), { fileDrawable })
                 val options = RequestOptions()
                     .signature(listItem.getKey())
                     .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
@@ -130,6 +131,7 @@ class DecompressItemsAdapter(activity: SimpleActivity, var listItems: MutableLis
         }
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun initDrawables() {
         folderDrawable = resources.getColoredDrawableWithColor(R.drawable.ic_folder_vector, textColor)
         folderDrawable.alpha = 180

@@ -142,6 +142,7 @@ class MimeTypesActivity : SimpleActivity(), ItemOperationsListener {
                     mimetypesPlaceholder2.beGone()
                 }
             }
+
             searchText.length == 1 -> {
                 binding.apply {
                     mimetypesFastscroller.beGone()
@@ -149,6 +150,7 @@ class MimeTypesActivity : SimpleActivity(), ItemOperationsListener {
                     mimetypesPlaceholder2.beVisible()
                 }
             }
+
             else -> {
                 ensureBackgroundThread {
                     if (lastSearchedText != searchText) {
@@ -300,26 +302,31 @@ class MimeTypesActivity : SimpleActivity(), ItemOperationsListener {
                                 fileDirItems.add(FileDirItem(path, name, false, 0, size, lastModified))
                             }
                         }
+
                         VIDEOS -> {
                             if (mimetype == "video") {
                                 fileDirItems.add(FileDirItem(path, name, false, 0, size, lastModified))
                             }
                         }
+
                         AUDIO -> {
                             if (mimetype == "audio" || extraAudioMimeTypes.contains(fullMimetype)) {
                                 fileDirItems.add(FileDirItem(path, name, false, 0, size, lastModified))
                             }
                         }
+
                         DOCUMENTS -> {
                             if (mimetype == "text" || extraDocumentMimeTypes.contains(fullMimetype)) {
                                 fileDirItems.add(FileDirItem(path, name, false, 0, size, lastModified))
                             }
                         }
+
                         ARCHIVES -> {
                             if (archiveMimeTypes.contains(fullMimetype)) {
                                 fileDirItems.add(FileDirItem(path, name, false, 0, size, lastModified))
                             }
                         }
+
                         OTHERS -> {
                             if (mimetype != "image" && mimetype != "video" && mimetype != "audio" && mimetype != "text" &&
                                 !extraAudioMimeTypes.contains(fullMimetype) && !extraDocumentMimeTypes.contains(fullMimetype) &&
@@ -414,7 +421,7 @@ class MimeTypesActivity : SimpleActivity(), ItemOperationsListener {
 
     private fun setupGridLayoutManager() {
         val layoutManager = binding.mimetypesList.layoutManager as MyGridLayoutManager
-        layoutManager.spanCount = config.fileColumnCnt ?: 3
+        layoutManager.spanCount = config.fileColumnCnt
 
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {

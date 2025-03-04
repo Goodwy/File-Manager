@@ -59,6 +59,20 @@ const val VOLUME_NAME = "volume_name"
 const val PRIMARY_VOLUME_NAME = "external_primary" // On API <= 28, use VOLUME_EXTERNAL instead.
 const val PRIMARY_VOLUME_NAME_OLD = "external"
 
+// swiped left action
+const val SWIPE_RIGHT_ACTION = "swipe_right_action"
+const val SWIPE_LEFT_ACTION = "swipe_left_action"
+const val SWIPE_ACTION_DELETE = 2
+const val SWIPE_ACTION_BLOCK = 4 //!! isNougatPlus()
+const val SWIPE_ACTION_CALL = 5
+const val SWIPE_ACTION_MESSAGE = 6
+const val SWIPE_ACTION_EDIT = 7
+const val SWIPE_ACTION_COPY = 8
+const val SWIPE_ACTION_MOVE = 9
+const val SWIPE_ACTION_INFO = 10
+const val SWIPE_VIBRATION = "swipe_vibration"
+const val SWIPE_RIPPLE = "swipe_ripple"
+
 // what else should we count as an audio except "audio/*" mimetype
 val extraAudioMimeTypes = arrayListOf("application/ogg")
 val extraDocumentMimeTypes = arrayListOf(

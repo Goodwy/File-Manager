@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<me.thanel.swipeactionview.SwipeActionView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_swipe"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="@drawable/selector">
+
+    <RelativeLayout
+        android:id="@+id/swipeRightIconHolder"
+        android:layout_width="82dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left|center_vertical"
+        android:background="@color/primary"
+        tools:ignore="RtlHardcoded">
+
+        <ImageView
+            android:id="@+id/swipeRightIcon"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_centerInParent='true'
+            android:src="@drawable/ic_copy_vector"
+            android:contentDescription="@null"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/swipeLeftIconHolder"
+        android:layout_width="82dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right|center_vertical"
+        android:background="@color/red_missed"
+        tools:ignore="RtlHardcoded">
+
+        <ImageView
+            android:id="@+id/swipeLeftIcon"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_centerInParent='true'
+            android:src="@drawable/ic_delete_outline"
+            android:contentDescription="@null"/>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/item_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/theme_black_background_color">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/item_holder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/small_margin"
+            android:paddingTop="@dimen/small_margin"
+            android:paddingEnd="@dimen/small_margin"
+            android:paddingBottom="@dimen/medium_margin">
+
+            <com.goodwy.commons.views.MySquareImageView
+                android:id="@+id/item_icon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/small_margin"
+                android:src="@drawable/ic_file_generic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/item_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="middle"
+                android:gravity="center_horizontal"
+                android:paddingStart="@dimen/small_margin"
+                android:paddingEnd="@dimen/small_margin"
+                android:singleLine="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/item_icon"
+                tools:text="Directory" />
+
+            <ImageView
+                android:id="@+id/item_check"
+                android:layout_width="@dimen/selection_check_size"
+                android:layout_height="@dimen/selection_check_size"
+                android:layout_margin="@dimen/smaller_margin"
+                android:background="@drawable/circle_background"
+                android:contentDescription="@null"
+                android:padding="@dimen/tiny_margin"
+                android:src="@drawable/ic_check_vector"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+</me.thanel.swipeactionview.SwipeActionView>

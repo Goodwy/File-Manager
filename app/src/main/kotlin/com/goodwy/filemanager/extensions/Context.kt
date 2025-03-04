@@ -2,6 +2,7 @@ package com.goodwy.filemanager.extensions
 
 import android.content.Context
 import android.os.storage.StorageManager
+import androidx.annotation.DimenRes
 import com.goodwy.commons.extensions.isPathOnOTG
 import com.goodwy.commons.extensions.isPathOnSD
 import com.goodwy.commons.helpers.isNougatPlus
@@ -30,3 +31,5 @@ fun Context.getAllVolumeNames(): List<String> {
     }
     return volumeNames
 }
+
+fun Context.pixels(@DimenRes dimen: Int): Float = resources.getDimensionPixelOffset(dimen).toFloat()

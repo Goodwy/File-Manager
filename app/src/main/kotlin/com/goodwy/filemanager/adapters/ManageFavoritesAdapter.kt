@@ -68,7 +68,7 @@ class ManageFavoritesAdapter(
                 setTextColor(activity.getProperTextColor())
             }
 
-            manageFavoriteHolder?.isSelected = isSelected
+            manageFavoriteHolder.isSelected = isSelected
 
             overflowMenuIcon.drawable.apply {
                 mutate()

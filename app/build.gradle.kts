@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.pm20.util.archivesName
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.konan.properties.Properties
 import java.io.FileInputStream
@@ -5,11 +6,7 @@ import java.io.FileInputStream
 plugins {
     alias(libs.plugins.android)
     alias(libs.plugins.kotlinAndroid)
-    base
-}
-
-base {
-    archivesName.set("file-manager")
+    alias(libs.plugins.detekt)
 }
 
 val keystorePropertiesFile: File = rootProject.file("keystore.properties")
@@ -31,6 +28,7 @@ android {
         targetSdk = project.libs.versions.app.build.targetSDK.get().toInt()
         versionName = project.libs.versions.app.version.versionName.get()
         versionCode = project.libs.versions.app.version.versionCode.get().toInt()
+        archivesName.set("file-manager-$versionCode")
         multiDexEnabled = true
         vectorDrawables.useSupportLibrary = true
         buildConfigField("String", "GOOGLE_PLAY_LICENSING_KEY", "\"${properties["GOOGLE_PLAY_LICENSE_KEY"]}\"")
@@ -80,7 +78,7 @@ android {
     flavorDimensions.add("variants")
     productFlavors {
         register("core")
-        register("fdroid")
+        register("foss")
         register("prepaid")
     }
 
@@ -94,6 +92,10 @@ android {
         targetCompatibility = currentJavaVersionFromLibs
     }
 
+    dependenciesInfo {
+        includeInApk = false
+    }
+
     tasks.withType<KotlinCompile> {
         kotlinOptions.jvmTarget = project.libs.versions.app.build.kotlinJVMTarget.get()
     }
@@ -102,15 +104,19 @@ android {
 
     lint {
         checkReleaseBuilds = false
-        abortOnError = false
+        abortOnError = true
+        warningsAsErrors = true
+        baseline = file("lint-baseline.xml")
     }
 }
 
+detekt {
+    baseline = file("detekt-baseline.xml")
+}
+
 dependencies {
-    //implementation(libs.simple.tools.commons)
     implementation(libs.androidx.documentfile)
     implementation(libs.androidx.swiperefreshlayout)
-    implementation(libs.androidpdfviewer)
     implementation(libs.roottools)
     implementation(libs.rootshell)
     implementation(libs.gestureviews)
@@ -118,8 +124,9 @@ dependencies {
     implementation(libs.zip4j)
 
     //Goodwy
-    //implementation(files("libs/commons-debug.aar"))
     implementation(libs.goodwy.commons)
-    implementation(libs.rustore.client)
     implementation(libs.bundles.lifecycle)
+    implementation(libs.rx.animation)
+    implementation(libs.rx.java)
+    implementation(libs.swipe.action)
 }

@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Parcelable
 import android.util.AttributeSet
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.goodwy.commons.activities.BaseSimpleActivity
 import com.goodwy.commons.dialogs.StoragePickerDialog
 import com.goodwy.commons.extensions.*
@@ -84,6 +85,13 @@ class ItemsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
 
             itemsSwipeRefresh.isEnabled = lastSearchedText.isEmpty() && activity?.config?.enablePullToRefresh != false
         }
+
+        binding.itemsList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                activity?.hideKeyboard()
+            }
+        })
     }
 
     override fun setupFontSize() {
@@ -147,7 +155,7 @@ class ItemsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
 
     private fun addItems(items: ArrayList<ListItem>, forceRefresh: Boolean = false) {
         activity?.runOnUiThread {
-            binding.itemsSwipeRefresh?.isRefreshing = false
+            binding.itemsSwipeRefresh.isRefreshing = false
             binding.breadcrumbs.setBreadcrumb(currentPath)
             if (!forceRefresh && items.hashCode() == storedItems.hashCode()) {
                 return@runOnUiThread

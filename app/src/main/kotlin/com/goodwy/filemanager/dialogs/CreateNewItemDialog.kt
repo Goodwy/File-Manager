@@ -66,6 +66,7 @@ class CreateNewItemDialog(val activity: SimpleActivity, val path: String, val ca
                 documentFile.createDirectory(path.getFilenameFromPath())
                 success(alertDialog)
             }
+
             isRPlus() || path.startsWith(activity.internalStoragePath, true) -> {
                 if (activity.isRestrictedSAFOnlyRoot(path)) {
                     activity.handleAndroidSAFDialog(path) {
@@ -87,6 +88,7 @@ class CreateNewItemDialog(val activity: SimpleActivity, val path: String, val ca
                     }
                 }
             }
+
             else -> {
                 RootHelpers(activity).createFileFolder(path, false) {
                     if (it) {
@@ -141,6 +143,7 @@ class CreateNewItemDialog(val activity: SimpleActivity, val path: String, val ca
                         success(alertDialog)
                     }
                 }
+
                 else -> {
                     RootHelpers(activity).createFileFolder(path, true) {
                         if (it) {

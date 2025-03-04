@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Egyszerű fájlkezelő</string>
     <string name="app_launcher_name">Fájlkezelő</string>
     <string name="press_back_again">A kilépéshez nyomja meg újra a vissza gombot</string>
     <string name="go_to_home_folder">Ugrás a kezdőmappára</string>
@@ -13,18 +12,14 @@
     <string name="rooted_device_only">Ez a művelet csak root jogosultságot támogató eszközökön működik</string>
     <string name="recents">Frissek</string>
     <string name="show_recents">Frissek megjelenítése</string>
-    <string name="pdf_viewer">PDF-megjelenítő</string>
     <string name="invert_colors">Színek invertálása</string>
-    <!-- Open as -->
     <string name="open_as">Megnyitás másként</string>
     <string name="text_file">Szövegfájl</string>
     <string name="image_file">Képfájl</string>
     <string name="audio_file">Hangfájl</string>
     <string name="video_file">Videófájl</string>
     <string name="other_file">Egyéb fájl</string>
-    <!-- Compression -->
     <string name="compress">Tömörítés</string>
-    <string name="compress_pro">Tömörítés (Pro)</string>
     <string name="decompress">Kibontás</string>
     <string name="compress_as">Tömörítés másként</string>
     <string name="compressing">Tömörítés…</string>
@@ -33,28 +28,20 @@
     <string name="decompression_successful">Kibontás sikeres</string>
     <string name="compressing_failed">Tömörítés sikertelen</string>
     <string name="decompressing_failed">Kibontás sikertelen</string>
-    <!-- Favorites -->
     <string name="manage_favorites">Kedvencek kezelése</string>
     <string name="go_to_favorite">Ugrás kedvenchez</string>
     <string name="favorites_activity_placeholder">A gyakran használt mappákat kedvencnek jelölheti, hogy bárhonnan könnyen elérje őket.</string>
-    <!-- File Editor -->
     <string name="file_editor">Fájlszerkesztő</string>
-    <!-- Storage analysis -->
     <string name="storage_analysis">Tárolóelemzés</string>
     <string name="images">Képek</string>
     <string name="videos">Videók</string>
-    <string name="audio">Hangok</string>
+    <string name="audio">Hang</string>
     <string name="documents">Dokumentumok</string>
     <string name="downloads">Letöltések</string>
     <string name="archives">Archívumok</string>
     <string name="others">Egyebek</string>
     <string name="storage_free">szabad</string>
     <string name="total_storage">Összes tárhely: %s</string>
-    <!-- Settings -->
     <string name="enable_root_access">Root hozzáférés engedélyezése</string>
     <string name="press_back_twice">A Vissza gombot kétszer kelljen megnyomni az alkalmazásból történő kilépéshez</string>
-    <!--
-        Haven't found some strings? There's more at
-        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
-    -->
 </resources>

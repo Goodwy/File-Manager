@@ -5,6 +5,7 @@ import android.content.res.Configuration
 import com.goodwy.commons.extensions.getInternalStoragePath
 import com.goodwy.commons.helpers.BaseConfig
 import java.io.File
+import java.util.Locale
 
 class Config(context: Context) : BaseConfig(context) {
     companion object {
@@ -79,17 +80,17 @@ class Config(context: Context) : BaseConfig(context) {
         if (path.isEmpty()) {
             viewType = value
         } else {
-            prefs.edit().putInt(VIEW_TYPE_PREFIX + path.lowercase(), value).apply()
+            prefs.edit().putInt(VIEW_TYPE_PREFIX + path.lowercase(Locale.getDefault()), value).apply()
         }
     }
 
-    fun getFolderViewType(path: String) = prefs.getInt(VIEW_TYPE_PREFIX + path.lowercase(), viewType)
+    fun getFolderViewType(path: String) = prefs.getInt(VIEW_TYPE_PREFIX + path.lowercase(Locale.getDefault()), viewType)
 
     fun removeFolderViewType(path: String) {
-        prefs.edit().remove(VIEW_TYPE_PREFIX + path.lowercase()).apply()
+        prefs.edit().remove(VIEW_TYPE_PREFIX + path.lowercase(Locale.getDefault())).apply()
     }
 
-    fun hasCustomViewType(path: String) = prefs.contains(VIEW_TYPE_PREFIX + path.lowercase())
+    fun hasCustomViewType(path: String) = prefs.contains(VIEW_TYPE_PREFIX + path.lowercase(Locale.getDefault()))
 
     var fileColumnCnt: Int
         get() = prefs.getInt(getFileColumnsField(), getDefaultFileColumnCount())
@@ -154,12 +155,29 @@ class Config(context: Context) : BaseConfig(context) {
         set(showExpandedDetails) = prefs.edit().putBoolean(SHOW_EXPANDED_DETAILS, showExpandedDetails).apply()
 
     fun saveExpandedDetails(volumeName: String, value: Boolean) {
-        prefs.edit().putBoolean(SHOW_EXPANDED_DETAILS_PREFIX + volumeName.lowercase(), value).apply()
+        prefs.edit().putBoolean(SHOW_EXPANDED_DETAILS_PREFIX + volumeName.lowercase(Locale.getDefault()), value).apply()
     }
 
-    fun getExpandedDetails(volumeName: String) = prefs.getBoolean(SHOW_EXPANDED_DETAILS_PREFIX + volumeName.lowercase(), showExpandedDetails)
+    fun getExpandedDetails(volumeName: String) = prefs.getBoolean(SHOW_EXPANDED_DETAILS_PREFIX + volumeName.lowercase(Locale.getDefault()), showExpandedDetails)
 
     var showOnlyFilename: Boolean
         get() = prefs.getBoolean(SHOW_ONLY_FILENAME, false)
         set(showOnlyFilename) = prefs.edit().putBoolean(SHOW_ONLY_FILENAME, showOnlyFilename).apply()
+
+    //Swipe
+    var swipeRightAction: Int
+        get() = prefs.getInt(SWIPE_RIGHT_ACTION, SWIPE_ACTION_COPY)
+        set(swipeRightAction) = prefs.edit().putInt(SWIPE_RIGHT_ACTION, swipeRightAction).apply()
+
+    var swipeLeftAction: Int
+        get() = prefs.getInt(SWIPE_LEFT_ACTION, SWIPE_ACTION_DELETE)
+        set(swipeLeftAction) = prefs.edit().putInt(SWIPE_LEFT_ACTION, swipeLeftAction).apply()
+
+    var swipeVibration: Boolean
+        get() = prefs.getBoolean(SWIPE_VIBRATION, true)
+        set(swipeVibration) = prefs.edit().putBoolean(SWIPE_VIBRATION, swipeVibration).apply()
+
+    var swipeRipple: Boolean
+        get() = prefs.getBoolean(SWIPE_RIPPLE, false)
+        set(swipeRipple) = prefs.edit().putBoolean(SWIPE_RIPPLE, swipeRipple).apply()
 }

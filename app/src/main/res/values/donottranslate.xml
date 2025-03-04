@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="package_name">com.goodwy.filemanager</string>
+    <string name="app_name_g">Right Files</string>
 
     <!-- Release notes -->
+    <string name="release_510">
+        Added swipe gestures (copy, move, delete, properties)\n
+        Fixed bugs, improved stability
+    </string>
+    <string name="release_501">
+        Fixed bugs
+    </string>
     <string name="release_500">
         Improved interface\n
         Automatic theme change\n

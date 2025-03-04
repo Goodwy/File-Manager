@@ -39,6 +39,7 @@ import com.goodwy.filemanager.dialogs.ChangeSortingDialog
 import com.goodwy.filemanager.dialogs.ChangeViewTypeDialog
 import com.goodwy.filemanager.dialogs.InsertFilenameDialog
 import com.goodwy.filemanager.extensions.config
+import com.goodwy.filemanager.extensions.launchAbout
 import com.goodwy.filemanager.extensions.tryOpenPathIntent
 import com.goodwy.filemanager.fragments.ItemsFragment
 import com.goodwy.filemanager.fragments.MyViewPagerFragment
@@ -64,8 +65,6 @@ class MainActivity : SimpleActivity() {
     private val binding by viewBinding(ActivityMainBinding::inflate)
 
     private var wasBackJustPressed = false
-    private var mIsPasswordProtectionPending = false
-    private var mWasProtectionHandled = false
     private var mTabsToShow = ArrayList<Int>()
     private var mHasStoragePermission = false
 
@@ -98,22 +97,12 @@ class MainActivity : SimpleActivity() {
         updateMaterialActivityViews(binding.mainCoordinator, null, useTransparentNavigation = false, useTopSearchMenu = true)
         binding.mainMenu.updateTitle(getString(R.string.app_launcher_name_g))
 
-        mIsPasswordProtectionPending = config.isAppPasswordProtectionOn
-
         if (savedInstanceState == null) {
-            handleAppPasswordProtection {
-                mWasProtectionHandled = it
-                if (it) {
-                    initFragments()
-                    mIsPasswordProtectionPending = false
-                    tryInitFileManager()
-                    checkWhatsNewDialog()
-                    checkIfRootAvailable()
-                    checkInvalidFavorites()
-                } else {
-                    finish()
-                }
-            }
+            initFragments()
+            tryInitFileManager()
+            checkWhatsNewDialog()
+            checkIfRootAvailable()
+            checkInvalidFavorites()
         }
     }
 
@@ -147,7 +136,7 @@ class MainActivity : SimpleActivity() {
             }
         }
 
-        if (binding.mainViewPager.adapter == null && mWasProtectionHandled) {
+        if (binding.mainViewPager.adapter == null) {
             initFragments()
         }
 
@@ -158,6 +147,7 @@ class MainActivity : SimpleActivity() {
             else -> null
         }
         binding.mainViewPager.setPageTransformer(true, animation)
+        binding.mainViewPager.setPagingEnabled(!config.useSwipeToAction)
     }
 
     override fun onPause() {
@@ -182,8 +172,9 @@ class MainActivity : SimpleActivity() {
         if (binding.mainMenu.isSearchOpen) {
             binding.mainMenu.closeSearch()
         } else if (currentFragment is RecentsFragment || currentFragment is StorageFragment) {
+            appLockManager.lock()
             super.onBackPressed()
-        } else if ((currentFragment as ItemsFragment).getBreadcrumbs().getItemCount() <= 1) {
+        } else if ((currentFragment as ItemsFragment)!!.getBreadcrumbs()!!.getItemCount() <= 1) {
             if (!wasBackJustPressed && config.pressBackTwice) {
                 wasBackJustPressed = true
                 toast(R.string.press_back_again)
@@ -191,6 +182,7 @@ class MainActivity : SimpleActivity() {
                     wasBackJustPressed = false
                 }, BACK_PRESS_TIMEOUT.toLong())
             } else {
+                appLockManager.lock()
                 finish()
             }
         } else {
@@ -298,12 +290,10 @@ class MainActivity : SimpleActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(PICKED_PATH, getItemsFragment()?.currentPath ?: "")
-        outState.putBoolean(WAS_PROTECTION_HANDLED, mWasProtectionHandled)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        mWasProtectionHandled = savedInstanceState.getBoolean(WAS_PROTECTION_HANDLED, false)
         val path = savedInstanceState.getString(PICKED_PATH) ?: internalStoragePath
 
         if (binding.mainViewPager.adapter == null) {
@@ -332,19 +322,7 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun restorePath(path: String) {
-        if (!mWasProtectionHandled) {
-            handleAppPasswordProtection {
-                mWasProtectionHandled = it
-                if (it) {
-                    mIsPasswordProtectionPending = false
-                    openPath(path, true)
-                } else {
-                    finish()
-                }
-            }
-        } else {
-            openPath(path, true)
-        }
+        openPath(path, true)
     }
 
     private fun storeStateVariables() {
@@ -485,15 +463,15 @@ class MainActivity : SimpleActivity() {
         this.scrollingView = scrollingView
         this.mySearchMenu = searchMenu
         if (scrollingView is RecyclerView) {
-            scrollingView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            scrollingView.setOnScrollChangeListener { _, _, _, _, _ ->
                 val newScrollY = scrollingView.computeVerticalScrollOffset()
-                scrollingChanged(newScrollY)
+                if (newScrollY == 0 || currentOldScrollY == 0) scrollingChanged(newScrollY)
                 currentScrollY = newScrollY
                 currentOldScrollY = currentScrollY
             }
         } else if (scrollingView is NestedScrollView) {
-            scrollingView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-                scrollingChanged(scrollY)
+            scrollingView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
+                if (scrollY == 0 || currentOldScrollY == 0) scrollingChanged(scrollY)
                 currentOldScrollY = oldScrollY
             }
         }
@@ -620,10 +598,6 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun openPath(path: String, forceRefresh: Boolean = false) {
-        if (mIsPasswordProtectionPending && !mWasProtectionHandled) {
-            return
-        }
-
         var newPath = path
         val file = File(path)
         if (config.OTGPath.isNotEmpty() && config.OTGPath == path.trimEnd('/')) {
@@ -750,49 +724,6 @@ class MainActivity : SimpleActivity() {
     private fun launchSettings() {
         hideKeyboard()
         startActivity(Intent(applicationContext, SettingsActivity::class.java))
-    }
-
-    private fun launchAbout() {
-        val licenses =
-            LICENSE_GLIDE or LICENSE_PATTERN or LICENSE_REPRINT or LICENSE_GESTURE_VIEWS or LICENSE_PDF_VIEWER or LICENSE_AUTOFITTEXTVIEW or LICENSE_ZIP4J
-
-        val faqItems = arrayListOf(
-            FAQItem(R.string.faq_3_title_commons, R.string.faq_3_text_commons),
-            FAQItem(R.string.faq_9_title_commons, R.string.faq_9_text_commons)
-        )
-
-        if (!resources.getBoolean(R.bool.hide_google_relations)) {
-            faqItems.add(FAQItem(R.string.faq_2_title_commons, R.string.faq_2_text_commons))
-            //faqItems.add(FAQItem(R.string.faq_6_title_commons, R.string.faq_6_text_commons))
-            faqItems.add(FAQItem(R.string.faq_7_title_commons, R.string.faq_7_text_commons))
-            faqItems.add(FAQItem(R.string.faq_10_title_commons, R.string.faq_10_text_commons))
-        }
-
-        val productIdX1 = BuildConfig.PRODUCT_ID_X1
-        val productIdX2 = BuildConfig.PRODUCT_ID_X2
-        val productIdX3 = BuildConfig.PRODUCT_ID_X3
-        val subscriptionIdX1 = BuildConfig.SUBSCRIPTION_ID_X1
-        val subscriptionIdX2 = BuildConfig.SUBSCRIPTION_ID_X2
-        val subscriptionIdX3 = BuildConfig.SUBSCRIPTION_ID_X3
-        val subscriptionYearIdX1 = BuildConfig.SUBSCRIPTION_YEAR_ID_X1
-        val subscriptionYearIdX2 = BuildConfig.SUBSCRIPTION_YEAR_ID_X2
-        val subscriptionYearIdX3 = BuildConfig.SUBSCRIPTION_YEAR_ID_X3
-
-        startAboutActivity(
-            appNameId = R.string.app_name_g,
-            licenseMask = licenses,
-            versionName = BuildConfig.VERSION_NAME,
-            faqItems = faqItems,
-            showFAQBeforeMail = true,
-            licensingKey = BuildConfig.GOOGLE_PLAY_LICENSING_KEY,
-            productIdList = arrayListOf(productIdX1, productIdX2, productIdX3),
-            productIdListRu = arrayListOf(productIdX1, productIdX2, productIdX3),
-            subscriptionIdList = arrayListOf(subscriptionIdX1, subscriptionIdX2, subscriptionIdX3),
-            subscriptionIdListRu = arrayListOf(subscriptionIdX1, subscriptionIdX2, subscriptionIdX3),
-            subscriptionYearIdList = arrayListOf(subscriptionYearIdX1, subscriptionYearIdX2, subscriptionYearIdX3),
-            subscriptionYearIdListRu = arrayListOf(subscriptionYearIdX1, subscriptionYearIdX2, subscriptionYearIdX3),
-            playStoreInstalled = isPlayStoreInstalled(),
-            ruStoreInstalled = isRuStoreInstalled())
     }
 
     private fun checkIfRootAvailable() {
@@ -922,9 +853,9 @@ class MainActivity : SimpleActivity() {
         return icons
     }
 
-    private fun getRecentsFragment() = findViewById<RecentsFragment>(R.id.recents_fragment);
-    private fun getItemsFragment() = findViewById<ItemsFragment>(R.id.items_fragment);
-    private fun getStorageFragment() = findViewById<StorageFragment>(R.id.storage_fragment);
+    private fun getRecentsFragment() = findViewById<RecentsFragment>(R.id.recents_fragment)
+    private fun getItemsFragment() = findViewById<ItemsFragment>(R.id.items_fragment)
+    private fun getStorageFragment() = findViewById<StorageFragment>(R.id.storage_fragment)
     private fun getAllFragments(): ArrayList<MyViewPagerFragment<*>?> =
         arrayListOf(getRecentsFragment(), getItemsFragment(), getStorageFragment())
 
@@ -951,6 +882,8 @@ class MainActivity : SimpleActivity() {
     private fun checkWhatsNewDialog() {
         arrayListOf<Release>().apply {
             add(Release(500, R.string.release_500))
+            add(Release(501, R.string.release_501))
+            add(Release(510, R.string.release_510))
             checkWhatsNew(this, BuildConfig.VERSION_CODE)
         }
     }
@@ -970,12 +903,6 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun openAppOpsService() {
-//        try {
-//            val storageSettingsIntent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
-//            startActivity(storageSettingsIntent)
-//        } catch (e: Exception) {
-//            showErrorToast(e)
-//        }
         try {
             val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
             intent.addCategory("android.intent.category.DEFAULT")

@@ -6,6 +6,7 @@ import android.provider.MediaStore.Files
 import android.provider.MediaStore.Files.FileColumns
 import android.util.AttributeSet
 import androidx.core.os.bundleOf
+import androidx.recyclerview.widget.RecyclerView
 import com.goodwy.commons.extensions.*
 import com.goodwy.commons.helpers.VIEW_TYPE_GRID
 import com.goodwy.commons.helpers.VIEW_TYPE_LIST
@@ -52,7 +53,7 @@ class RecentsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
         ensureBackgroundThread {
             getRecents { recents ->
                 binding.apply {
-                    recentsSwipeRefresh?.isRefreshing = false
+                    recentsSwipeRefresh.isRefreshing = false
                     recentsList.beVisibleIf(recents.isNotEmpty())
                     recentsPlaceholder.beVisibleIf(recents.isEmpty())
                 }
@@ -93,6 +94,13 @@ class RecentsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
         }
 
         binding.recentsSwipeRefresh.isEnabled = lastSearchedText.isEmpty() && activity?.config?.enablePullToRefresh != false
+
+        binding.recentsList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                activity?.hideKeyboard()
+            }
+        })
     }
 
     private fun setupLayoutManager() {

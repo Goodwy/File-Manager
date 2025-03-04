@@ -71,7 +71,7 @@ class FavoritesActivity : SimpleActivity(), RefreshRecyclerViewListener {
     }
 
     private fun addFavorite() {
-        FilePickerDialog(this, pickFile = false, showHidden = config.shouldShowHidden(), canAddShowHiddenButton = true) {
+        FilePickerDialog(this, pickFile = false, showHidden = config.shouldShowHidden(), canAddShowHiddenButton = true, useAccentColor = true) {
             config.addFavorite(it)
             updateFavorites()
         }

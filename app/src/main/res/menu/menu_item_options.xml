@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="AppCompatResource,AlwaysShowAction">
+    <item
+        android:id="@+id/cab_delete"
+        android:icon="@drawable/ic_delete_outline"
+        android:title="@string/delete" />
+    <item
+        android:id="@+id/cab_move_to"
+        android:icon="@drawable/ic_move_vector"
+        android:title="@string/move_to" />
+    <item
+        android:id="@+id/cab_copy_to"
+        android:icon="@drawable/ic_copy_vector"
+        android:title="@string/copy_to" />
+    <item
+        android:id="@+id/cab_properties"
+        android:icon="@drawable/ic_info_vector"
+        android:title="@string/properties" />
+    <item
+        android:id="@+id/cab_rename"
+        android:icon="@drawable/ic_rename_vector"
+        android:title="@string/rename" />
+    <item
+        android:id="@+id/cab_share"
+        android:icon="@drawable/ic_share_vector"
+        android:title="@string/share" />
+    <item
+        android:id="@+id/cab_hide"
+        android:icon="@drawable/ic_hide_vector"
+        android:title="@string/hide" />
+    <item
+        android:id="@+id/cab_unhide"
+        android:icon="@drawable/ic_unhide_vector"
+        android:title="@string/unhide" />
+    <item
+        android:id="@+id/cab_create_shortcut"
+        android:title="@string/create_shortcut" />
+    <item
+        android:id="@+id/cab_copy_path"
+        android:title="@string/copy_path" />
+    <item
+        android:id="@+id/cab_set_as"
+        android:title="@string/set_as" />
+    <item
+        android:id="@+id/cab_open_with"
+        android:title="@string/open_with" />
+    <item
+        android:id="@+id/cab_compress"
+        android:title="@string/compress" />
+    <item
+        android:id="@+id/cab_decompress"
+        android:title="@string/decompress" />
+</menu>

@@ -8,11 +8,8 @@ import android.app.usage.StorageStatsManager
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
-import android.media.MediaScannerConnection
-import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import android.os.UserHandle
@@ -21,13 +18,15 @@ import android.provider.MediaStore
 import android.provider.Settings
 import android.text.TextUtils
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.core.view.children
 import androidx.core.view.isVisible
+import androidx.core.widget.NestedScrollView
+import androidx.recyclerview.widget.RecyclerView
 import com.goodwy.commons.extensions.*
 import com.goodwy.commons.helpers.*
 import com.goodwy.commons.models.FileDirItem
@@ -45,7 +44,6 @@ import com.goodwy.filemanager.extensions.getAllVolumeNames
 import com.goodwy.filemanager.helpers.*
 import com.goodwy.filemanager.interfaces.ItemOperationsListener
 import com.goodwy.filemanager.models.ListItem
-import java.io.File
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -69,6 +67,7 @@ class StorageFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
         innerBinding = StorageInnerBinding(binding)
     }
 
+    @SuppressLint("StringFormatInvalid")
     override fun setupFragment(activity: SimpleActivity) {
         if (this.activity == null) {
             this.activity = activity
@@ -80,6 +79,7 @@ class StorageFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
             volumes[volumeName] = volumeBinding
             volumeBinding.apply {
                 binding.storageSwipeRefresh.setOnRefreshListener {
+                    (activity as? MainActivity)?.openedDirectory()
                     refreshFragment()
                     getSizes(volumeName)
                     if (volumeName == if (isQPlus()) PRIMARY_VOLUME_NAME else PRIMARY_VOLUME_NAME_OLD) getAllAppSize(volumeName)
@@ -230,6 +230,18 @@ class StorageFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
             progressBar.setIndicatorColor(properPrimaryColor)
             progressBar.trackColor = properPrimaryColor.adjustAlpha(LOWER_ALPHA)
             storageSwipeRefresh.isEnabled = lastSearchedText.isEmpty() && activity?.config?.enablePullToRefresh != false
+
+            searchResultsList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    activity?.hideKeyboard()
+                }
+            })
+            storageNestedScrollview.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
+                if (scrollY != 0) {
+                    (activity as? MainActivity)?.openedDirectory()
+                }
+            })
         }
 
         ensureBackgroundThread {
@@ -344,7 +356,7 @@ class StorageFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
         return mimeTypeSizes
     }
 
-    @SuppressLint("NewApi")
+    @SuppressLint("NewApi", "StringFormatInvalid")
     private fun getVolumeStorageStats(context: Context) {
         val externalDirs = context.getExternalFilesDirs(null)
         val storageManager = context.getSystemService(AppCompatActivity.STORAGE_SERVICE) as StorageManager
@@ -372,11 +384,6 @@ class StorageFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
                 volumeName = storageVolume.uuid!!.lowercase(Locale.US)
                 totalStorageSpace = file.totalSpace
                 freeStorageSpace = file.freeSpace
-                post {
-                    ensureBackgroundThread {
-                        scanVolume(volumeName, file)
-                    }
-                }
             }
 
             val filesSize = getSizesByMimeType(volumeName)
@@ -546,22 +553,6 @@ class StorageFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
                     systemDecryptionImage.beVisibleIf(threeMax.contains(fileSizeSystem) && fileSizeSystem.toInt() != 0)
                     systemDecryption.beVisibleIf(threeMax.contains(fileSizeSystem) && fileSizeSystem.toInt() != 0)
                 }
-            }
-        }
-    }
-
-    private fun scanVolume(volumeName: String, root: File) {
-        val paths = mutableListOf<String>()
-        if (context.isPathOnSD(root.path)) {
-            File(context.sdCardPath).walkBottomUp().forEach {
-                paths.add(it.path)
-            }
-        }
-        var callbackCount = 0
-        MediaScannerConnection.scanFile(context, paths.toTypedArray(), null) { _, _ ->
-            callbackCount++
-            if (callbackCount == paths.size) {
-                getSizes(volumeName)
             }
         }
     }

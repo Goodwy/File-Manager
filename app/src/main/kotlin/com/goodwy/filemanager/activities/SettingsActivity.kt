@@ -1,9 +1,13 @@
 package com.goodwy.filemanager.activities
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.goodwy.commons.dialogs.*
@@ -18,10 +22,12 @@ import com.goodwy.filemanager.R
 import com.goodwy.filemanager.databinding.ActivitySettingsBinding
 import com.goodwy.filemanager.dialogs.ManageVisibleTabsDialog
 import com.goodwy.filemanager.extensions.config
-import com.goodwy.filemanager.helpers.FOLDER_HOME
-import com.goodwy.filemanager.helpers.FOLDER_INTERNAL
-import com.goodwy.filemanager.helpers.FOLDER_LAST_USED
-import com.goodwy.filemanager.helpers.RootHelpers
+import com.goodwy.filemanager.extensions.launchAbout
+import com.goodwy.filemanager.extensions.pixels
+import com.goodwy.filemanager.helpers.*
+import com.google.android.material.snackbar.Snackbar
+import com.mikhaellopez.rxanimation.RxAnimation
+import com.mikhaellopez.rxanimation.shake
 import kotlinx.coroutines.launch
 import ru.rustore.sdk.core.feature.model.FeatureAvailabilityResult
 import java.util.Locale
@@ -31,7 +37,7 @@ class SettingsActivity : SimpleActivity() {
     private val binding by viewBinding(ActivitySettingsBinding::inflate)
 
     private val purchaseHelper = PurchaseHelper(this)
-    private val ruStoreHelper = RuStoreHelper(this)
+    private var ruStoreHelper: RuStoreHelper? = null
 
     private val productIdX1 = BuildConfig.PRODUCT_ID_X1
     private val productIdX2 = BuildConfig.PRODUCT_ID_X2
@@ -93,10 +99,11 @@ class SettingsActivity : SimpleActivity() {
         }
         if (isRuStoreInstalled()) {
             //RuStore
-            ruStoreHelper.checkPurchasesAvailability()
+            ruStoreHelper = RuStoreHelper()
+            ruStoreHelper!!.checkPurchasesAvailability(this@SettingsActivity)
 
             lifecycleScope.launch {
-                ruStoreHelper.eventStart
+                ruStoreHelper!!.eventStart
                     .flowWithLifecycle(lifecycle)
                     .collect { event ->
                         handleEventStart(event)
@@ -104,7 +111,7 @@ class SettingsActivity : SimpleActivity() {
             }
 
             lifecycleScope.launch {
-                ruStoreHelper.statePurchased
+                ruStoreHelper!!.statePurchased
                     .flowWithLifecycle(lifecycle)
                     .collect { state ->
                         //update of purchased
@@ -126,12 +133,6 @@ class SettingsActivity : SimpleActivity() {
         setupMaterialDesign3()
         setupOverflowIcon()
 
-        setupManageShownTabs()
-        setupUseIconTabs()
-        setupScreenSlideAnimation()
-        setupEnablePullToRefresh()
-        setupShowHomeButton()
-
         setupDefaultFolder()
         setupManageFavorites()
         setupPressBackTwice()
@@ -139,6 +140,18 @@ class SettingsActivity : SimpleActivity() {
         setupChangeDateTimeFormat()
         setupUseEnglish()
         setupLanguage()
+
+        setupManageShownTabs()
+        setupUseIconTabs()
+        setupScreenSlideAnimation()
+        setupEnablePullToRefresh()
+        setupShowHomeButton()
+
+        setupUseSwipeToAction()
+        setupSwipeVibration()
+        setupSwipeRipple()
+        setupSwipeRightAction()
+        setupSwipeLeftAction()
 
         setupShowHidden()
         setupKeepLastModified()
@@ -161,8 +174,9 @@ class SettingsActivity : SimpleActivity() {
         binding.apply {
             arrayOf(
                 settingsAppearanceLabel,
-                settingsTabsLabel,
                 settingsGeneralLabel,
+                settingsTabsLabel,
+                settingsSwipeGesturesLabel,
                 settingsFileOperationsLabel,
                 settingsSecurityLabel,
                 settingsListViewLabel,
@@ -175,14 +189,15 @@ class SettingsActivity : SimpleActivity() {
         binding.apply {
             arrayOf(
                 settingsColorCustomizationHolder,
-                settingsTabsHolder,
                 settingsGeneralHolder,
+                settingsTabsHolder,
+                settingsSwipeGesturesHolder,
                 settingsFileOperationsHolder,
                 settingsSecurityHolder,
                 settingsListViewHolder,
                 settingsOtherHolder
             ).forEach {
-                it.background.applyColorFilter(getBottomNavigationBackgroundColor())
+                it.setCardBackgroundColor(getBottomNavigationBackgroundColor())
             }
         }
 
@@ -203,11 +218,7 @@ class SettingsActivity : SimpleActivity() {
     private fun updatePro(isPro: Boolean = isPro()) {
         binding.apply {
             settingsPurchaseThankYouHolder.beGoneIf(isPro)
-//            settingsCustomizeColorsLabel.text = if (isPro) {
-//                getString(R.string.customize_colors)
-//            } else {
-//                getString(R.string.customize_colors_locked)
-//            }
+            settingsSwipeLeftActionHolder.alpha = if (isPro) 1f else 0.4f
             settingsTipJarHolder.beVisibleIf(isPro)
         }
     }
@@ -239,9 +250,8 @@ class SettingsActivity : SimpleActivity() {
 //            }
             settingsCustomizeColorsHolder.setOnClickListener {
                 startCustomizationActivity(
-                    true,
+                    showAccentColor = true,
                     isCollection = false,
-                    licensingKey = BuildConfig.GOOGLE_PLAY_LICENSING_KEY,
                     productIdList = arrayListOf(productIdX1, productIdX2, productIdX3),
                     productIdListRu = arrayListOf(productIdX1, productIdX2, productIdX3),
                     subscriptionIdList = arrayListOf(subscriptionIdX1, subscriptionIdX2, subscriptionIdX3),
@@ -249,7 +259,8 @@ class SettingsActivity : SimpleActivity() {
                     subscriptionYearIdList = arrayListOf(subscriptionYearIdX1, subscriptionYearIdX2, subscriptionYearIdX3),
                     subscriptionYearIdListRu = arrayListOf(subscriptionYearIdX1, subscriptionYearIdX2, subscriptionYearIdX3),
                     playStoreInstalled = isPlayStoreInstalled(),
-                    ruStoreInstalled = isRuStoreInstalled()
+                    ruStoreInstalled = isRuStoreInstalled(),
+                    showAppIconColor = true
                 )
             }
         }
@@ -266,13 +277,30 @@ class SettingsActivity : SimpleActivity() {
         }
     }
 
-    private fun setupOverflowIcon() {
-        binding.apply {
-            settingsOverflowIcon.applyColorFilter(getProperTextColor())
-            settingsOverflowIcon.setImageResource(getOverflowIcon(baseConfig.overflowIcon))
-            settingsOverflowIconHolder.setOnClickListener {
-                OverflowIconDialog(this@SettingsActivity) {
-                    settingsOverflowIcon.setImageResource(getOverflowIcon(baseConfig.overflowIcon))
+    private fun setupOverflowIcon() = binding.apply {
+        settingsOverflowIcon.applyColorFilter(getProperTextColor())
+        settingsOverflowIcon.setImageResource(getOverflowIcon(config.overflowIcon))
+        settingsOverflowIconHolder.setOnClickListener {
+            val items = arrayListOf(
+                R.drawable.ic_more_horiz,
+                R.drawable.ic_three_dots_vector,
+                R.drawable.ic_more_horiz_round
+            )
+
+            IconListDialog(
+                activity = this@SettingsActivity,
+                items = items,
+                checkedItemId = config.overflowIcon + 1,
+                defaultItemId = OVERFLOW_ICON_HORIZONTAL + 1,
+                titleId = R.string.overflow_icon,
+                size = pixels(R.dimen.normal_icon_size).toInt(),
+                color = getProperTextColor()
+            ) { wasPositivePressed, newValue ->
+                if (wasPositivePressed) {
+                    if (config.overflowIcon != newValue - 1) {
+                        config.overflowIcon = newValue - 1
+                        settingsOverflowIcon.setImageResource(getOverflowIcon(config.overflowIcon))
+                    }
                 }
             }
         }
@@ -300,15 +328,15 @@ class SettingsActivity : SimpleActivity() {
             settingsScreenSlideAnimation.text = getScreenSlideAnimationText()
             settingsScreenSlideAnimationHolder.setOnClickListener {
                 val items = arrayListOf(
-                    RadioItem(0, getString(R.string.no)),
-                    RadioItem(1, getString(R.string.screen_slide_animation_zoomout)),
-                    RadioItem(2, getString(R.string.screen_slide_animation_depth))
+                    RadioItem(0, getString(R.string.no), icon = R.drawable.ic_view_array),
+                    RadioItem(1, getString(R.string.screen_slide_animation_zoomout), icon = R.drawable.ic_view_carousel),
+                    RadioItem(2, getString(R.string.screen_slide_animation_depth), icon = R.drawable.ic_playing_cards),
                 )
 
-                RadioGroupDialog(this@SettingsActivity, items, config.screenSlideAnimation) {
+                RadioGroupIconDialog(this@SettingsActivity, items, config.screenSlideAnimation, R.string.screen_slide_animation) {
                     config.screenSlideAnimation = it as Int
                     config.tabsChanged = true
-                    settingsScreenSlideAnimation.text = getScreenSlideAnimationText()
+                    binding.settingsScreenSlideAnimation.text = getScreenSlideAnimationText()
                 }
             }
         }
@@ -319,12 +347,12 @@ class SettingsActivity : SimpleActivity() {
             settingsDefaultFolder.text = getDefaultFolderText()
             settingsDefaultFolderHolder.setOnClickListener {
                 val items = arrayListOf(
-                    RadioItem(FOLDER_LAST_USED, getString(R.string.last_used_g)),
-                    RadioItem(FOLDER_HOME, getString(R.string.home_folder_g)),
-                    RadioItem(FOLDER_INTERNAL, getString(R.string.internal))
+                    RadioItem(FOLDER_LAST_USED, getString(R.string.last_used_g), icon = R.drawable.ic_clock_filled),
+                    RadioItem(FOLDER_HOME, getString(R.string.home_folder_g), icon = R.drawable.ic_home),
+                    RadioItem(FOLDER_INTERNAL, getString(R.string.internal), icon = R.drawable.ic_storage_vector)
                 )
 
-                RadioGroupDialog(this@SettingsActivity, items, config.defaultFolder) {
+                RadioGroupIconDialog(this@SettingsActivity, items, config.defaultFolder, R.string.default_folder_to_open_g) {
                     config.defaultFolder = it as Int
                     settingsDefaultFolder.text = getDefaultFolderText()
                 }
@@ -395,7 +423,7 @@ class SettingsActivity : SimpleActivity() {
                     RadioItem(FONT_SIZE_EXTRA_LARGE, getString(R.string.extra_large))
                 )
 
-                RadioGroupDialog(this@SettingsActivity, items, config.fontSize) {
+                RadioGroupDialog(this@SettingsActivity, items, config.fontSize, R.string.font_size) {
                     config.fontSize = it as Int
                     settingsFontSize.text = getFontSizeText()
                 }
@@ -441,6 +469,129 @@ class SettingsActivity : SimpleActivity() {
                 config.showHomeButton = settingsShowHomeButton.isChecked
             }
         }
+    }
+
+    private fun setupUseSwipeToAction() {
+        updateSwipeToActionVisible()
+        binding.apply {
+            settingsUseSwipeToAction.isChecked = config.useSwipeToAction
+            settingsUseSwipeToActionHolder.setOnClickListener {
+                settingsUseSwipeToAction.toggle()
+                config.useSwipeToAction = settingsUseSwipeToAction.isChecked
+                config.tabsChanged = true
+                updateSwipeToActionVisible()
+            }
+        }
+    }
+
+    private fun updateSwipeToActionVisible() {
+        binding.apply {
+            settingsSwipeVibrationHolder.beVisibleIf(config.useSwipeToAction)
+            settingsSwipeRippleHolder.beVisibleIf(config.useSwipeToAction)
+            settingsSwipeRightActionHolder.beVisibleIf(config.useSwipeToAction)
+            settingsSwipeLeftActionHolder.beVisibleIf(config.useSwipeToAction)
+        }
+    }
+
+    private fun setupSwipeVibration() {
+        binding.apply {
+            settingsSwipeVibration.isChecked = config.swipeVibration
+            settingsSwipeVibrationHolder.setOnClickListener {
+                settingsSwipeVibration.toggle()
+                config.swipeVibration = settingsSwipeVibration.isChecked
+            }
+        }
+    }
+
+    private fun setupSwipeRipple() {
+        binding.apply {
+            settingsSwipeRipple.isChecked = config.swipeRipple
+            settingsSwipeRippleHolder.setOnClickListener {
+                settingsSwipeRipple.toggle()
+                config.swipeRipple = settingsSwipeRipple.isChecked
+                config.tabsChanged = true
+            }
+        }
+    }
+
+    private fun setupSwipeRightAction() = binding.apply {
+        if (isRTLLayout) settingsSwipeRightActionLabel.text = getString(R.string.swipe_left_action)
+        settingsSwipeRightAction.text = getSwipeActionText(false)
+        settingsSwipeRightActionHolder.setOnClickListener {
+            val items = arrayListOf(
+                RadioItem(SWIPE_ACTION_DELETE, getString(R.string.delete), icon = R.drawable.ic_delete_outline),
+                RadioItem(SWIPE_ACTION_MOVE, getString(R.string.move_to), icon = R.drawable.ic_move_vector),
+                RadioItem(SWIPE_ACTION_COPY, getString(R.string.copy_to), icon = R.drawable.ic_copy_vector),
+                RadioItem(SWIPE_ACTION_INFO, getString(R.string.properties), icon = R.drawable.ic_info_vector),
+            )
+
+            val title =
+                if (isRTLLayout) R.string.swipe_left_action else R.string.swipe_right_action
+            RadioGroupIconDialog(this@SettingsActivity, items, config.swipeRightAction, title) {
+                config.swipeRightAction = it as Int
+                config.tabsChanged = true
+                settingsSwipeRightAction.text = getSwipeActionText(false)
+            }
+        }
+    }
+
+    private fun setupSwipeLeftAction() = binding.apply {
+        val pro = isPro()
+        settingsSwipeLeftActionHolder.alpha = if (pro) 1f else 0.4f
+        val stringId = if (isRTLLayout) R.string.swipe_right_action else R.string.swipe_left_action
+        settingsSwipeLeftActionLabel.text = addLockedLabelIfNeeded(stringId, pro)
+        settingsSwipeLeftAction.text = getSwipeActionText(true)
+        settingsSwipeLeftActionHolder.setOnClickListener {
+            if (pro) {
+                val items = arrayListOf(
+                    RadioItem(SWIPE_ACTION_DELETE, getString(R.string.delete), icon = R.drawable.ic_delete_outline),
+                    RadioItem(SWIPE_ACTION_MOVE, getString(R.string.move_to), icon = R.drawable.ic_move_vector),
+                    RadioItem(SWIPE_ACTION_COPY, getString(R.string.copy_to), icon = R.drawable.ic_copy_vector),
+                    RadioItem(SWIPE_ACTION_INFO, getString(R.string.properties), icon = R.drawable.ic_info_vector),
+                )
+
+                val title =
+                    if (isRTLLayout) R.string.swipe_right_action else R.string.swipe_left_action
+                RadioGroupIconDialog(this@SettingsActivity, items, config.swipeLeftAction, title) {
+                    config.swipeLeftAction = it as Int
+                    config.tabsChanged = true
+                    settingsSwipeLeftAction.text = getSwipeActionText(true)
+                }
+            } else {
+                RxAnimation.from(settingsSwipeLeftActionHolder)
+                    .shake(shakeTranslation = 2f)
+                    .subscribe()
+
+                showSnackbar(binding.root)
+            }
+        }
+    }
+
+    private fun getSwipeActionText(left: Boolean) = getString(
+        when (if (left) config.swipeLeftAction else config.swipeRightAction) {
+            SWIPE_ACTION_DELETE -> R.string.delete
+            SWIPE_ACTION_MOVE -> R.string.move_to
+            SWIPE_ACTION_INFO -> R.string.properties
+            else -> R.string.copy_to
+        }
+    )
+
+    private fun showSnackbar(view: View) {
+        view.performHapticFeedback()
+
+        val snackbar = Snackbar.make(view, R.string.support_project_to_unlock, Snackbar.LENGTH_SHORT)
+            .setAction(R.string.support) {
+                launchPurchase()
+            }
+
+        val bgDrawable = ResourcesCompat.getDrawable(view.resources, R.drawable.button_background_16dp, null)
+        snackbar.view.background = bgDrawable
+        val properBackgroundColor = getProperBackgroundColor()
+        val backgroundColor = if (properBackgroundColor == Color.BLACK) getBottomNavigationBackgroundColor().lightenColor(6) else getBottomNavigationBackgroundColor().darkenColor(6)
+        snackbar.setBackgroundTint(backgroundColor)
+        snackbar.setTextColor(getProperTextColor())
+        snackbar.setActionTextColor(getProperPrimaryColor())
+        snackbar.show()
     }
 
     private fun setupHiddenItemPasswordProtection() {
@@ -594,6 +745,7 @@ class SettingsActivity : SimpleActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setupAbout() {
         binding.settingsAboutVersion.text = "Version: " + BuildConfig.VERSION_NAME
         binding.settingsAboutHolder.setOnClickListener {
@@ -601,43 +753,9 @@ class SettingsActivity : SimpleActivity() {
         }
     }
 
-    private fun launchAbout() {
-        val licenses =
-            LICENSE_GLIDE or LICENSE_PATTERN or LICENSE_REPRINT or LICENSE_GESTURE_VIEWS or LICENSE_PDF_VIEWER or LICENSE_AUTOFITTEXTVIEW or LICENSE_ZIP4J
-
-        val faqItems = arrayListOf(
-            FAQItem(R.string.faq_3_title_commons, R.string.faq_3_text_commons),
-            FAQItem(R.string.faq_9_title_commons, R.string.faq_9_text_commons)
-        )
-
-        if (!resources.getBoolean(R.bool.hide_google_relations)) {
-            faqItems.add(FAQItem(R.string.faq_2_title_commons, R.string.faq_2_text_commons))
-            //faqItems.add(FAQItem(R.string.faq_6_title_commons, R.string.faq_6_text_commons))
-            faqItems.add(FAQItem(R.string.faq_7_title_commons, R.string.faq_7_text_commons))
-            faqItems.add(FAQItem(R.string.faq_10_title_commons, R.string.faq_10_text_commons))
-        }
-
-        startAboutActivity(
-            appNameId = R.string.app_name_g,
-            licenseMask = licenses,
-            versionName = BuildConfig.VERSION_NAME,
-            faqItems = faqItems,
-            showFAQBeforeMail = true,
-            licensingKey = BuildConfig.GOOGLE_PLAY_LICENSING_KEY,
-            productIdList = arrayListOf(productIdX1, productIdX2, productIdX3),
-            productIdListRu = arrayListOf(productIdX1, productIdX2, productIdX3),
-            subscriptionIdList = arrayListOf(subscriptionIdX1, subscriptionIdX2, subscriptionIdX3),
-            subscriptionIdListRu = arrayListOf(subscriptionIdX1, subscriptionIdX2, subscriptionIdX3),
-            subscriptionYearIdList = arrayListOf(subscriptionYearIdX1, subscriptionYearIdX2, subscriptionYearIdX3),
-            subscriptionYearIdListRu = arrayListOf(subscriptionYearIdX1, subscriptionYearIdX2, subscriptionYearIdX3),
-            playStoreInstalled = isPlayStoreInstalled(),
-            ruStoreInstalled = isRuStoreInstalled())
-    }
-
     private fun launchPurchase() {
         startPurchaseActivity(
             R.string.app_name_g,
-            BuildConfig.GOOGLE_PLAY_LICENSING_KEY,
             productIdList = arrayListOf(productIdX1, productIdX2, productIdX3),
             productIdListRu = arrayListOf(productIdX1, productIdX2, productIdX3),
             subscriptionIdList = arrayListOf(subscriptionIdX1, subscriptionIdX2, subscriptionIdX3),
@@ -646,12 +764,13 @@ class SettingsActivity : SimpleActivity() {
             subscriptionYearIdListRu = arrayListOf(subscriptionYearIdX1, subscriptionYearIdX2, subscriptionYearIdX3),
             playStoreInstalled = isPlayStoreInstalled(),
             ruStoreInstalled = isRuStoreInstalled(),
-            showCollection = false)
+            showCollection = false
+        )
     }
 
     private fun updateProducts() {
         val productList: java.util.ArrayList<String> = arrayListOf(productIdX1, productIdX2, productIdX3, subscriptionIdX1, subscriptionIdX2, subscriptionIdX3, subscriptionYearIdX1, subscriptionYearIdX2, subscriptionYearIdX3)
-        ruStoreHelper.getProducts(productList)
+        ruStoreHelper!!.getProducts(productList)
     }
 
     private fun handleEventStart(event: StartPurchasesEvent) {

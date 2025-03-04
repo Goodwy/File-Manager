@@ -126,6 +126,7 @@ class ReadTextActivity : SimpleActivity() {
                     }
                 }
             }
+
             else -> super.onBackPressed()
         }
     }
@@ -231,7 +232,7 @@ class ReadTextActivity : SimpleActivity() {
         val jobName = if (filePath.isNotEmpty()) {
             filePath.getFilenameFromPath()
         } else {
-            getString(R.string.app_name)
+            getString(R.string.app_name_g)
         }
 
         val printAdapter = webView.createPrintDocumentAdapter(jobName)
@@ -316,7 +317,7 @@ class ReadTextActivity : SimpleActivity() {
         binding.readTextView.text?.clearBackgroundSpans()
 
         if (text.isNotBlank() && text.length > 1) {
-            searchMatches = binding.readTextView.value.searchMatches(text)
+            searchMatches = binding.readTextView.text.toString().searchMatches(text)
             binding.readTextView.highlightText(text, getProperPrimaryColor())
         }
 

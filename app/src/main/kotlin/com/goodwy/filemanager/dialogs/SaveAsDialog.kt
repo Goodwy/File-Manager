@@ -38,7 +38,7 @@ class SaveAsDialog(
                 folderHint.beGone()
             } else {
                 filenameValue.setOnClickListener {
-                    FilePickerDialog(activity, realPath, false, false, true, true, showFavoritesButton = true) {
+                    FilePickerDialog(activity, realPath, false, false, true, true, showFavoritesButton = true, useAccentColor = true) {
                         filenameValue.setText(activity.humanizePath(it))
                         realPath = it
                     }

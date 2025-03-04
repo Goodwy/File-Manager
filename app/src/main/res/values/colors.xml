@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="color_accent">#67ADCC</color>
+    <color name="swipe_purple">#FF5E5CE6</color>
 
     <color name="red_ios">#FF6861</color> <!--apps-->
     <color name="orange_ios">#FF9E0B</color> <!--images-->
