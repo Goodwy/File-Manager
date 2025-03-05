@@ -4,6 +4,13 @@
     <string name="app_name_g">Right Files</string>
 
     <!-- Release notes -->
+    <string name="release_610">
+        Changed theme logic\n
+        Added ‘App icon color’ option\n
+        Added ‘Change top bar colour when scrolling’ option\n
+        Improved scrolling performance and interface\n
+        Fixed bugs, improved stability
+    </string>
     <string name="release_510">
         Added swipe gestures (copy, move, delete, properties)\n
         Fixed bugs, improved stability

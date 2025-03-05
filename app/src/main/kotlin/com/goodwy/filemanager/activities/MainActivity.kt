@@ -429,7 +429,7 @@ class MainActivity : SimpleActivity() {
                 override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
 
                 override fun onPageSelected(position: Int) {
-                    scrollChange()
+                    if (config.changeColourTopBar) scrollChange()
                     binding.mainTabsHolder.getTabAt(position)?.select()
                     getAllFragments().forEach {
                         (it as? ItemOperationsListener)?.finishActMode()
@@ -445,7 +445,7 @@ class MainActivity : SimpleActivity() {
 
             onGlobalLayout {
                 refreshMenuItems()
-                scrollChange()
+                if (config.changeColourTopBar) scrollChange()
             }
         }
     }
@@ -884,6 +884,7 @@ class MainActivity : SimpleActivity() {
             add(Release(500, R.string.release_500))
             add(Release(501, R.string.release_501))
             add(Release(510, R.string.release_510))
+            add(Release(610, R.string.release_610))
             checkWhatsNew(this, BuildConfig.VERSION_CODE)
         }
     }

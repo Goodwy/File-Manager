@@ -165,6 +165,7 @@ class SettingsActivity : SimpleActivity() {
         setupShowFolderIcon()
         setupShowDividers()
         setupShowOnlyFilename()
+        setupChangeColourTopBar()
 
         setupTipJar()
         setupAbout()
@@ -733,6 +734,17 @@ class SettingsActivity : SimpleActivity() {
             settingsShowOnlyFilenameHolder.setOnClickListener {
                 settingsShowOnlyFilename.toggle()
                 config.showOnlyFilename = settingsShowOnlyFilename.isChecked
+            }
+        }
+    }
+
+    private fun setupChangeColourTopBar() {
+        binding.apply {
+            settingsChangeColourTopBar.isChecked = config.changeColourTopBar
+            settingsChangeColourTopBarHolder.setOnClickListener {
+                settingsChangeColourTopBar.toggle()
+                config.changeColourTopBar = settingsChangeColourTopBar.isChecked
+                config.tabsChanged = true
             }
         }
     }
