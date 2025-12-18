@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_launcher_name_g">ファイル</string>
-    <string name="storage_used">%1$sが%2$s空いている</string>
-    <string name="used">中古</string>
+    <string name="storage_used">%2$s のうち %1$s が利用可能です</string>
     <string name="system">システム</string>
     <string name="apps">アプリ</string>
-    <string name="manage_storage">ストレージの管理</string>
-    <string name="show_folder_icons">フォルダアイコンの表示</string>
-    <string name="access_app_ops_service">私たちのアプリにUsageアクセス権を与えてください。</string>
-    <string name="show_home_button">ホームボタンの表示</string>
-    <string name="cannot_be_inserted_into_itself">オブジェクト自体に挿入することはできません</string>
-    <string name="show_only_filename">ファイル/フォルダ名のみ表示</string>
+    <string name="manage_storage">ストレージを管理する</string>
+    <string name="show_folder_icons">フォルダアイコンを表示</string>
+    <string name="access_app_ops_service">アプリの使用状況へのアクセスを許可してください。許可しないと、すべてのアプリのサイズを把握できません。</string>
+    <string name="show_home_button">ホームボタンを表示</string>
+    <string name="cannot_be_inserted_into_itself">オブジェクトをそれ自身に挿入することはできません</string>
+    <string name="show_only_filename">ファイル名/フォルダ名のみ表示</string>
+    <string name="maximum_number_recent_files">最近保存したファイルの最大数</string>
 </resources>

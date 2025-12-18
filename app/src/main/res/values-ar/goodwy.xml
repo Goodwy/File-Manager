@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_launcher_name_g">الملفات</string>
-    <string name="storage_used">%1$s من %2$s مجانًا</string>
-    <string name="used">مستعمل</string>
+    <string name="storage_used">%1$s من %2$s متاحة</string>
     <string name="system">نظام</string>
-    <string name="apps">تطبيقات</string>
-    <string name="manage_storage">ادارة المساحة</string>
-    <string name="show_folder_icons">إظهار رموز المجلد</string>
-    <string name="access_app_ops_service">يرجى منح الوصول إلى استخدام التطبيق لدينا ، بدونه ، لا يمكننا معرفة حجم جميع التطبيقات.</string>
-    <string name="show_home_button">اعرض زر الصفحة الرئيسية</string>
-    <string name="cannot_be_inserted_into_itself">لا يمكن إدراج كائن في حد ذاته</string>
+    <string name="apps">التطبيقات</string>
+    <string name="manage_storage">إدارة التخزين</string>
+    <string name="show_folder_icons">إظهار أيقونات المجلد</string>
+    <string name="access_app_ops_service">يرجى منح تطبيقنا صلاحية الوصول إلى الاستخدام، وبدون ذلك، لن نتمكن من معرفة حجم كافة التطبيقات.</string>
+    <string name="show_home_button">إظهار زر الصفحة الرئيسية</string>
+    <string name="cannot_be_inserted_into_itself">لا يمكن إدراج الكائن في نفسه</string>
     <string name="show_only_filename">إظهار اسم الملف/المجلد فقط</string>
+    <string name="maximum_number_recent_files">الحد الأقصى لعدد الملفات الأخيرة</string>
 </resources>

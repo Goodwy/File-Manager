@@ -7,7 +7,6 @@
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="com.android.vending.BILLING" />
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions"/>
@@ -41,10 +40,10 @@
         android:appCategory="productivity"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_launcher_name_g"
-        android:localeConfig="@xml/locale_config"
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:label">
 
         <activity
             android:name=".activities.SplashActivity"
@@ -53,7 +52,7 @@
 
         <activity
             android:name=".activities.MainActivity"
-            android:configChanges="orientation|uiMode"
+            android:configChanges="orientation"
             android:exported="true">
 
             <intent-filter>
@@ -116,6 +115,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="text/*" />
+                <data android:mimeType="application/json" />
             </intent-filter>
         </activity>
 
@@ -146,7 +146,7 @@
 
         <activity
             android:name=".activities.SettingsActivity"
-            android:configChanges="orientation|uiMode"
+            android:configChanges="orientation"
             android:exported="true"
             android:label="@string/settings"
             android:parentActivityName=".activities.MainActivity">
@@ -159,14 +159,14 @@
 
         <activity
             android:name=".activities.FavoritesActivity"
-            android:configChanges="orientation|uiMode"
+            android:configChanges="orientation"
             android:exported="false"
             android:label="@string/favorites"
             android:parentActivityName=".activities.MainActivity" />
 
         <activity
             android:name="com.goodwy.commons.activities.PurchaseActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize|uiMode"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="true"
             android:label="">
             <intent-filter>
@@ -179,14 +179,14 @@
 
         <activity
             android:name="com.goodwy.commons.activities.AboutActivity"
-            android:configChanges="orientation|uiMode"
+            android:configChanges="orientation"
             android:exported="false"
             android:label="@string/about"
             android:parentActivityName=".activities.MainActivity" />
 
         <activity
             android:name="com.goodwy.commons.activities.CustomizationActivity"
-            android:configChanges="orientation|uiMode"
+            android:configChanges="orientation"
             android:exported="false"
             android:label="@string/customize_colors"
             android:parentActivityName=".activities.SettingsActivity" />

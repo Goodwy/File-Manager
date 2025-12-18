@@ -5,11 +5,11 @@
     <string name="go_to_home_folder">Gå til hjemmemappen</string>
     <string name="set_as_home_folder">Sæt som hjemmemappe</string>
     <string name="home_folder_updated">Hjemmemappe opdateret</string>
-    <string name="copy_path">Kopier sti til udklipsholderen</string>
+    <string name="copy_path">Kopiér sti til udklipsholder</string>
     <string name="path_copied">Sti kopieret</string>
     <string name="select_audio_file">Vælg en lydfil</string>
     <string name="search_folder">Søg i mappe</string>
-    <string name="rooted_device_only">Denne funktion virker kun på rootede enheder</string>
+    <string name="rooted_device_only">Denne handling virker kun på rootede enheder</string>
     <string name="recents">Seneste</string>
     <string name="show_recents">Vis seneste</string>
     <string name="invert_colors">Inverter farver</string>
@@ -28,11 +28,11 @@
     <string name="decompression_successful">Dekomprimeret</string>
     <string name="compressing_failed">Komprimering mislykkedes</string>
     <string name="decompressing_failed">Dekomprimering mislykkedes</string>
-    <string name="manage_favorites">Håndter favoritter</string>
+    <string name="manage_favorites">Administrer favoritter</string>
     <string name="go_to_favorite">Gå til favorit</string>
-    <string name="favorites_activity_placeholder">Du kan tilføje ofte benyttede mapper til favoritter, så du hurtigt kan finde dem igen.</string>
+    <string name="favorites_activity_placeholder">Du kan føje ofte brugte mapper til favoritter for nem adgang overalt.</string>
     <string name="file_editor">Fileditor</string>
-    <string name="storage_analysis">Lagersanalyse</string>
+    <string name="storage_analysis">Lagringsanalyse</string>
     <string name="images">Billeder</string>
     <string name="videos">Videoer</string>
     <string name="audio">Lyd</string>
@@ -42,6 +42,6 @@
     <string name="others">Andre</string>
     <string name="storage_free">fri</string>
     <string name="total_storage">Samlet lagerplads: %s</string>
-    <string name="enable_root_access">Aktiver root-adgang</string>
-    <string name="press_back_twice">Kræv to tryk på tilbage for at forlade appen</string>
+    <string name="enable_root_access">Aktivér root-adgang</string>
+    <string name="press_back_twice">Dobbelttryk på Tilbage for at afslutte appen</string>
 </resources>

@@ -22,7 +22,7 @@
         android:visibility="gone"
         tools:visibility="visible" />
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    <com.goodwy.filemanager.views.MySwipeRefreshLayout
         android:id="@+id/recents_swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -38,5 +38,5 @@
             android:scrollbars="none"
             app:layoutManager="com.goodwy.commons.views.MyGridLayoutManager" />
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </com.goodwy.filemanager.views.MySwipeRefreshLayout>
 </com.goodwy.filemanager.fragments.RecentsFragment>

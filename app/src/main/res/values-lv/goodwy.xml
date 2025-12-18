@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_launcher_name_g">Faili</string>
+    <string name="storage_used">Pieejami %1$s no %2$s</string>
+    <string name="system">Sistēma</string>
+    <string name="apps">Lietotnes</string>
+    <string name="manage_storage">Pārvaldīt krātuvi</string>
+    <string name="show_folder_icons">Rādīt mapju ikonas</string>
+    <string name="access_app_ops_service">Lūdzu, piešķiriet mūsu lietotnei piekļuvi lietošanai, bez tās mēs nevaram zināt visu lietotņu lielumu.</string>
+    <string name="show_home_button">Rādīt sākuma pogu</string>
+    <string name="cannot_be_inserted_into_itself">Objektu nevar ievietot pats sevī</string>
+    <string name="show_only_filename">Rādīt tikai faila/mapes nosaukumu</string>
+    <string name="maximum_number_recent_files">Maksimālais nesen atvērto failu skaits</string>
+</resources>

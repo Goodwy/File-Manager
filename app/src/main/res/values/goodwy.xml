@@ -2,7 +2,6 @@
 <resources>
     <string name="app_launcher_name_g">Files</string>
     <string name="storage_used">%1$s of %2$s Free</string>
-    <string name="used">Used</string>
     <string name="system">System</string>
     <string name="apps">Apps</string>
     <string name="manage_storage">Manage storage</string>
@@ -11,4 +10,5 @@
     <string name="show_home_button">Show Home button</string>
     <string name="cannot_be_inserted_into_itself">An object cannot be inserted into itself</string>
     <string name="show_only_filename">Show only file/folder name</string>
+    <string name="maximum_number_recent_files">Maximum number of recent files</string>
 </resources>

@@ -7,11 +7,22 @@ import android.provider.MediaStore.Files.FileColumns
 import android.util.AttributeSet
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
-import com.goodwy.commons.extensions.*
+import com.goodwy.commons.extensions.areSystemAnimationsEnabled
+import com.goodwy.commons.extensions.beVisibleIf
+import com.goodwy.commons.extensions.getDoesFilePathExist
+import com.goodwy.commons.extensions.getFilenameFromPath
+import com.goodwy.commons.extensions.getLongValue
+import com.goodwy.commons.extensions.getProperBackgroundColor
+import com.goodwy.commons.extensions.getStringValue
+import com.goodwy.commons.extensions.getSurfaceColor
+import com.goodwy.commons.extensions.hideKeyboard
+import com.goodwy.commons.extensions.isDynamicTheme
+import com.goodwy.commons.extensions.isSystemInDarkMode
+import com.goodwy.commons.extensions.normalizeString
+import com.goodwy.commons.extensions.showErrorToast
 import com.goodwy.commons.helpers.VIEW_TYPE_GRID
 import com.goodwy.commons.helpers.VIEW_TYPE_LIST
 import com.goodwy.commons.helpers.ensureBackgroundThread
-import com.goodwy.commons.helpers.isOreoPlus
 import com.goodwy.commons.models.FileDirItem
 import com.goodwy.commons.views.MyGridLayoutManager
 import com.goodwy.commons.views.MyRecyclerView
@@ -20,6 +31,7 @@ import com.goodwy.filemanager.activities.SimpleActivity
 import com.goodwy.filemanager.adapters.ItemsAdapter
 import com.goodwy.filemanager.databinding.RecentsFragmentBinding
 import com.goodwy.filemanager.extensions.config
+import com.goodwy.filemanager.extensions.isPathInHiddenFolder
 import com.goodwy.filemanager.helpers.MAX_COLUMN_COUNT
 import com.goodwy.filemanager.interfaces.ItemOperationsListener
 import com.goodwy.filemanager.models.ListItem
@@ -27,7 +39,7 @@ import java.io.File
 
 class RecentsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment<MyViewPagerFragment.RecentsInnerBinding>(context, attributeSet),
     ItemOperationsListener {
-    private val RECENTS_LIMIT = 50
+//    private val RECENTS_LIMIT = 50
     private var filesIgnoringSearch = ArrayList<ListItem>()
     private var lastSearchedText = ""
     private var zoomListener: MyRecyclerView.MyZoomListener? = null
@@ -42,7 +54,9 @@ class RecentsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
     override fun setupFragment(activity: SimpleActivity) {
         if (this.activity == null) {
             this.activity = activity
-            binding.recentsFragment.setBackgroundColor(context.getProperBackgroundColor())
+            val useSurfaceColor = activity.isDynamicTheme() && !activity.isSystemInDarkMode()
+            val backgroundColor = if (useSurfaceColor) activity.getSurfaceColor() else activity.getProperBackgroundColor()
+            binding.recentsFragment.setBackgroundColor(backgroundColor)
             binding.recentsSwipeRefresh.setOnRefreshListener { refreshFragment() }
         }
 
@@ -164,18 +178,16 @@ class RecentsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
             FileColumns.SIZE
         )
 
+        val recentsLimit = context?.config?.queryLimitRecent
+
         try {
-            if (isOreoPlus()) {
-                val queryArgs = bundleOf(
-                    ContentResolver.QUERY_ARG_LIMIT to RECENTS_LIMIT,
-                    ContentResolver.QUERY_ARG_SORT_COLUMNS to arrayOf(FileColumns.DATE_MODIFIED),
-                    ContentResolver.QUERY_ARG_SORT_DIRECTION to ContentResolver.QUERY_SORT_DIRECTION_DESCENDING
-                )
-                context?.contentResolver?.query(uri, projection, queryArgs, null)
-            } else {
-                val sortOrder = "${FileColumns.DATE_MODIFIED} DESC LIMIT $RECENTS_LIMIT"
-                context?.contentResolver?.query(uri, projection, null, null, sortOrder)
-            }?.use { cursor ->
+            val queryArgs = bundleOf(
+                ContentResolver.QUERY_ARG_LIMIT to recentsLimit,
+                ContentResolver.QUERY_ARG_SORT_COLUMNS to arrayOf(FileColumns.DATE_MODIFIED),
+                ContentResolver.QUERY_ARG_SORT_DIRECTION to ContentResolver.QUERY_SORT_DIRECTION_DESCENDING
+            )
+
+            context?.contentResolver?.query(uri, projection, queryArgs, null)?.use { cursor ->
                 if (cursor.moveToFirst()) {
                     do {
                         val path = cursor.getStringValue(FileColumns.DATA)
@@ -186,9 +198,11 @@ class RecentsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
                         val name = cursor.getStringValue(FileColumns.DISPLAY_NAME) ?: path.getFilenameFromPath()
                         val size = cursor.getLongValue(FileColumns.SIZE)
                         val modified = cursor.getLongValue(FileColumns.DATE_MODIFIED) * 1000
-                        val fileDirItem = ListItem(path, name, false, 0, size, modified, false, false)
-                        if ((showHidden || !name.startsWith(".")) && activity?.getDoesFilePathExist(path) == true) {
+                        val isHiddenFile = name.startsWith(".")
+                        val shouldShow = showHidden || (!isHiddenFile && !path.isPathInHiddenFolder())
+                        if (shouldShow && activity?.getDoesFilePathExist(path) == true) {
                             if (wantedMimeTypes.any { isProperMimeType(it, path, false) }) {
+                                val fileDirItem = ListItem(path, name, false, 0, size, modified, false, false)
                                 listItems.add(fileDirItem)
                             }
                         }
@@ -250,7 +264,11 @@ class RecentsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
 
     override fun searchQueryChanged(text: String) {
         lastSearchedText = text
-        val filtered = filesIgnoringSearch.filter { it.mName.contains(text, true) }.toMutableList() as ArrayList<ListItem>
+        val normalizedText = text.normalizeString()
+        val filtered = filesIgnoringSearch.filter {
+            it.mName.normalizeString().contains(normalizedText, true)
+        }.toMutableList() as ArrayList<ListItem>
+
         binding.apply {
             (recentsList.adapter as? ItemsAdapter)?.updateItems(filtered, text)
             recentsPlaceholder.beVisibleIf(filtered.isEmpty())

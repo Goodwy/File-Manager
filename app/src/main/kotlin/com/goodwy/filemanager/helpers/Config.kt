@@ -2,6 +2,7 @@ package com.goodwy.filemanager.helpers
 
 import android.content.Context
 import android.content.res.Configuration
+import androidx.core.content.edit
 import com.goodwy.commons.extensions.getInternalStoragePath
 import com.goodwy.commons.helpers.BaseConfig
 import java.io.File
@@ -30,7 +31,7 @@ class Config(context: Context) : BaseConfig(context) {
         get(): String {
             var path = prefs.getString(HOME_FOLDER, "")!!
             if (path.isEmpty() || !File(path).isDirectory) {
-                path = context.getInternalStoragePath()
+                path = getInternalStoragePath()
                 homeFolder = path
             }
             return path
@@ -139,7 +140,7 @@ class Config(context: Context) : BaseConfig(context) {
         get(): String {
             var path = prefs.getString(LAST_FOLDER, "")!!
             if (path.isEmpty() || !File(path).isDirectory) {
-                path = context.getInternalStoragePath()
+                path = getInternalStoragePath()
                 lastFolder = path
             }
             return path
@@ -163,6 +164,10 @@ class Config(context: Context) : BaseConfig(context) {
     var showOnlyFilename: Boolean
         get() = prefs.getBoolean(SHOW_ONLY_FILENAME, false)
         set(showOnlyFilename) = prefs.edit().putBoolean(SHOW_ONLY_FILENAME, showOnlyFilename).apply()
+
+    var queryLimitRecent: Int
+        get() = prefs.getInt(QUERY_LIMIT_RECENT, QUERY_LIMIT_MEDIUM_VALUE)
+        set(queryLimitRecent) = prefs.edit { putInt(QUERY_LIMIT_RECENT, queryLimitRecent) }
 
     //Swipe
     var swipeRightAction: Int

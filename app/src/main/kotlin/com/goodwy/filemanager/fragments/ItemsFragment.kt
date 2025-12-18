@@ -50,7 +50,9 @@ class ItemsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
         if (this.activity == null) {
             this.activity = activity
             binding.apply {
-                itemsFragment.setBackgroundColor(context.getProperBackgroundColor())
+                val useSurfaceColor = activity.isDynamicTheme() && !activity.isSystemInDarkMode()
+                val backgroundColor = if (useSurfaceColor) activity.getSurfaceColor() else activity.getProperBackgroundColor()
+                itemsFragment.setBackgroundColor(backgroundColor)
                 breadcrumbs.listener = this@ItemsFragment
                 itemsSwipeRefresh.setOnRefreshListener { refreshFragment() }
                 itemsFab.setOnClickListener {
@@ -81,7 +83,9 @@ class ItemsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
             if (currentPath != "") {
                 breadcrumbs.updateColor(textColor)
             }
-            breadcrumbs.background.applyColorFilter(context!!.getProperBackgroundColor())
+            val useSurfaceColor = context!!.isDynamicTheme() && !context!!.isSystemInDarkMode()
+            val backgroundColor = if (useSurfaceColor) context!!.getSurfaceColor() else context!!.getProperBackgroundColor()
+            breadcrumbs.background.applyColorFilter(backgroundColor)
 
             itemsSwipeRefresh.isEnabled = lastSearchedText.isEmpty() && activity?.config?.enablePullToRefresh != false
         }
@@ -196,7 +200,8 @@ class ItemsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
             if (activity?.isDestroyed == false && activity?.isFinishing == false) {
                 val config = context!!.config
                 if (context.isRestrictedSAFOnlyRoot(path)) {
-                    activity?.handleAndroidSAFDialog(path) {
+                    activity?.runOnUiThread { hideProgressBar() }
+                    activity?.handleAndroidSAFDialog(path, openInSystemAppAllowed = true) {
                         if (!it) {
                             activity?.toast(R.string.no_storage_permissions)
                             return@handleAndroidSAFDialog
@@ -266,7 +271,7 @@ class ItemsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
         }
 
         var lastModified = lastModifieds.remove(curPath)
-        val isDirectory = if (lastModified != null) false else file.isDirectory
+        val isDirectory = file.isDirectory
         val children = if (isDirectory && getProperChildCount) file.getDirectChildrenCount(context, showHidden) else 0
         val size = if (isDirectory) {
             if (isSortingBySize) {
@@ -386,6 +391,7 @@ class ItemsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
             return files
         }
 
+        val normalizedText = text.normalizeString()
         val sorting = context!!.config.getFolderSorting(path)
         FileDirItem.sorting = context!!.config.getFolderSorting(currentPath)
         val isSortingBySize = sorting and SORT_BY_SIZE != 0
@@ -395,7 +401,7 @@ class ItemsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
             }
 
             if (it.isDirectory) {
-                if (it.name.contains(text, true)) {
+                if (it.name.normalizeString().contains(normalizedText, true)) {
                     val fileDirItem = getListItemFromFile(it, isSortingBySize, HashMap(), false)
                     if (fileDirItem != null) {
                         files.add(fileDirItem)
@@ -404,7 +410,7 @@ class ItemsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
 
                 files.addAll(searchFiles(text, it.absolutePath))
             } else {
-                if (it.name.contains(text, true)) {
+                if (it.name.normalizeString().contains(normalizedText, true)) {
                     val fileDirItem = getListItemFromFile(it, isSortingBySize, HashMap(), false)
                     if (fileDirItem != null) {
                         files.add(fileDirItem)

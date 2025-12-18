@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_launcher_name_g">ਫਾਈਲਾਂ</string>
+    <string name="storage_used">%2$s ਵਿੱਚੋਂ %1$s ਉਪਲਬਧ ਹਨ</string>
+    <string name="system">ਸਿਸਟਮ</string>
+    <string name="apps">ਐਪਸ</string>
+    <string name="manage_storage">ਸਟੋਰੇਜ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰੋ</string>
+    <string name="show_folder_icons">ਫੋਲਡਰ ਆਈਕਨ ਦਿਖਾਓ</string>
+    <string name="access_app_ops_service">ਕਿਰਪਾ ਕਰਕੇ ਸਾਡੀ ਐਪ ਨੂੰ ਵਰਤੋਂ ਦੀ ਪਹੁੰਚ ਦਿਓ, ਇਸ ਤੋਂ ਬਿਨਾਂ, ਅਸੀਂ ਸਾਰੀਆਂ ਐਪਾਂ ਦਾ ਆਕਾਰ ਨਹੀਂ ਜਾਣ ਸਕਦੇ।</string>
+    <string name="show_home_button">ਹੋਮ ਬਟਨ ਦਿਖਾਓ</string>
+    <string name="cannot_be_inserted_into_itself">ਇੱਕ ਵਸਤੂ ਆਪਣੇ ਆਪ ਵਿੱਚ ਨਹੀਂ ਪਾਈ ਜਾ ਸਕਦੀ।</string>
+    <string name="show_only_filename">ਸਿਰਫ਼ ਫਾਈਲ/ਫੋਲਡਰ ਨਾਮ ਦਿਖਾਓ</string>
+    <string name="maximum_number_recent_files">ਹਾਲੀਆ ਫਾਈਲਾਂ ਦੀ ਵੱਧ ਤੋਂ ਵੱਧ ਗਿਣਤੀ</string>
+</resources>

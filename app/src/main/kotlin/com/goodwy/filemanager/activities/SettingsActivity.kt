@@ -5,17 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
-import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
-import androidx.lifecycle.flowWithLifecycle
-import androidx.lifecycle.lifecycleScope
 import com.goodwy.commons.dialogs.*
 import com.goodwy.commons.extensions.*
 import com.goodwy.commons.helpers.*
-import com.goodwy.commons.helpers.rustore.RuStoreHelper
-import com.goodwy.commons.helpers.rustore.model.StartPurchasesEvent
-import com.goodwy.commons.models.FAQItem
 import com.goodwy.commons.models.RadioItem
 import com.goodwy.filemanager.BuildConfig
 import com.goodwy.filemanager.R
@@ -28,16 +23,11 @@ import com.goodwy.filemanager.helpers.*
 import com.google.android.material.snackbar.Snackbar
 import com.mikhaellopez.rxanimation.RxAnimation
 import com.mikhaellopez.rxanimation.shake
-import kotlinx.coroutines.launch
-import ru.rustore.sdk.core.feature.model.FeatureAvailabilityResult
 import java.util.Locale
 import kotlin.system.exitProcess
 
 class SettingsActivity : SimpleActivity() {
     private val binding by viewBinding(ActivitySettingsBinding::inflate)
-
-    private val purchaseHelper = PurchaseHelper(this)
-    private var ruStoreHelper: RuStoreHelper? = null
 
     private val productIdX1 = BuildConfig.PRODUCT_ID_X1
     private val productIdX2 = BuildConfig.PRODUCT_ID_X2
@@ -49,89 +39,46 @@ class SettingsActivity : SimpleActivity() {
     private val subscriptionYearIdX2 = BuildConfig.SUBSCRIPTION_YEAR_ID_X2
     private val subscriptionYearIdX3 = BuildConfig.SUBSCRIPTION_YEAR_ID_X3
 
-    private var ruStoreIsConnected = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
-        isMaterialActivity = true
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        setupOptionsMenu()
+
         binding.apply {
-            updateMaterialActivityViews(settingsCoordinator, settingsHolder, useTransparentNavigation = true, useTopSearchMenu = false)
-            setupMaterialScrollListener(settingsNestedScrollview, settingsToolbar)
+//            setupEdgeToEdge(padBottomSystem = listOf(settingsNestedScrollview))
+            setupMaterialScrollListener(binding.settingsNestedScrollview, binding.settingsAppbar)
         }
 
-        if (isPlayStoreInstalled()) {
-            //PlayStore
-            purchaseHelper.initBillingClient()
-            val iapList: ArrayList<String> = arrayListOf(productIdX1, productIdX2, productIdX3)
-            val subList: java.util.ArrayList<String> = arrayListOf(subscriptionIdX1, subscriptionIdX2, subscriptionIdX3, subscriptionYearIdX1, subscriptionYearIdX2, subscriptionYearIdX3)
-            purchaseHelper.retrieveDonation(iapList, subList)
-
-            purchaseHelper.isIapPurchased.observe(this) {
-                when (it) {
-                    is Tipping.Succeeded -> {
-                        config.isPro = true
-                        updatePro()
-                    }
-                    is Tipping.NoTips -> {
-                        config.isPro = false
-                        updatePro()
-                    }
-                    is Tipping.FailedToLoad -> {
-                    }
-                }
-            }
-
-            purchaseHelper.isSupPurchased.observe(this) {
-                when (it) {
-                    is Tipping.Succeeded -> {
-                        config.isProSubs = true
-                        updatePro()
-                    }
-                    is Tipping.NoTips -> {
-                        config.isProSubs = false
-                        updatePro()
-                    }
-                    is Tipping.FailedToLoad -> {
-                    }
-                }
-            }
-        }
-        if (isRuStoreInstalled()) {
-            //RuStore
-            ruStoreHelper = RuStoreHelper()
-            ruStoreHelper!!.checkPurchasesAvailability(this@SettingsActivity)
-
-            lifecycleScope.launch {
-                ruStoreHelper!!.eventStart
-                    .flowWithLifecycle(lifecycle)
-                    .collect { event ->
-                        handleEventStart(event)
-                    }
-            }
-
-            lifecycleScope.launch {
-                ruStoreHelper!!.statePurchased
-                    .flowWithLifecycle(lifecycle)
-                    .collect { state ->
-                        //update of purchased
-                        if (!state.isLoading && ruStoreIsConnected) {
-                            baseConfig.isProRuStore = state.purchases.firstOrNull() != null
-                            updatePro()
-                        }
-                    }
-            }
+        val iapList: ArrayList<String> = arrayListOf(productIdX1, productIdX2, productIdX3)
+        val subList: ArrayList<String> =
+            arrayListOf(
+                subscriptionIdX1, subscriptionIdX2, subscriptionIdX3,
+                subscriptionYearIdX1, subscriptionYearIdX2, subscriptionYearIdX3
+            )
+        val ruStoreList: ArrayList<String> =
+            arrayListOf(
+                productIdX1, productIdX2, productIdX3,
+                subscriptionIdX1, subscriptionIdX2, subscriptionIdX3,
+                subscriptionYearIdX1, subscriptionYearIdX2, subscriptionYearIdX3
+            )
+        PurchaseHelper().checkPurchase(
+            this@SettingsActivity,
+            iapList = iapList,
+            subList = subList,
+            ruStoreList = ruStoreList
+        ) { updatePro ->
+            if (updatePro) updatePro()
         }
     }
 
     override fun onResume() {
         super.onResume()
-        setupToolbar(binding.settingsToolbar, NavigationIcon.Arrow)
+        setupTopAppBar(binding.settingsAppbar, NavigationIcon.Arrow)
 
         setupPurchaseThankYou()
         setupCustomizeColors()
-        setupMaterialDesign3()
         setupOverflowIcon()
+        setupFloatingButtonStyle()
 
         setupDefaultFolder()
         setupManageFavorites()
@@ -162,8 +109,10 @@ class SettingsActivity : SimpleActivity() {
         setupFileDeletionPasswordProtection()
         setupEnableRootAccess()
 
+        setupQueryLimitRecent()
         setupShowFolderIcon()
         setupShowDividers()
+        setupThumbnailsSize()
         setupShowOnlyFilename()
         setupChangeColourTopBar()
 
@@ -198,7 +147,7 @@ class SettingsActivity : SimpleActivity() {
                 settingsListViewHolder,
                 settingsOtherHolder
             ).forEach {
-                it.setCardBackgroundColor(getBottomNavigationBackgroundColor())
+                it.setCardBackgroundColor(getSurfaceColor())
             }
         }
 
@@ -224,22 +173,9 @@ class SettingsActivity : SimpleActivity() {
         }
     }
 
-    private fun setupPurchaseThankYou() {
-        binding.apply {
-            settingsPurchaseThankYouHolder.beGoneIf(isPro())
-            settingsPurchaseThankYouHolder.setOnClickListener {
-                launchPurchase()
-            }
-            moreButton.setOnClickListener {
-                launchPurchase()
-            }
-            val appDrawable = resources.getColoredDrawableWithColor(this@SettingsActivity, R.drawable.ic_plus_support, getProperPrimaryColor())
-            purchaseLogo.setImageDrawable(appDrawable)
-            val drawable = resources.getColoredDrawableWithColor(this@SettingsActivity, R.drawable.button_gray_bg, getProperPrimaryColor())
-            moreButton.background = drawable
-            moreButton.setTextColor(getProperBackgroundColor())
-            moreButton.setPadding(2, 2, 2, 2)
-        }
+    private fun setupPurchaseThankYou() = binding.apply {
+        settingsPurchaseThankYouHolder.beGoneIf(isPro())
+        settingsPurchaseThankYouHolder.onClick = { launchPurchase() }
     }
 
     private fun setupCustomizeColors() {
@@ -259,21 +195,8 @@ class SettingsActivity : SimpleActivity() {
                     subscriptionIdListRu = arrayListOf(subscriptionIdX1, subscriptionIdX2, subscriptionIdX3),
                     subscriptionYearIdList = arrayListOf(subscriptionYearIdX1, subscriptionYearIdX2, subscriptionYearIdX3),
                     subscriptionYearIdListRu = arrayListOf(subscriptionYearIdX1, subscriptionYearIdX2, subscriptionYearIdX3),
-                    playStoreInstalled = isPlayStoreInstalled(),
-                    ruStoreInstalled = isRuStoreInstalled(),
                     showAppIconColor = true
                 )
-            }
-        }
-    }
-
-    private fun setupMaterialDesign3() {
-        binding.apply {
-            settingsMaterialDesign3.isChecked = config.materialDesign3
-            settingsMaterialDesign3Holder.setOnClickListener {
-                settingsMaterialDesign3.toggle()
-                config.materialDesign3 = settingsMaterialDesign3.isChecked
-                config.tabsChanged = true
             }
         }
     }
@@ -307,6 +230,41 @@ class SettingsActivity : SimpleActivity() {
         }
     }
 
+    private fun setupFloatingButtonStyle() {
+        binding.apply {
+            settingsFloatingButtonStyle.applyColorFilter(getProperTextColor())
+            settingsFloatingButtonStyle.setImageResource(
+                if (baseConfig.materialDesign3) R.drawable.squircle_bg else R.drawable.ic_circle_filled
+            )
+            settingsFloatingButtonStyleHolder.setOnClickListener {
+                val items = arrayListOf(
+                    R.drawable.ic_circle_filled,
+                    R.drawable.squircle_bg
+                )
+
+                IconListDialog(
+                    activity = this@SettingsActivity,
+                    items = items,
+                    checkedItemId = if (baseConfig.materialDesign3) 2 else 1,
+                    defaultItemId = 1,
+                    titleId = com.goodwy.strings.R.string.floating_button_style,
+                    size = pixels(com.goodwy.commons.R.dimen.normal_icon_size).toInt(),
+                    color = getProperTextColor()
+                ) { wasPositivePressed, newValue ->
+                    if (wasPositivePressed) {
+                        if (newValue != if (baseConfig.materialDesign3) 2 else 1) {
+                            baseConfig.materialDesign3 = newValue == 2
+                            settingsFloatingButtonStyle.setImageResource(
+                                if (newValue == 2) R.drawable.squircle_bg else R.drawable.ic_circle_filled
+                            )
+                            config.needRestart = true
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private fun setupManageShownTabs() {
         binding.settingsManageShownTabsHolder.setOnClickListener {
             ManageVisibleTabsDialog(this)
@@ -319,7 +277,7 @@ class SettingsActivity : SimpleActivity() {
             settingsUseIconTabsHolder.setOnClickListener {
                 settingsUseIconTabs.toggle()
                 config.useIconTabs = settingsUseIconTabs.isChecked
-                config.tabsChanged = true
+                config.needRestart = true
             }
         }
     }
@@ -336,7 +294,7 @@ class SettingsActivity : SimpleActivity() {
 
                 RadioGroupIconDialog(this@SettingsActivity, items, config.screenSlideAnimation, R.string.screen_slide_animation) {
                     config.screenSlideAnimation = it as Int
-                    config.tabsChanged = true
+                    config.needRestart = true
                     binding.settingsScreenSlideAnimation.text = getScreenSlideAnimationText()
                 }
             }
@@ -479,7 +437,7 @@ class SettingsActivity : SimpleActivity() {
             settingsUseSwipeToActionHolder.setOnClickListener {
                 settingsUseSwipeToAction.toggle()
                 config.useSwipeToAction = settingsUseSwipeToAction.isChecked
-                config.tabsChanged = true
+                config.needRestart = true
                 updateSwipeToActionVisible()
             }
         }
@@ -510,7 +468,7 @@ class SettingsActivity : SimpleActivity() {
             settingsSwipeRippleHolder.setOnClickListener {
                 settingsSwipeRipple.toggle()
                 config.swipeRipple = settingsSwipeRipple.isChecked
-                config.tabsChanged = true
+                config.needRestart = true
             }
         }
     }
@@ -524,13 +482,14 @@ class SettingsActivity : SimpleActivity() {
                 RadioItem(SWIPE_ACTION_MOVE, getString(R.string.move_to), icon = R.drawable.ic_move_vector),
                 RadioItem(SWIPE_ACTION_COPY, getString(R.string.copy_to), icon = R.drawable.ic_copy_vector),
                 RadioItem(SWIPE_ACTION_INFO, getString(R.string.properties), icon = R.drawable.ic_info_vector),
+                RadioItem(SWIPE_ACTION_NONE, getString(com.goodwy.commons.R.string.nothing)),
             )
 
             val title =
                 if (isRTLLayout) R.string.swipe_left_action else R.string.swipe_right_action
             RadioGroupIconDialog(this@SettingsActivity, items, config.swipeRightAction, title) {
                 config.swipeRightAction = it as Int
-                config.tabsChanged = true
+                config.needRestart = true
                 settingsSwipeRightAction.text = getSwipeActionText(false)
             }
         }
@@ -549,13 +508,14 @@ class SettingsActivity : SimpleActivity() {
                     RadioItem(SWIPE_ACTION_MOVE, getString(R.string.move_to), icon = R.drawable.ic_move_vector),
                     RadioItem(SWIPE_ACTION_COPY, getString(R.string.copy_to), icon = R.drawable.ic_copy_vector),
                     RadioItem(SWIPE_ACTION_INFO, getString(R.string.properties), icon = R.drawable.ic_info_vector),
+                    RadioItem(SWIPE_ACTION_NONE, getString(com.goodwy.commons.R.string.nothing)),
                 )
 
                 val title =
                     if (isRTLLayout) R.string.swipe_right_action else R.string.swipe_left_action
                 RadioGroupIconDialog(this@SettingsActivity, items, config.swipeLeftAction, title) {
                     config.swipeLeftAction = it as Int
-                    config.tabsChanged = true
+                    config.needRestart = true
                     settingsSwipeLeftAction.text = getSwipeActionText(true)
                 }
             } else {
@@ -573,7 +533,8 @@ class SettingsActivity : SimpleActivity() {
             SWIPE_ACTION_DELETE -> R.string.delete
             SWIPE_ACTION_MOVE -> R.string.move_to
             SWIPE_ACTION_INFO -> R.string.properties
-            else -> R.string.copy_to
+            SWIPE_ACTION_COPY -> R.string.copy_to
+            else -> R.string.nothing
         }
     )
 
@@ -588,7 +549,9 @@ class SettingsActivity : SimpleActivity() {
         val bgDrawable = ResourcesCompat.getDrawable(view.resources, R.drawable.button_background_16dp, null)
         snackbar.view.background = bgDrawable
         val properBackgroundColor = getProperBackgroundColor()
-        val backgroundColor = if (properBackgroundColor == Color.BLACK) getBottomNavigationBackgroundColor().lightenColor(6) else getBottomNavigationBackgroundColor().darkenColor(6)
+        val backgroundColor =
+            if (properBackgroundColor == Color.BLACK) getSurfaceColor().lightenColor(6)
+            else getSurfaceColor().darkenColor(6)
         snackbar.setBackgroundTint(backgroundColor)
         snackbar.setTextColor(getProperTextColor())
         snackbar.setActionTextColor(getProperPrimaryColor())
@@ -708,6 +671,28 @@ class SettingsActivity : SimpleActivity() {
         config.enableRootAccess = enable
     }
 
+    private fun setupQueryLimitRecent() {
+        binding.settingsQueryLimitRecent.text = getQueryLimitRecentText()
+        binding.settingsQueryLimitRecentHolder.setOnClickListener {
+            val items = arrayListOf(
+                RadioItem(QUERY_LIMIT_SMALL_VALUE, "≤20"),
+                RadioItem(QUERY_LIMIT_MEDIUM_VALUE, "≤50"),
+                RadioItem(QUERY_LIMIT_NORMAL_VALUE, "≤100"),
+                RadioItem(QUERY_LIMIT_BIG_VALUE, "≤200")
+            )
+
+            RadioGroupDialog(this@SettingsActivity, items, config.queryLimitRecent, R.string.maximum_number_recent_files) {
+                config.queryLimitRecent = it as Int
+                binding.settingsQueryLimitRecent.text = getQueryLimitRecentText()
+                config.needRestart = true
+            }
+        }
+    }
+
+    private fun getQueryLimitRecentText(): String {
+        return "≤" + config.queryLimitRecent.toString()
+    }
+
     private fun setupShowFolderIcon() {
         binding.apply {
             settingsShowFolderIcon.isChecked = config.showFolderIcon
@@ -728,6 +713,45 @@ class SettingsActivity : SimpleActivity() {
         }
     }
 
+    private fun setupThumbnailsSize() = binding.apply {
+        val pro = isPro()
+        settingsThumbnailsSizeHolder.beVisibleIf(config.showContactThumbnails)
+        settingsThumbnailsSizeHolder.alpha = if (pro) 1f else 0.4f
+        settingsThumbnailsSizeLabel.text = addLockedLabelIfNeeded(R.string.contact_thumbnails_size, pro)
+        settingsThumbnailsSize.text = getThumbnailsSizeText()
+        settingsThumbnailsSizeHolder.setOnClickListener {
+            if (pro) {
+                val items = arrayListOf(
+                    RadioItem(FONT_SIZE_SMALL, getString(R.string.small), CONTACT_THUMBNAILS_SIZE_SMALL),
+                    RadioItem(FONT_SIZE_MEDIUM, getString(R.string.medium), CONTACT_THUMBNAILS_SIZE_MEDIUM),
+                    RadioItem(FONT_SIZE_LARGE, getString(R.string.large), CONTACT_THUMBNAILS_SIZE_LARGE),
+                    RadioItem(FONT_SIZE_EXTRA_LARGE, getString(R.string.extra_large), CONTACT_THUMBNAILS_SIZE_EXTRA_LARGE)
+                )
+
+                RadioGroupDialog(this@SettingsActivity, items, config.contactThumbnailsSize, R.string.contact_thumbnails_size) {
+                    config.contactThumbnailsSize = it as Int
+                    settingsThumbnailsSize.text = getThumbnailsSizeText()
+                    config.needRestart = true
+                }
+            } else {
+                RxAnimation.from(settingsThumbnailsSizeHolder)
+                    .shake(shakeTranslation = 2f)
+                    .subscribe()
+
+                showSnackbar(binding.root)
+            }
+        }
+    }
+
+    private fun getThumbnailsSizeText() = getString(
+        when (baseConfig.contactThumbnailsSize) {
+            CONTACT_THUMBNAILS_SIZE_SMALL -> com.goodwy.commons.R.string.small
+            CONTACT_THUMBNAILS_SIZE_MEDIUM -> com.goodwy.commons.R.string.medium
+            CONTACT_THUMBNAILS_SIZE_LARGE -> com.goodwy.commons.R.string.large
+            else -> com.goodwy.commons.R.string.extra_large
+        }
+    )
+
     private fun setupShowOnlyFilename() {
         binding.apply {
             settingsShowOnlyFilename.isChecked = config.showOnlyFilename
@@ -744,23 +768,35 @@ class SettingsActivity : SimpleActivity() {
             settingsChangeColourTopBarHolder.setOnClickListener {
                 settingsChangeColourTopBar.toggle()
                 config.changeColourTopBar = settingsChangeColourTopBar.isChecked
-                config.tabsChanged = true
+                config.needRestart = true
             }
         }
     }
 
-    private fun setupTipJar() {
-        binding.settingsTipJarHolder.beVisibleIf(isPro())
-        binding.settingsTipJarHolder.background.applyColorFilter(getBottomNavigationBackgroundColor().lightenColor(4))
-        binding.settingsTipJarWrapper.setOnClickListener {
-            launchPurchase()
+    private fun setupTipJar() = binding.apply {
+        settingsTipJarHolder.apply {
+            beVisibleIf(isPro())
+            background.applyColorFilter(getColoredMaterialStatusBarColor().lightenColor(4))
+            setOnClickListener {
+                launchPurchase()
+            }
         }
     }
 
     @SuppressLint("SetTextI18n")
-    private fun setupAbout() {
-        binding.settingsAboutVersion.text = "Version: " + BuildConfig.VERSION_NAME
-        binding.settingsAboutHolder.setOnClickListener {
+    private fun setupAbout() = binding.apply {
+        val flavorName = BuildConfig.FLAVOR
+        val storeDisplayName = when (flavorName) {
+            "gplay" -> "Google Play"
+            "foss" -> "FOSS"
+            "rustore" -> "RuStore"
+            else -> ""
+        }
+        val versionName = BuildConfig.VERSION_NAME
+        val fullVersionText = "Version: $versionName ($storeDisplayName)"
+
+        settingsAboutVersion.text = fullVersionText
+        settingsAboutHolder.setOnClickListener {
             launchAbout()
         }
     }
@@ -774,37 +810,23 @@ class SettingsActivity : SimpleActivity() {
             subscriptionIdListRu = arrayListOf(subscriptionIdX1, subscriptionIdX2, subscriptionIdX3),
             subscriptionYearIdList = arrayListOf(subscriptionYearIdX1, subscriptionYearIdX2, subscriptionYearIdX3),
             subscriptionYearIdListRu = arrayListOf(subscriptionYearIdX1, subscriptionYearIdX2, subscriptionYearIdX3),
-            playStoreInstalled = isPlayStoreInstalled(),
-            ruStoreInstalled = isRuStoreInstalled(),
             showCollection = false
         )
     }
 
-    private fun updateProducts() {
-        val productList: java.util.ArrayList<String> = arrayListOf(productIdX1, productIdX2, productIdX3, subscriptionIdX1, subscriptionIdX2, subscriptionIdX3, subscriptionYearIdX1, subscriptionYearIdX2, subscriptionYearIdX3)
-        ruStoreHelper!!.getProducts(productList)
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        updateMenuItemColors(menu)
+        return super.onCreateOptionsMenu(menu)
     }
 
-    private fun handleEventStart(event: StartPurchasesEvent) {
-        when (event) {
-            is StartPurchasesEvent.PurchasesAvailability -> {
-                when (event.availability) {
-                    is FeatureAvailabilityResult.Available -> {
-                        //Process purchases available
-                        updateProducts()
-                        ruStoreIsConnected = true
-                    }
-
-                    is FeatureAvailabilityResult.Unavailable -> {
-                        //toast(event.availability.cause.message ?: "Process purchases unavailable", Toast.LENGTH_LONG)
-                    }
-
-                    else -> {}
+    private fun setupOptionsMenu() {
+        binding.settingsToolbar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.whats_new -> {
+                    WhatsNewDialog(this@SettingsActivity, whatsNewList()) //arrayListOf(whatsNewList().last())
+                    true
                 }
-            }
-
-            is StartPurchasesEvent.Error -> {
-                //toast(event.throwable.message ?: "Process unknown error", Toast.LENGTH_LONG)
+                else -> false
             }
         }
     }

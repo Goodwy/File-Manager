@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/activity_margin"
             android:paddingBottom="@dimen/activity_margin"
-            android:text="@string/storage_analysis" />
+            android:text="@string/storage" />
 
     </LinearLayout>
 </ScrollView>

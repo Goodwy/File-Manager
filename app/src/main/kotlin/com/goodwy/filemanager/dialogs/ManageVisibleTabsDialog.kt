@@ -1,13 +1,11 @@
 package com.goodwy.filemanager.dialogs
 
 import com.goodwy.commons.activities.BaseSimpleActivity
-import com.goodwy.commons.extensions.beGone
 import com.goodwy.commons.extensions.getAlertDialogBuilder
 import com.goodwy.commons.extensions.setupDialogStuff
 import com.goodwy.commons.helpers.TAB_FILES
 import com.goodwy.commons.helpers.TAB_RECENT_FILES
 import com.goodwy.commons.helpers.TAB_STORAGE_ANALYSIS
-import com.goodwy.commons.helpers.isOreoPlus
 import com.goodwy.commons.views.MyAppCompatCheckbox
 import com.goodwy.filemanager.R
 import com.goodwy.filemanager.databinding.DialogManageVisibleTabsBinding
@@ -23,10 +21,6 @@ class ManageVisibleTabsDialog(val activity: BaseSimpleActivity) {
             put(TAB_RECENT_FILES, R.id.manage_visible_tabs_recent_files)
             put(TAB_FILES, R.id.manage_visible_tabs_files)
             put(TAB_STORAGE_ANALYSIS, R.id.manage_visible_tabs_storage_analysis)
-        }
-
-        if (!isOreoPlus()) {
-            binding.manageVisibleTabsStorageAnalysis.beGone()
         }
 
         val showTabs = activity.config.showTabs

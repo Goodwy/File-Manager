@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_launcher_name_g">ഫയലുകൾ</string>
+    <string name="storage_used">%2$s-ൽ %1$s ലഭ്യമാണ്</string>
+    <string name="system">സിസ്റ്റം</string>
+    <string name="apps">അപ്ലിക്കേഷനുകൾ</string>
+    <string name="manage_storage">സംഭരണം കൈകാര്യം ചെയ്യുക</string>
+    <string name="show_folder_icons">ഫോൾഡർ ഐക്കണുകൾ കാണിക്കുക</string>
+    <string name="access_app_ops_service">ദയവായി ഞങ്ങളുടെ ആപ്പിന് ഉപയോഗ ആക്‌സസ് അനുവദിക്കുക, അതില്ലാതെ, എല്ലാ ആപ്പുകളുടെയും വലുപ്പം ഞങ്ങൾക്ക് അറിയാൻ കഴിയില്ല.</string>
+    <string name="show_home_button">ഹോം ബട്ടൺ കാണിക്കുക</string>
+    <string name="cannot_be_inserted_into_itself">ഒരു വസ്തുവിനെ അതിൽ തന്നെ തിരുകാൻ കഴിയില്ല.</string>
+    <string name="show_only_filename">ഫയൽ/ഫോൾഡർ നാമം മാത്രം കാണിക്കുക</string>
+    <string name="maximum_number_recent_files">സമീപകാല ഫയലുകളുടെ പരമാവധി എണ്ണം</string>
+</resources>

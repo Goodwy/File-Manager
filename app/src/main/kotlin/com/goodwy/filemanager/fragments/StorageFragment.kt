@@ -18,10 +18,10 @@ import android.provider.MediaStore
 import android.provider.Settings
 import android.text.TextUtils
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.children
 import androidx.core.view.isVisible
@@ -44,6 +44,7 @@ import com.goodwy.filemanager.extensions.getAllVolumeNames
 import com.goodwy.filemanager.helpers.*
 import com.goodwy.filemanager.interfaces.ItemOperationsListener
 import com.goodwy.filemanager.models.ListItem
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -87,14 +88,13 @@ class StorageFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
                 }
 
                 if (volumeName == if (isQPlus()) PRIMARY_VOLUME_NAME else PRIMARY_VOLUME_NAME_OLD) {
-                    storageName.setText(R.string.internal)
+                    storageName.setText(R.string.all_g)
                     getAllAppSize(volumeName)
                 } else {
                     storageName.setText(R.string.sd_card)
                 }
 
                 totalSpace.text = String.format(context.getString(R.string.storage_used), "…", "…")
-                getSizes(volumeName)
 
                 if (volumeNames.size > 1) {
                     val primaryColor = context.getProperPrimaryColor()
@@ -171,8 +171,7 @@ class StorageFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
 
         val properPrimaryColor = context.getProperPrimaryColor()
 
-        volumes.entries.forEach { (it, volumeBinding) ->
-            getSizes(it)
+        volumes.values.forEach { volumeBinding ->
             volumeBinding.apply {
 //                mainStorageUsageProgressbar.setIndicatorColor(properPrimaryColor)
 //                mainStorageUsageProgressbar.trackColor = properPrimaryColor.adjustAlpha(LOWER_ALPHA)
@@ -197,7 +196,12 @@ class StorageFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
 
                 expandButton.applyColorFilter(context.getProperPrimaryColor())
 
-                freeSpaceCard.setCardBackgroundColor(context.getBottomNavigationBackgroundColor().adjustAlpha(0.8f))
+                val useSurfaceColor = context.isDynamicTheme() && !context.isSystemInDarkMode()
+                val surfaceColor =
+                    if (useSurfaceColor) context.getProperBackgroundColor().adjustAlpha(0.8f)
+                    else context.getSurfaceColor().adjustAlpha(0.8f)
+                freeSpaceCard.setCardBackgroundColor(surfaceColor)
+
                 arrayOf(
                     manageStorageChevron,
                     appsChevron,
@@ -210,6 +214,7 @@ class StorageFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
                 ).forEach {
                     it.setColorFilter(textColor)
                 }
+
                 arrayOf(
                     imageDivider,
                     videoDivider,
@@ -220,7 +225,7 @@ class StorageFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
                     systemDivider,
                     systemEndDivider
                 ).forEach {
-                    it.setBackgroundColor(context.getBottomNavigationBackgroundColor().adjustAlpha(0.8f))
+                    it.setBackgroundColor(surfaceColor)
                 }
             }
         }
@@ -258,10 +263,6 @@ class StorageFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
     }
 
     private fun getSizes(volumeName: String) {
-        if (!isOreoPlus()) {
-            return
-        }
-
         ensureBackgroundThread {
             val filesSize = getSizesByMimeType(volumeName)
             val fileSizeImages = filesSize[IMAGES]!!
@@ -338,10 +339,10 @@ class StorageFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
                             }
                         }
                     }
-                } catch (e: Exception) {
+                } catch (_: Exception) {
                 }
             }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
         }
 
         val mimeTypeSizes = HashMap<String, Long>().apply {
@@ -369,15 +370,10 @@ class StorageFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
             if (storageVolume.isPrimary) {
                 // internal storage
                 volumeName = if (isQPlus()) PRIMARY_VOLUME_NAME else PRIMARY_VOLUME_NAME_OLD
-                if (isOreoPlus()) {
-                    val storageStatsManager = context.getSystemService(AppCompatActivity.STORAGE_STATS_SERVICE) as StorageStatsManager
-                    val uuid = StorageManager.UUID_DEFAULT
-                    totalStorageSpace = storageStatsManager.getTotalBytes(uuid)
-                    freeStorageSpace = storageStatsManager.getFreeBytes(uuid)
-                } else {
-                    totalStorageSpace = file.totalSpace
-                    freeStorageSpace = file.freeSpace
-                }
+                val storageStatsManager = context.getSystemService(AppCompatActivity.STORAGE_STATS_SERVICE) as StorageStatsManager
+                val uuid = StorageManager.UUID_DEFAULT
+                totalStorageSpace = storageStatsManager.getTotalBytes(uuid)
+                freeStorageSpace = storageStatsManager.getFreeBytes(uuid)
                 totalStorageSpaceLong = totalStorageSpace
             } else {
                 // sd card
@@ -396,20 +392,8 @@ class StorageFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
 
             post {
                 volumes[volumeName]?.apply {
-//                    arrayOf(
-//                        mainStorageUsageProgressbar, imagesProgressbar, videosProgressbar, audioProgressbar, documentsProgressbar,
-//                        archivesProgressbar, othersProgressbar
-//                    ).forEach {
-//                        it.max = (totalStorageSpace / SIZE_DIVIDER).toInt()
-//                    }
-
-                    //mainStorageUsageProgressbar.progress = ((totalStorageSpace - freeStorageSpace) / SIZE_DIVIDER).toInt()
-
-                    //mainStorageUsageProgressbar.beVisible()
-                    //freeSpaceValue.text = freeStorageSpace.formatSizeThousand()
-                    //totalSpace.text = String.format(context.getString(R.string.total_storage), totalStorageSpace.formatSizeThousand())
+                    getSizes(volumeName)
                     totalSpace.text = String.format(context.getString(R.string.storage_used), freeStorageSpace.formatSizeThousand(), totalStorageSpace.formatSizeThousand())
-                    //freeSpaceLabel.beVisible()
 
                     val appsSizeL = if (storageVolume.isPrimary) appsSizeLong else 0
                     val fileSizeSystem = totalStorageSpace - freeStorageSpace - appsSizeL - fileSizeImages - fileSizeVideos - fileSizeAudios - fileSizeDocuments - fileSizeArchives - fileSizeOthers
@@ -452,86 +436,86 @@ class StorageFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
                     appsProgress.setOnClickListener {
                         toastColor(
                             message = context.getString(R.string.apps) + " " + appsSizeLong.divideToPercentText(totalStorageSpace),
-                            color = context.resources.getColor(R.color.red_ios)) }
+                            color = context.getColor(R.color.red_ios)) }
                     imageDivider.setOnClickListener {
                         toastColor(
                             message = context.getString(R.string.images) + " " + fileSizeImages.divideToPercentText(totalStorageSpace),
-                            color = context.resources.getColor(R.color.orange_ios))
+                            color = context.getColor(R.color.orange_ios))
                     }
                     imageProgress.setOnClickListener {
                         toastColor(
                             message = context.getString(R.string.images) + " " + fileSizeImages.divideToPercentText(totalStorageSpace),
-                            color = context.resources.getColor(R.color.orange_ios))
+                            color = context.getColor(R.color.orange_ios))
                     }
                     videoDivider.setOnClickListener {
                         toastColor(
                             message = context.getString(R.string.videos) + " " + fileSizeVideos.divideToPercentText(totalStorageSpace),
-                            color = context.resources.getColor(R.color.yellow_ios))
+                            color = context.getColor(R.color.yellow_ios))
                     }
                     videoProgress.setOnClickListener {
                         toastColor(
                             message = context.getString(R.string.videos) + " " + fileSizeVideos.divideToPercentText(totalStorageSpace),
-                            color = context.resources.getColor(R.color.yellow_ios))
+                            color = context.getColor(R.color.yellow_ios))
                     }
                     audioDivider.setOnClickListener {
                         toastColor(
                             message = context.getString(R.string.audio) + " " + fileSizeAudios.divideToPercentText(totalStorageSpace),
-                            color = context.resources.getColor(R.color.green_ios))
+                            color = context.getColor(R.color.green_ios))
                     }
                     audioProgress.setOnClickListener {
                         toastColor(
                             message = context.getString(R.string.audio) + " " + fileSizeAudios.divideToPercentText(totalStorageSpace),
-                            color = context.resources.getColor(R.color.green_ios))
+                            color = context.getColor(R.color.green_ios))
                     }
                     documentDivider.setOnClickListener {
                         toastColor(
                             message = context.getString(R.string.documents) + " " + fileSizeDocuments.divideToPercentText(totalStorageSpace),
-                            color = context.resources.getColor(R.color.cyan_ios))
+                            color = context.getColor(R.color.cyan_ios))
                     }
                     documentsProgress.setOnClickListener {
                         toastColor(
                             message = context.getString(R.string.documents) + " " + fileSizeDocuments.divideToPercentText(totalStorageSpace),
-                            color = context.resources.getColor(R.color.cyan_ios))
+                            color = context.getColor(R.color.cyan_ios))
                     }
                     archiveDivider.setOnClickListener {
                         toastColor(
                             message = context.getString(R.string.archives) + " " + fileSizeArchives.divideToPercentText(totalStorageSpace),
-                            color = context.resources.getColor(R.color.blue_ios))
+                            color = context.getColor(R.color.blue_ios))
                     }
                     archivesProgress.setOnClickListener {
                         toastColor(
                             message = context.getString(R.string.archives) + " " + fileSizeArchives.divideToPercentText(totalStorageSpace),
-                            color = context.resources.getColor(R.color.blue_ios))
+                            color = context.getColor(R.color.blue_ios))
                     }
                     otherDivider.setOnClickListener {
                         toastColor(
                             message = context.getString(R.string.others) + " " + fileSizeOthers.divideToPercentText(totalStorageSpace),
-                            color = context.resources.getColor(R.color.purple_ios))
+                            color = context.getColor(R.color.purple_ios))
                     }
                     othersProgress.setOnClickListener {
                         toastColor(
                             message = context.getString(R.string.others) + " " + fileSizeOthers.divideToPercentText(totalStorageSpace),
-                            color = context.resources.getColor(R.color.purple_ios))
+                            color = context.getColor(R.color.purple_ios))
                     }
                     systemDivider.setOnClickListener {
                         toastColor(
                             message = context.getString(R.string.system) + " " + fileSizeSystem.divideToPercentText(totalStorageSpace),
-                            color = context.resources.getColor(R.color.gray_light_ios))
+                            color = context.getColor(R.color.gray_light_ios))
                     }
                     systemProgress.setOnClickListener {
                         toastColor(
                             message = context.getString(R.string.system) + " " + fileSizeSystem.divideToPercentText(totalStorageSpace),
-                            color = context.resources.getColor(R.color.gray_light_ios))
+                            color = context.getColor(R.color.gray_light_ios))
                     }
                     systemEndDivider.setOnClickListener {
                         toastColor(
                             message = context.getString(R.string.storage_free).capitalize(Locale.getDefault()) + " " + freeStorageSpace.divideToPercentText(totalStorageSpace),
-                            color = context.resources.getColor(R.color.gray_ios))
+                            color = context.getColor(R.color.gray_ios))
                     }
                     mainStorageProgressbar.setOnClickListener {
                         toastColor(
                             message = context.getString(R.string.storage_free).capitalize(Locale.getDefault()) + " " + freeStorageSpace.divideToPercentText(totalStorageSpace),
-                            color = context.resources.getColor(R.color.gray_ios))
+                            color = context.getColor(R.color.gray_ios))
                     }
 
                     val listSize = mutableListOf(appsSizeL, fileSizeImages, fileSizeVideos, fileSizeAudios, fileSizeDocuments, fileSizeArchives, fileSizeOthers, fileSizeSystem)
@@ -558,6 +542,7 @@ class StorageFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
     }
 
     override fun searchQueryChanged(text: String) {
+        val normalizedText = text.normalizeString()
         lastSearchedText = text
         binding.apply {
             storageSwipeRefresh.isEnabled = text.isEmpty() && activity?.config?.enablePullToRefresh != false
@@ -583,8 +568,10 @@ class StorageFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
             } else {
                 showProgressBar()
                 ensureBackgroundThread {
-                    val start = System.currentTimeMillis()
-                    val filtered = allDeviceListItems.filter { it.mName.contains(text, true) }.toMutableList() as ArrayList<ListItem>
+                    val filtered = allDeviceListItems.filter {
+                        it.mName.normalizeString().contains(normalizedText, true)
+                    }.toMutableList() as ArrayList<ListItem>
+
                     if (lastSearchedText != text) {
                         return@ensureBackgroundThread
                     }
@@ -645,16 +632,12 @@ class StorageFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
         )
 
         try {
-            if (isOreoPlus()) {
-                val queryArgs = bundleOf(
-                    ContentResolver.QUERY_ARG_SORT_COLUMNS to arrayOf(MediaStore.Files.FileColumns.DATE_MODIFIED),
-                    ContentResolver.QUERY_ARG_SORT_DIRECTION to ContentResolver.QUERY_SORT_DIRECTION_DESCENDING
-                )
-                context?.contentResolver?.query(uri, projection, queryArgs, null)
-            } else {
-                val sortOrder = "${MediaStore.Files.FileColumns.DATE_MODIFIED} DESC"
-                context?.contentResolver?.query(uri, projection, null, null, sortOrder)
-            }?.use { cursor ->
+            val queryArgs = bundleOf(
+                ContentResolver.QUERY_ARG_SORT_COLUMNS to arrayOf(MediaStore.Files.FileColumns.DATE_MODIFIED),
+                ContentResolver.QUERY_ARG_SORT_DIRECTION to ContentResolver.QUERY_SORT_DIRECTION_DESCENDING
+            )
+
+            context?.contentResolver?.query(uri, projection, queryArgs, null)?.use { cursor ->
                 if (cursor.moveToFirst()) {
                     do {
                         try {
@@ -671,7 +654,7 @@ class StorageFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
                             val path = cursor.getStringValue(MediaStore.Files.FileColumns.DATA)
                             val lastModified = cursor.getLongValue(MediaStore.Files.FileColumns.DATE_MODIFIED) * 1000
                             fileDirItems.add(FileDirItem(path, name, false, 0, size, lastModified))
-                        } catch (e: Exception) {
+                        } catch (_: Exception) {
                         }
                     } while (cursor.moveToNext())
                 }
@@ -807,21 +790,21 @@ class StorageFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
 //        return pkgInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
 //    }
 
-    private fun openAppOpsService() {
-        try {
-            val storageSettingsIntent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
-            context.startActivity(storageSettingsIntent)
-        } catch (e: Exception) {
-            context.showErrorToast(e)
-        }
-    }
+//    private fun openAppOpsService() {
+//        try {
+//            val storageSettingsIntent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
+//            context.startActivity(storageSettingsIntent)
+//        } catch (e: Exception) {
+//            context.showErrorToast(e)
+//        }
+//    }
 
     private fun checkAppOpsService(): Boolean {
         return try {
             val appOps = context.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
             val mode = appOps.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, android.os.Process.myUid(), context.packageName)
             mode == AppOpsManager.MODE_ALLOWED
-        } catch (e: PackageManager.NameNotFoundException) {
+        } catch (_: PackageManager.NameNotFoundException) {
             false
         }
     }
@@ -833,20 +816,19 @@ class StorageFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
         val storageVolumes = storageManager.storageVolumes
         var appSizeL: Long = 0
         for (storageVolume in storageVolumes) {
-            var uuid: UUID? = null
             val uuidStr = storageVolume.uuid
-            uuid = try {
+            val uuid: UUID? = try {
                 if (TextUtils.isEmpty(uuidStr)) {
                     StorageManager.UUID_DEFAULT
                 } else {
                     UUID.fromString(uuidStr)
                 }
-            } catch (e: java.lang.Exception) {
+            } catch (_: java.lang.Exception) {
                 StorageManager.UUID_DEFAULT
             }
-            var storageStats: StorageStats? = null
-            storageStats = try {
+            val storageStats: StorageStats? = try {
                 val userHandle: UserHandle = android.os.Process.myUserHandle()
+                @SuppressLint("WrongThread")
                 storageStatsManager.queryStatsForPackage(uuid!!, packageName!!, userHandle)
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
@@ -873,6 +855,21 @@ class StorageFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
         toast.view?.backgroundTintList = ColorStateList.valueOf(color)
         toast.show()
     }
+
+//    fun showSnackbar(message: String, color: Int, length: Int = Toast.LENGTH_SHORT) {
+//        val view = binding.root
+//        val snackbar = Snackbar.make(view, message, length)
+////            .setAction(R.string.support) {
+////                launchPurchase()
+////            }
+//
+//        val bgDrawable = ResourcesCompat.getDrawable(view.resources, R.drawable.button_background_16dp, null)
+//        snackbar.view.background = bgDrawable
+//        snackbar.setBackgroundTint(color)
+//        snackbar.setTextColor(color.getContrastColor())
+////        snackbar.setActionTextColor(getProperPrimaryColor())
+//        snackbar.show()
+//    }
 
     override fun myRecyclerView() = binding.storageNestedScrollview
 }

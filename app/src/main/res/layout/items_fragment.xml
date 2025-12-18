@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            <com.goodwy.filemanager.views.MySwipeRefreshLayout
                 android:id="@+id/items_swipe_refresh"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -40,7 +40,7 @@
                         app:layoutManager="com.goodwy.commons.views.MyGridLayoutManager" />
 
                 </com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller>
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            </com.goodwy.filemanager.views.MySwipeRefreshLayout>
 
             <com.goodwy.commons.views.Breadcrumbs
                 android:id="@+id/breadcrumbs"

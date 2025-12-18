@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_launcher_name_g">فایل‌ها</string>
+    <string name="storage_used">%1$s از %2$s موجود است</string>
+    <string name="system">سیستم</string>
+    <string name="apps">برنامه‌ها</string>
+    <string name="manage_storage">مدیریت فضای ذخیره‌سازی</string>
+    <string name="show_folder_icons">نمایش آیکون پوشه‌ها</string>
+    <string name="access_app_ops_service">لطفا به برنامه ما دسترسی استفاده بدهید، بدون آن نمی‌توانیم از حجم همه برنامه‌ها مطلع شویم.</string>
+    <string name="show_home_button">نمایش دکمه خانه</string>
+    <string name="cannot_be_inserted_into_itself">یک شیء را نمی‌توان در خودش جای داد</string>
+    <string name="show_only_filename">فقط نام فایل/پوشه را نمایش بده</string>
+    <string name="maximum_number_recent_files">حداکثر تعداد فایل‌های اخیر</string>
+</resources>

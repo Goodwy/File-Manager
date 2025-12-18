@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_launcher_name_g">Fișiere</string>
-    <string name="storage_used">%1$s din %2$s gratuit</string>
-    <string name="used">Folosit</string>
+    <string name="storage_used">%1$s din %2$s disponibile</string>
     <string name="system">Sistem</string>
     <string name="apps">Aplicații</string>
     <string name="manage_storage">Gestionați spațiul de stocare</string>
-    <string name="show_folder_icons">Afișați pictogramele folderului</string>
-    <string name="access_app_ops_service">Vă rugăm să acordați aplicației noastre acces de utilizare, fără el, nu putem ști dimensiunea tuturor aplicațiilor.</string>
-    <string name="show_home_button">Afișați butonul Acasă</string>
+    <string name="show_folder_icons">Afișează pictogramele folderelor</string>
+    <string name="access_app_ops_service">Vă rugăm să acordați aplicației noastre acces de utilizare; fără acesta, nu putem cunoaște dimensiunea tuturor aplicațiilor.</string>
+    <string name="show_home_button">Afișează butonul Acasă</string>
     <string name="cannot_be_inserted_into_itself">Un obiect nu poate fi inserat în sine</string>
-    <string name="show_only_filename">Afișați numai numele fișierului/folderului</string>
+    <string name="show_only_filename">Afișează doar numele fișierului/folderului</string>
+    <string name="maximum_number_recent_files">Numărul maxim de fișiere recente</string>
 </resources>

@@ -59,10 +59,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:alpha="0.6"
-            android:paddingStart="@dimen/smaller_margin"
+            android:paddingHorizontal="@dimen/smaller_margin"
             android:textSize="@dimen/smaller_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/item_date"
+            app:layout_constraintEnd_toStartOf="@+id/chevron"
             app:layout_constraintStart_toEndOf="@id/item_icon"
             app:layout_constraintTop_toBottomOf="@+id/item_name"
             app:layout_constraintVertical_bias="0.5"
@@ -90,7 +90,8 @@
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
 
         <ImageView
             android:id="@+id/divider"

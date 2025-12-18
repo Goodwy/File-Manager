@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_launcher_name_g">ফাইল</string>
+    <string name="storage_used">%2$s এর মধ্যে %1$s উপলব্ধ</string>
+    <string name="system">সিস্টেম</string>
+    <string name="apps">অ্যাপস</string>
+    <string name="manage_storage">স্টোরেজ পরিচালনা করুন</string>
+    <string name="show_folder_icons">ফোল্ডার আইকন দেখান</string>
+    <string name="access_app_ops_service">আমাদের অ্যাপ ব্যবহারের অ্যাক্সেস দিন, এটি ছাড়া আমরা সমস্ত অ্যাপের আকার জানতে পারব না।</string>
+    <string name="show_home_button">হোম বোতাম দেখান</string>
+    <string name="cannot_be_inserted_into_itself">কোনও বস্তু নিজের মধ্যে ঢোকানো যাবে না</string>
+    <string name="show_only_filename">শুধুমাত্র ফাইল/ফোল্ডারের নাম দেখান</string>
+    <string name="maximum_number_recent_files">সাম্প্রতিক ফাইলের সর্বাধিক সংখ্যা</string>
+</resources>

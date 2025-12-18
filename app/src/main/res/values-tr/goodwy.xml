@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_launcher_name_g">Dosyalar</string>
-    <string name="storage_used">2$s Ücretsiz\'in %1$s\'i</string>
-    <string name="used">Kullanılmış</string>
+    <string name="storage_used">%2$s\'den %1$s mevcut</string>
     <string name="system">Sistem</string>
     <string name="apps">Uygulamalar</string>
     <string name="manage_storage">Depolamayı yönet</string>
     <string name="show_folder_icons">Klasör simgelerini göster</string>
     <string name="access_app_ops_service">Lütfen uygulamamıza Kullanım erişimi verin, bu olmadan tüm uygulamaların boyutunu bilemeyiz.</string>
     <string name="show_home_button">Ana Sayfa düğmesini göster</string>
-    <string name="cannot_be_inserted_into_itself">Bir nesne kendi içine sokulamaz</string>
+    <string name="cannot_be_inserted_into_itself">Bir nesne kendi içine yerleştirilemez</string>
     <string name="show_only_filename">Yalnızca dosya/klasör adını göster</string>
+    <string name="maximum_number_recent_files">Son dosyaların maksimum sayısı</string>
 </resources>

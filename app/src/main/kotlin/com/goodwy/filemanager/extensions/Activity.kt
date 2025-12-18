@@ -2,18 +2,31 @@ package com.goodwy.filemanager.extensions
 
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
-import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.goodwy.commons.activities.BaseSimpleActivity
-import com.goodwy.commons.extensions.*
-import com.goodwy.commons.helpers.*
+import com.goodwy.commons.extensions.getFilenameFromPath
+import com.goodwy.commons.extensions.getMimeTypeFromUri
+import com.goodwy.commons.extensions.getParentPath
+import com.goodwy.commons.extensions.launchActivityIntent
+import com.goodwy.commons.extensions.openPathIntent
+import com.goodwy.commons.extensions.renameFile
+import com.goodwy.commons.extensions.setAsIntent
+import com.goodwy.commons.extensions.sharePathsIntent
+import com.goodwy.commons.helpers.LICENSE_AUTOFITTEXTVIEW
+import com.goodwy.commons.helpers.LICENSE_GESTURE_VIEWS
+import com.goodwy.commons.helpers.LICENSE_GLIDE
+import com.goodwy.commons.helpers.LICENSE_PATTERN
+import com.goodwy.commons.helpers.LICENSE_REPRINT
+import com.goodwy.commons.helpers.LICENSE_ZIP4J
 import com.goodwy.commons.models.FAQItem
 import com.goodwy.filemanager.BuildConfig
 import com.goodwy.filemanager.R
 import com.goodwy.filemanager.activities.SimpleActivity
-import com.goodwy.filemanager.helpers.*
+import com.goodwy.filemanager.helpers.OPEN_AS_AUDIO
+import com.goodwy.filemanager.helpers.OPEN_AS_DEFAULT
+import com.goodwy.filemanager.helpers.OPEN_AS_IMAGE
+import com.goodwy.filemanager.helpers.OPEN_AS_TEXT
+import com.goodwy.filemanager.helpers.OPEN_AS_VIDEO
 import java.io.File
 
 fun Activity.sharePaths(paths: ArrayList<String>) {
@@ -22,11 +35,9 @@ fun Activity.sharePaths(paths: ArrayList<String>) {
 
 fun Activity.tryOpenPathIntent(path: String, forceChooser: Boolean, openAsType: Int = OPEN_AS_DEFAULT, finishActivity: Boolean = false) {
     if (!forceChooser && path.endsWith(".apk", true)) {
-        val uri = if (isNougatPlus()) {
-            FileProvider.getUriForFile(this, "${BuildConfig.APPLICATION_ID}.provider", File(path))
-        } else {
-            Uri.fromFile(File(path))
-        }
+        val uri = FileProvider.getUriForFile(
+            this, "${BuildConfig.APPLICATION_ID}.provider", File(path)
+        )
 
         Intent().apply {
             action = Intent.ACTION_VIEW
@@ -82,30 +93,6 @@ fun BaseSimpleActivity.toggleItemVisibility(oldPath: String, hide: Boolean, call
     }
 }
 
-fun AppCompatActivity.showSystemUI(toggleActionBarVisibility: Boolean) {
-    if (toggleActionBarVisibility) {
-        supportActionBar?.show()
-    }
-
-    window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
-        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-}
-
-fun AppCompatActivity.hideSystemUI(toggleActionBarVisibility: Boolean) {
-    if (toggleActionBarVisibility) {
-        supportActionBar?.hide()
-    }
-
-    window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
-        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
-        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
-        View.SYSTEM_UI_FLAG_LOW_PROFILE or
-        View.SYSTEM_UI_FLAG_FULLSCREEN or
-        View.SYSTEM_UI_FLAG_IMMERSIVE
-}
-
 fun SimpleActivity.launchAbout() {
     val licenses = LICENSE_GLIDE or LICENSE_PATTERN or LICENSE_REPRINT or LICENSE_GESTURE_VIEWS or LICENSE_AUTOFITTEXTVIEW or LICENSE_ZIP4J
 
@@ -131,10 +118,21 @@ fun SimpleActivity.launchAbout() {
     val subscriptionYearIdX2 = BuildConfig.SUBSCRIPTION_YEAR_ID_X2
     val subscriptionYearIdX3 = BuildConfig.SUBSCRIPTION_YEAR_ID_X3
 
+    val flavorName = BuildConfig.FLAVOR
+    val storeDisplayName = when (flavorName) {
+        "gplay" -> "Google Play"
+        "foss" -> "FOSS"
+        "rustore" -> "RuStore"
+        else -> ""
+    }
+    val versionName = BuildConfig.VERSION_NAME
+    val fullVersionText = "$versionName ($storeDisplayName)"
+
     startAboutActivity(
         appNameId = R.string.app_name_g,
         licenseMask = licenses,
-        versionName = BuildConfig.VERSION_NAME,
+        versionName = fullVersionText,
+        flavorName = BuildConfig.FLAVOR,
         faqItems = faqItems,
         showFAQBeforeMail = true,
         productIdList = arrayListOf(productIdX1, productIdX2, productIdX3),
@@ -143,6 +141,5 @@ fun SimpleActivity.launchAbout() {
         subscriptionIdListRu = arrayListOf(subscriptionIdX1, subscriptionIdX2, subscriptionIdX3),
         subscriptionYearIdList = arrayListOf(subscriptionYearIdX1, subscriptionYearIdX2, subscriptionYearIdX3),
         subscriptionYearIdListRu = arrayListOf(subscriptionYearIdX1, subscriptionYearIdX2, subscriptionYearIdX3),
-        playStoreInstalled = isPlayStoreInstalled(),
-        ruStoreInstalled = isRuStoreInstalled())
+        )
 }

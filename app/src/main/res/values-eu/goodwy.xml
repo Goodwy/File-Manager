@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_launcher_name_g">Fitxategiak</string>
+    <string name="storage_used">%2$tik %1$s eskuragarri</string>
+    <string name="system">Sistema</string>
+    <string name="apps">Aplikazioak</string>
+    <string name="manage_storage">Kudeatu biltegiratzea</string>
+    <string name="show_folder_icons">Erakutsi karpeta ikonoak</string>
+    <string name="access_app_ops_service">Mesedez, eman gure aplikazioari Erabilera sarbidea, hori gabe ezin baitugu aplikazio guztien tamaina jakin.</string>
+    <string name="show_home_button">Erakutsi Hasiera botoia</string>
+    <string name="cannot_be_inserted_into_itself">Objektu bat ezin da bere baitan txertatu</string>
+    <string name="show_only_filename">Erakutsi fitxategi/karpetaren izena bakarrik</string>
+    <string name="maximum_number_recent_files">Azken fitxategien gehienezko kopurua</string>
+</resources>

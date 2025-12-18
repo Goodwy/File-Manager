@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_launcher_name_g">Tệp</string>
+    <string name="storage_used">%1$s trong số %2$s tệp còn trống</string>
+    <string name="system">Hệ thống</string>
+    <string name="apps">Ứng dụng</string>
+    <string name="manage_storage">Quản lý dung lượng lưu trữ</string>
+    <string name="show_folder_icons">Hiển thị biểu tượng thư mục</string>
+    <string name="access_app_ops_service">Vui lòng cấp quyền sử dụng ứng dụng của chúng tôi, nếu không, chúng tôi không thể biết kích thước của tất cả các ứng dụng.</string>
+    <string name="show_home_button">Hiển thị nút Trang chủ</string>
+    <string name="cannot_be_inserted_into_itself">Không thể chèn một đối tượng vào chính nó</string>
+    <string name="show_only_filename">Chỉ hiển thị tên tệp/thư mục</string>
+    <string name="maximum_number_recent_files">Số lượng tệp gần đây tối đa</string>
+</resources>

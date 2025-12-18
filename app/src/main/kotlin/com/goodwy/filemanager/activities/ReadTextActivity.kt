@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.print.PrintAttributes
 import android.print.PrintManager
+import android.util.Base64
 import android.view.inputmethod.EditorInfo
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
@@ -32,6 +33,7 @@ class ReadTextActivity : SimpleActivity() {
     companion object {
         private const val SELECT_SAVE_FILE_INTENT = 1
         private const val SELECT_SAVE_FILE_AND_EXIT_INTENT = 2
+        private const val KEY_UNSAVED_TEXT = "KEY_UNSAVED_TEXT"
     }
 
     private val binding by viewBinding(ActivityReadTextBinding::inflate)
@@ -49,14 +51,13 @@ class ReadTextActivity : SimpleActivity() {
     private lateinit var searchClearBtn: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        isMaterialActivity = true
         useChangeAutoTheme = false
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setupOptionsMenu()
         binding.apply {
-            updateMaterialActivityViews(readTextCoordinator, readTextView, useTransparentNavigation = true, useTopSearchMenu = false)
-            setupMaterialScrollListener(readTextHolder, readTextToolbar)
+            setupEdgeToEdge(padBottomImeAndSystem = listOf(readTextView))
+            setupMaterialScrollListener(binding.readTextHolder, binding.readTextAppbar)
         }
 
         searchQueryET = findViewById(R.id.search_query)
@@ -86,7 +87,7 @@ class ReadTextActivity : SimpleActivity() {
 
         binding.readTextView.onGlobalLayout {
             ensureBackgroundThread {
-                checkIntent(uri)
+                checkIntent(uri, savedInstanceState)
             }
         }
 
@@ -95,7 +96,14 @@ class ReadTextActivity : SimpleActivity() {
 
     override fun onResume() {
         super.onResume()
-        setupToolbar(binding.readTextToolbar, NavigationIcon.Arrow)
+        setupTopAppBar(binding.readTextAppbar, NavigationIcon.Arrow)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        if (originalText != binding.readTextView.text.toString()) {
+            outState.putString(KEY_UNSAVED_TEXT, binding.readTextView.text.toString())
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
@@ -112,22 +120,26 @@ class ReadTextActivity : SimpleActivity() {
         }
     }
 
-    override fun onBackPressed() {
+    override fun onBackPressedCompat(): Boolean {
         val hasUnsavedChanges = originalText != binding.readTextView.text.toString()
-        when {
-            isSearchActive -> closeSearch()
+        return when {
+            isSearchActive -> {
+                closeSearch()
+                true
+            }
             hasUnsavedChanges && System.currentTimeMillis() - lastSavePromptTS > SAVE_DISCARD_PROMPT_INTERVAL -> {
                 lastSavePromptTS = System.currentTimeMillis()
                 ConfirmationAdvancedDialog(this, "", R.string.save_before_closing, R.string.save, R.string.discard) {
                     if (it) {
                         saveText(true)
                     } else {
-                        super.onBackPressed()
+                        performDefaultBack()
                     }
                 }
+                true
             }
 
-            else -> super.onBackPressed()
+            else -> false
         }
     }
 
@@ -136,6 +148,7 @@ class ReadTextActivity : SimpleActivity() {
             when (menuItem.itemId) {
                 R.id.menu_search -> openSearch()
                 R.id.menu_save -> saveText()
+                R.id.menu_save_as -> saveAsText()
                 R.id.menu_open_with -> openPath(intent.dataString!!, true)
                 R.id.menu_print -> printText()
                 else -> return@setOnMenuItemClickListener false
@@ -157,10 +170,14 @@ class ReadTextActivity : SimpleActivity() {
         }, 250)
     }
 
-    private fun saveText(shouldExitAfterSaving: Boolean = false) {
+    private fun updateFilePath() {
         if (filePath.isEmpty()) {
             filePath = getRealPathFromURI(intent.data!!) ?: ""
         }
+    }
+
+    private fun saveAsText(shouldExitAfterSaving: Boolean = false) {
+        updateFilePath()
 
         if (filePath.isEmpty()) {
             SaveAsDialog(this, filePath, true) { _, filename ->
@@ -174,6 +191,7 @@ class ReadTextActivity : SimpleActivity() {
                     } else {
                         SELECT_SAVE_FILE_INTENT
                     }
+                    @Suppress("DEPRECATION")
                     startActivityForResult(this, requestCode)
                 }
             }
@@ -192,6 +210,21 @@ class ReadTextActivity : SimpleActivity() {
         }
     }
 
+    private fun saveText(shouldExitAfterSaving: Boolean = false) {
+        updateFilePath()
+
+        if (filePath.isEmpty()) {
+            saveAsText(shouldExitAfterSaving)
+        } else if (hasStoragePermission()) {
+            val file = File(filePath)
+            getFileOutputStream(file.toFileDirItem(this), true) {
+                saveTextContent(it, shouldExitAfterSaving, true)
+            }
+        } else {
+            toast(R.string.no_storage_permissions)
+        }
+    }
+
     private fun saveTextContent(outputStream: OutputStream?, shouldExitAfterSaving: Boolean, shouldOverwriteOriginalText: Boolean) {
         if (outputStream != null) {
             val currentText = binding.readTextView.text.toString()
@@ -204,7 +237,7 @@ class ReadTextActivity : SimpleActivity() {
             }
 
             if (shouldExitAfterSaving) {
-                super.onBackPressed()
+                performDefaultBack()
             }
         } else {
             toast(R.string.unknown_error_occurred)
@@ -222,7 +255,17 @@ class ReadTextActivity : SimpleActivity() {
                 }
             }
 
-            webView.loadData(binding.readTextView.text.toString(), "text/plain", "UTF-8")
+            val text = binding.readTextView.text.toString()
+            ensureBackgroundThread {
+                try {
+                    val base64 = Base64.encodeToString(text.toByteArray(), Base64.DEFAULT)
+                    runOnUiThread {
+                        webView.loadData(base64, "text/plain", "base64")
+                    }
+                } catch (e: Exception) {
+                    showErrorToast(e)
+                }
+            }
         } catch (e: Exception) {
             showErrorToast(e)
         }
@@ -242,7 +285,7 @@ class ReadTextActivity : SimpleActivity() {
         }
     }
 
-    private fun checkIntent(uri: Uri) {
+    private fun checkIntent(uri: Uri, savedInstanceState: Bundle?) {
         originalText = if (uri.scheme == "file") {
             filePath = uri.path!!
             val file = File(filePath)
@@ -271,7 +314,13 @@ class ReadTextActivity : SimpleActivity() {
         }
 
         runOnUiThread {
-            binding.readTextView.setText(originalText)
+            var textToSet = originalText
+
+            if (savedInstanceState != null) {
+                textToSet = savedInstanceState.getString(KEY_UNSAVED_TEXT, originalText)
+            }
+
+            binding.readTextView.setText(textToSet)
             if (originalText.isNotEmpty()) {
                 hideKeyboard()
             } else {

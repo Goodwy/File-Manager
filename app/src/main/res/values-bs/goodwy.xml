@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_launcher_name_g">Datoteke</string>
+    <string name="storage_used">Dostupno je %1$s od %2$s</string>
+    <string name="system">Sistem</string>
+    <string name="apps">Aplikacije</string>
+    <string name="manage_storage">Upravljanje pohranom</string>
+    <string name="show_folder_icons">Prikaži ikone mapa</string>
+    <string name="access_app_ops_service">Molimo vas da našoj aplikaciji odobrite pristup za korištenje, bez njega ne možemo znati veličinu svih aplikacija.</string>
+    <string name="show_home_button">Prikaži dugme Početna</string>
+    <string name="cannot_be_inserted_into_itself">Objekat se ne može umetnuti u sebe samog</string>
+    <string name="show_only_filename">Prikaži samo naziv datoteke/mape</string>
+    <string name="maximum_number_recent_files">Maksimalan broj nedavnih datoteka</string>
+</resources>

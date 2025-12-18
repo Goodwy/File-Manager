@@ -15,7 +15,7 @@ class SaveAsDialog(
 
     init {
         if (path.isEmpty()) {
-            path = "${activity.internalStoragePath}/${activity.getCurrentFormattedDateTime()}.txt"
+            path = "${activity.internalStoragePath}/${getCurrentFormattedDateTime()}.txt"
         }
 
         var realPath = path.getParentPath()

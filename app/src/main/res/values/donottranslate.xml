@@ -4,6 +4,23 @@
     <string name="app_name_g">Right Files</string>
 
     <!-- Release notes -->
+    <string name="release_800">
+        Compatibility updates for Android 15 &amp; 16\n
+        Added an auto dark/light theme\n
+        Changed color schemes and theme behavior\n
+        Changed the logic of styles\n
+        Changed colors of context action modes\n
+        Added voice input for search\n
+        Added the ability to disable one of the swipes\n
+        Added ‘Maximum number of recent files’ option\n
+        Added date format YYYY.MM.DD\n
+        Persian calendar added\n
+        Fixed bugs, improved stability
+    </string>
+    <string name="release_611">
+        Fix French translation\n
+        Fixed bugs, improved stability
+    </string>
     <string name="release_610">
         Changed theme logic\n
         Added ‘App icon color’ option\n

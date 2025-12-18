@@ -4,14 +4,25 @@ import android.net.Uri
 import android.os.Bundle
 import com.goodwy.commons.dialogs.EnterPasswordDialog
 import com.goodwy.commons.dialogs.FilePickerDialog
-import com.goodwy.commons.extensions.*
+import com.goodwy.commons.extensions.createDirectorySync
+import com.goodwy.commons.extensions.getDoesFilePathExist
+import com.goodwy.commons.extensions.getFileOutputStreamSync
+import com.goodwy.commons.extensions.getFilenameFromPath
+import com.goodwy.commons.extensions.getMimeType
+import com.goodwy.commons.extensions.getParentPath
+import com.goodwy.commons.extensions.getRealPathFromURI
+import com.goodwy.commons.extensions.internalStoragePath
+import com.goodwy.commons.extensions.isGone
+import com.goodwy.commons.extensions.showErrorToast
+import com.goodwy.commons.extensions.toast
+import com.goodwy.commons.extensions.viewBinding
 import com.goodwy.commons.helpers.NavigationIcon
 import com.goodwy.commons.helpers.ensureBackgroundThread
-import com.goodwy.commons.helpers.isOreoPlus
 import com.goodwy.filemanager.R
 import com.goodwy.filemanager.adapters.DecompressItemsAdapter
 import com.goodwy.filemanager.databinding.ActivityDecompressBinding
 import com.goodwy.filemanager.extensions.config
+import com.goodwy.filemanager.extensions.setLastModified
 import com.goodwy.filemanager.models.ListItem
 import net.lingala.zip4j.exception.ZipException
 import net.lingala.zip4j.exception.ZipException.Type
@@ -31,16 +42,16 @@ class DecompressActivity : SimpleActivity() {
     private var uri: Uri? = null
     private var password: String? = null
     private var passwordDialog: EnterPasswordDialog? = null
+    private var filename = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        isMaterialActivity = true
         useChangeAutoTheme = false
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setupOptionsMenu()
         binding.apply {
-            updateMaterialActivityViews(decompressCoordinator, decompressList, useTransparentNavigation = true, useTopSearchMenu = false)
-            setupMaterialScrollListener(decompressList, decompressToolbar)
+            setupEdgeToEdge(padBottomSystem = listOf(decompressList))
+            setupMaterialScrollListener(binding.decompressList, binding.decompressAppbar)
         }
 
         uri = intent.data
@@ -52,13 +63,14 @@ class DecompressActivity : SimpleActivity() {
         password = savedInstanceState?.getString(PASSWORD, null)
 
         val realPath = getRealPathFromURI(uri!!)
-        binding.decompressToolbar.title = realPath?.getFilenameFromPath() ?: Uri.decode(uri.toString().getFilenameFromPath())
+        filename = realPath?.getFilenameFromPath() ?: Uri.decode(uri.toString().getFilenameFromPath())
+        binding.decompressToolbar.title = filename
         setupFilesList()
     }
 
     override fun onResume() {
         super.onResume()
-        setupToolbar(binding.decompressToolbar, NavigationIcon.Arrow)
+        setupTopAppBar(binding.decompressAppbar, NavigationIcon.Arrow)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -76,16 +88,18 @@ class DecompressActivity : SimpleActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        if (currentPath.isEmpty()) {
-            super.onBackPressed()
+    override fun onBackPressedCompat(): Boolean {
+        return if (currentPath.isEmpty()) {
+            false
         } else {
             val newPath = if (currentPath.contains("/")) currentPath.getParentPath() else ""
             updateCurrentPath(newPath)
+            true
         }
     }
 
     private fun setupFilesList() {
+        allFiles.clear()
         fillAllListItems(uri!!) {
             updateCurrentPath("")
         }
@@ -147,7 +161,7 @@ class DecompressActivity : SimpleActivity() {
             zipInputStream.use {
                 while (true) {
                     val entry = zipInputStream.nextEntry ?: break
-                    val filename = title.toString().substringBeforeLast(".")
+                    val filename = filename.substringBeforeLast(".")
                     val parent = "$destination/$filename"
                     val newPath = "$parent/${entry.fileName.trimEnd('/')}"
 
@@ -161,7 +175,9 @@ class DecompressActivity : SimpleActivity() {
                         continue
                     }
 
-                    val isVulnerableForZipPathTraversal = !File(newPath).canonicalPath.startsWith(parent)
+                    val outputFile = File(newPath)
+
+                    val isVulnerableForZipPathTraversal = !outputFile.canonicalPath.startsWith(parent)
                     if (isVulnerableForZipPathTraversal) {
                         continue
                     }
@@ -177,6 +193,7 @@ class DecompressActivity : SimpleActivity() {
                         fos!!.write(buffer, 0, count)
                     }
                     fos!!.close()
+                    outputFile.setLastModified(entry)
                 }
 
                 toast(R.string.decompression_successful)
@@ -229,7 +246,7 @@ class DecompressActivity : SimpleActivity() {
                 } else {
                     break
                 }
-            } catch (ignored: Exception) {
+            } catch (_: Exception) {
                 break
             }
 
@@ -249,7 +266,7 @@ class DecompressActivity : SimpleActivity() {
                 passwordDialog = null
             }
 
-            val lastModified = if (isOreoPlus()) zipEntry.lastModifiedTime else 0
+            val lastModified = zipEntry.lastModifiedTime
             val filename = zipEntry.fileName.removeSuffix("/")
             allFiles.add(
                 ListItem(

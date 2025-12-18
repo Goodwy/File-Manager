@@ -11,25 +11,19 @@ import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 import android.media.RingtoneManager
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.os.Handler
 import android.provider.Settings
+import android.speech.RecognizerIntent
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.view.ScrollingView
-import androidx.core.widget.NestedScrollView
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.goodwy.commons.dialogs.ConfirmationAdvancedDialog
 import com.goodwy.commons.dialogs.RadioGroupDialog
 import com.goodwy.commons.extensions.*
 import com.goodwy.commons.helpers.*
-import com.goodwy.commons.models.FAQItem
 import com.goodwy.commons.models.RadioItem
 import com.goodwy.commons.models.Release
-import com.goodwy.commons.views.MySearchMenu
 import com.goodwy.filemanager.BuildConfig
 import com.goodwy.filemanager.R
 import com.goodwy.filemanager.adapters.ViewPagerAdapter
@@ -49,15 +43,18 @@ import com.goodwy.filemanager.helpers.FOLDER_HOME
 import com.goodwy.filemanager.helpers.FOLDER_INTERNAL
 import com.goodwy.filemanager.helpers.MAX_COLUMN_COUNT
 import com.goodwy.filemanager.helpers.RootHelpers
+import com.goodwy.filemanager.helpers.whatsNewList
 import com.goodwy.filemanager.interfaces.ItemOperationsListener
 import com.stericson.RootTools.RootTools
 import me.grantland.widget.AutofitHelper
 import java.io.File
+import java.util.Objects
 
 class MainActivity : SimpleActivity() {
+    override var isSearchBarEnabled = true
+
     companion object {
         private const val BACK_PRESS_TIMEOUT = 5000
-        private const val MANAGE_STORAGE_RC = 201
         private const val USAGE_STATS_RC = 202
         private const val PICKED_PATH = "picked_path"
     }
@@ -72,19 +69,19 @@ class MainActivity : SimpleActivity() {
     private var mStoredDateFormat = ""
     private var mStoredTimeFormat = ""
     private var mStoredShowTabs = 0
-    private var currentOldScrollY = 0
+    private var mStoredBackgroundColor = 0
+    private var isSpeechToTextAvailable = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        isMaterialActivity = true
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         appLaunched(BuildConfig.APPLICATION_ID)
         setupOptionsMenu()
         refreshMenuItems()
-        config.tabsChanged = false
+        config.needRestart = false
         mTabsToShow = getTabsList()
 
-        if (!config.wasStorageAnalysisTabAdded && isOreoPlus()) {
+        if (!config.wasStorageAnalysisTabAdded) {
             config.wasStorageAnalysisTabAdded = true
             if (config.showTabs and TAB_STORAGE_ANALYSIS == 0) {
                 config.showTabs += TAB_STORAGE_ANALYSIS
@@ -94,10 +91,13 @@ class MainActivity : SimpleActivity() {
         storeStateVariables()
         setupTabs()
 
-        updateMaterialActivityViews(binding.mainCoordinator, null, useTransparentNavigation = false, useTopSearchMenu = true)
         binding.mainMenu.updateTitle(getString(R.string.app_launcher_name_g))
+        setupEdgeToEdge(
+            padBottomImeAndSystem = listOf(binding.mainTabsHolder)
+        )
 
         if (savedInstanceState == null) {
+            config.temporarilyShowHidden = false
             initFragments()
             tryInitFileManager()
             checkWhatsNewDialog()
@@ -108,7 +108,7 @@ class MainActivity : SimpleActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (mStoredShowTabs != config.showTabs || config.tabsChanged) {
+        if (mStoredShowTabs != config.showTabs || config.needRestart || mStoredBackgroundColor != getProperBackgroundColor()) {
             config.lastUsedViewPagerPage = 0
             finish()
             startActivity(intent)
@@ -119,9 +119,12 @@ class MainActivity : SimpleActivity() {
         setupTabColors()
         binding.mainMenu.updateColors(getStartRequiredStatusBarColor(), scrollingView?.computeVerticalScrollOffset() ?: 0)
 
+        val useSurfaceColor = isDynamicTheme() && !isSystemInDarkMode()
+        val backgroundColor = if (useSurfaceColor) getSurfaceColor() else getProperBackgroundColor()
+        if (useSurfaceColor) binding.mainHolder.setBackgroundColor(getSurfaceColor())
         getAllFragments().forEach {
             it?.onResume(getProperTextColor())
-            it?.setBackgroundColor(getProperBackgroundColor())
+            it?.setBackgroundColor(backgroundColor)
         }
 
         if (mStoredFontSize != config.fontSize) {
@@ -154,40 +157,36 @@ class MainActivity : SimpleActivity() {
         super.onPause()
         storeStateVariables()
         config.lastUsedViewPagerPage = binding.mainViewPager.currentItem
-        config.tabsChanged = false
+        config.needRestart = false
         val getCurrentFragment = getCurrentFragment()
         if (getCurrentFragment is ItemsFragment) config.lastFolder = getCurrentFragment.currentPath
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        config.temporarilyShowHidden = false
-        config.tabsChanged = false
-        val getCurrentFragment = getCurrentFragment()
-        if (getCurrentFragment is ItemsFragment) config.lastFolder = getCurrentFragment.currentPath
-    }
-
-    override fun onBackPressed() {
+    override fun onBackPressedCompat(): Boolean {
         val currentFragment = getCurrentFragment()
         if (binding.mainMenu.isSearchOpen) {
             binding.mainMenu.closeSearch()
+            return true
         } else if (currentFragment is RecentsFragment || currentFragment is StorageFragment) {
             appLockManager.lock()
-            super.onBackPressed()
-        } else if ((currentFragment as ItemsFragment)!!.getBreadcrumbs()!!.getItemCount() <= 1) {
+            return false
+        } else if ((currentFragment as ItemsFragment).getBreadcrumbs().getItemCount() <= 1) {
             if (!wasBackJustPressed && config.pressBackTwice) {
                 wasBackJustPressed = true
                 toast(R.string.press_back_again)
                 Handler().postDelayed({
                     wasBackJustPressed = false
                 }, BACK_PRESS_TIMEOUT.toLong())
+                return true
             } else {
                 appLockManager.lock()
                 finish()
+                return true
             }
         } else {
             currentFragment.getBreadcrumbs().removeBreadcrumb()
             openPath(currentFragment.getBreadcrumbs().getLastItem().path)
+            return true
         }
     }
 
@@ -197,14 +196,12 @@ class MainActivity : SimpleActivity() {
         val currentViewType = config.getFolderViewType(currentFragment.currentPath)
         val favorites = config.favorites
 
-        binding.mainMenu.getToolbar().menu.apply {
+        binding.mainMenu.requireToolbar().menu.apply {
             findItem(R.id.sort).isVisible = currentFragment is ItemsFragment
             findItem(R.id.change_view_type).isVisible = currentFragment !is StorageFragment
             findItem(R.id.change_view_type).setIcon(getViewTypeIcon())
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val properTextColor = getProperTextColor()
-                findItem(R.id.change_view_type).iconTintList = ColorStateList.valueOf(properTextColor)
-            }
+            val properTextColor = getProperTextColor()
+            findItem(R.id.change_view_type).iconTintList = ColorStateList.valueOf(properTextColor)
 
             findItem(R.id.add_favorite).isVisible = currentFragment is ItemsFragment && !favorites.contains(currentFragment.currentPath)
             findItem(R.id.remove_favorite).isVisible = currentFragment is ItemsFragment && favorites.contains(currentFragment.currentPath)
@@ -221,19 +218,16 @@ class MainActivity : SimpleActivity() {
 
             findItem(R.id.column_count).isVisible = currentViewType == VIEW_TYPE_GRID && currentFragment !is StorageFragment
 
-            //findItem(R.id.more_apps_from_us).isVisible = !resources.getBoolean(R.bool.hide_google_relations)
             findItem(R.id.settings).isVisible = !isCreateDocumentIntent
             findItem(R.id.about).isVisible = !isCreateDocumentIntent
         }
     }
 
     private fun setViewTypeIcon() {
-        binding.mainMenu.getToolbar().menu.findItem(R.id.change_view_type).apply {
+        binding.mainMenu.requireToolbar().menu.findItem(R.id.change_view_type).apply {
             setIcon(getViewTypeIcon())
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val properTextColor = getProperTextColor()
-                iconTintList = ColorStateList.valueOf(properTextColor)
-            }
+            val properTextColor = getProperTextColor()
+            iconTintList = ColorStateList.valueOf(properTextColor)
         }
     }
 
@@ -246,9 +240,19 @@ class MainActivity : SimpleActivity() {
 
     private fun setupOptionsMenu() {
         binding.mainMenu.apply {
-            getToolbar().inflateMenu(R.menu.menu)
+            requireToolbar().inflateMenu(R.menu.menu)
             toggleHideOnScroll(false)
+
+            if (baseConfig.useSpeechToText) {
+                isSpeechToTextAvailable = isSpeechToTextAvailable()
+                showSpeechToText = isSpeechToTextAvailable
+            }
+
             setupMenu()
+
+            onSpeechToTextClickListener = {
+                speechToText()
+            }
 
             onSearchClosedListener = {
                 getAllFragments().forEach {
@@ -258,9 +262,10 @@ class MainActivity : SimpleActivity() {
 
             onSearchTextChangedListener = { text ->
                 getCurrentFragment()?.searchQueryChanged(text)
+                clearSearch()
             }
 
-            getToolbar().setOnMenuItemClickListener { menuItem ->
+            requireToolbar().setOnMenuItemClickListener { menuItem ->
                 if (getCurrentFragment() == null) {
                     return@setOnMenuItemClickListener true
                 }
@@ -277,7 +282,6 @@ class MainActivity : SimpleActivity() {
                     R.id.temporarily_show_hidden -> tryToggleTemporarilyShowHidden()
                     R.id.stop_showing_hidden -> tryToggleTemporarilyShowHidden()
                     R.id.column_count -> changeColumnCount()
-                    R.id.more_apps_from_us -> launchMoreAppsFromUsIntent()
                     R.id.settings -> launchSettings()
                     R.id.about -> launchAbout()
                     else -> return@setOnMenuItemClickListener false
@@ -298,10 +302,10 @@ class MainActivity : SimpleActivity() {
 
         if (binding.mainViewPager.adapter == null) {
             binding.mainViewPager.onGlobalLayout {
-                restorePath(path)
+                openPath(path, true)
             }
         } else {
-            restorePath(path)
+            openPath(path, true)
         }
     }
 
@@ -309,20 +313,23 @@ class MainActivity : SimpleActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
         super.onActivityResult(requestCode, resultCode, resultData)
         isAskingPermissions = false
-        if (requestCode == MANAGE_STORAGE_RC && isRPlus()) {
-            actionOnPermission?.invoke(Environment.isExternalStorageManager())
-        }
         if (requestCode == USAGE_STATS_RC) {
             if (checkAppOpsService()) {
                 finish()
                 startActivity(intent)
                 return
             } else appOpsServiceDialog()
-        }
-    }
+        } else if (requestCode == REQUEST_CODE_SPEECH_INPUT && resultCode == RESULT_OK) {
+            if (resultData != null) {
+                val res: ArrayList<String> =
+                    resultData.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS) as ArrayList<String>
 
-    private fun restorePath(path: String) {
-        openPath(path, true)
+                val speechToText =  Objects.requireNonNull(res)[0]
+                if (speechToText.isNotEmpty()) {
+                    binding.mainMenu.setText(speechToText)
+                }
+            }
+        }
     }
 
     private fun storeStateVariables() {
@@ -332,6 +339,7 @@ class MainActivity : SimpleActivity() {
             mStoredTimeFormat = context.getTimeFormat()
             mStoredShowTabs = showTabs
         }
+        mStoredBackgroundColor = getProperBackgroundColor()
     }
 
     private fun tryInitFileManager() {
@@ -350,38 +358,6 @@ class MainActivity : SimpleActivity() {
             } else {
                 toast(R.string.no_storage_permissions)
                 finish()
-            }
-        }
-    }
-
-    @SuppressLint("InlinedApi")
-    private fun handleStoragePermission(callback: (granted: Boolean) -> Unit) {
-        actionOnPermission = null
-        if (hasStoragePermission()) {
-            callback(true)
-        } else {
-            if (isRPlus()) {
-                ConfirmationAdvancedDialog(this, "", R.string.access_storage_prompt, R.string.ok, 0, false) { success ->
-                    if (success) {
-                        isAskingPermissions = true
-                        actionOnPermission = callback
-                        try {
-                            val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
-                            intent.addCategory("android.intent.category.DEFAULT")
-                            intent.data = Uri.parse("package:$packageName")
-                            startActivityForResult(intent, MANAGE_STORAGE_RC)
-                        } catch (e: Exception) {
-                            showErrorToast(e)
-                            val intent = Intent()
-                            intent.action = Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
-                            startActivityForResult(intent, MANAGE_STORAGE_RC)
-                        }
-                    } else {
-                        finish()
-                    }
-                }
-            } else {
-                handlePermission(PERMISSION_WRITE_STORAGE, callback)
             }
         }
     }
@@ -454,54 +430,21 @@ class MainActivity : SimpleActivity() {
         val myRecyclerView = getCurrentFragment()?.myRecyclerView()
         scrollingView = myRecyclerView
         val scrollingViewOffset = scrollingView?.computeVerticalScrollOffset() ?: 0
-        currentOldScrollY = scrollingViewOffset
-        binding.mainMenu.updateColors(getStartRequiredStatusBarColor(), scrollingViewOffset)
-        setupSearchMenuScrollListenerNew(myRecyclerView, binding.mainMenu)
-    }
 
-    private fun setupSearchMenuScrollListenerNew(scrollingView: ScrollingView?, searchMenu: MySearchMenu) {
-        this.scrollingView = scrollingView
-        this.mySearchMenu = searchMenu
-        if (scrollingView is RecyclerView) {
-            scrollingView.setOnScrollChangeListener { _, _, _, _, _ ->
-                val newScrollY = scrollingView.computeVerticalScrollOffset()
-                if (newScrollY == 0 || currentOldScrollY == 0) scrollingChanged(newScrollY)
-                currentScrollY = newScrollY
-                currentOldScrollY = currentScrollY
-            }
-        } else if (scrollingView is NestedScrollView) {
-            scrollingView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
-                if (scrollY == 0 || currentOldScrollY == 0) scrollingChanged(scrollY)
-                currentOldScrollY = oldScrollY
-            }
-        }
-    }
+        val useSurfaceColor = isDynamicTheme() && !isSystemInDarkMode()
+        val backgroundColor = if (useSurfaceColor) getSurfaceColor() else getProperBackgroundColor()
+        val statusBarColor = if (config.changeColourTopBar) getRequiredStatusBarColor(useSurfaceColor) else backgroundColor
 
-    private fun scrollingChanged(newScrollY: Int) {
-        if (newScrollY > 0 && currentOldScrollY == 0) {
-            val colorFrom = window.statusBarColor
-            val colorTo = getColoredMaterialStatusBarColor()
-            animateMySearchMenuColors(colorFrom, colorTo)
-        } else if (newScrollY == 0 && currentOldScrollY > 0) {
-            val colorFrom = window.statusBarColor
-            val colorTo = getRequiredStatusBarColor()
-            animateMySearchMenuColors(colorFrom, colorTo)
-        }
-    }
-
-    private fun getStartRequiredStatusBarColor(): Int {
-        val scrollingViewOffset = scrollingView?.computeVerticalScrollOffset() ?: 0
-        return if (scrollingViewOffset == 0) {
-            getProperBackgroundColor()
-        } else {
-            getColoredMaterialStatusBarColor()
-        }
+        binding.mainMenu.updateColors(statusBarColor, scrollingViewOffset)
+        setupSearchMenuScrollListener(myRecyclerView, binding.mainMenu, useSurfaceColor)
     }
 
     private fun setupTabs() {
         binding.mainTabsHolder.removeAllTabs()
         val action = intent.action
-        val isPickFileIntent = action == RingtoneManager.ACTION_RINGTONE_PICKER || action == Intent.ACTION_GET_CONTENT || action == Intent.ACTION_PICK
+        val isPickFileIntent = action == RingtoneManager.ACTION_RINGTONE_PICKER
+            || action == Intent.ACTION_GET_CONTENT
+            || action == Intent.ACTION_PICK
         val isCreateDocumentIntent = action == Intent.ACTION_CREATE_DOCUMENT
 
         if (isPickFileIntent) {
@@ -560,8 +503,9 @@ class MainActivity : SimpleActivity() {
                 updateBottomTabItemColors(inactiveView, false, getDeselectedTabDrawableIds()[index])
             }
 
-            val bottomBarColor = getBottomNavigationBackgroundColor()
-            updateNavigationBarColor(bottomBarColor)
+            val bottomBarColor =
+                if (isDynamicTheme() && !isSystemInDarkMode()) getColoredMaterialStatusBarColor()
+                else getSurfaceColor()
             mainTabsHolder.setBackgroundColor(bottomBarColor)
         }
     }
@@ -603,7 +547,7 @@ class MainActivity : SimpleActivity() {
         if (config.OTGPath.isNotEmpty() && config.OTGPath == path.trimEnd('/')) {
             newPath = path
         } else if (file.exists() && !file.isDirectory) {
-            newPath = file.parent
+            newPath = file.parent!!
         } else if (!file.exists() && !isPathOnOTG(newPath)) {
             newPath = internalStoragePath
         }
@@ -880,11 +824,7 @@ class MainActivity : SimpleActivity() {
     private fun getTabsList() = arrayListOf(TAB_RECENT_FILES, TAB_FILES, TAB_STORAGE_ANALYSIS)
 
     private fun checkWhatsNewDialog() {
-        arrayListOf<Release>().apply {
-            add(Release(500, R.string.release_500))
-            add(Release(501, R.string.release_501))
-            add(Release(510, R.string.release_510))
-            add(Release(610, R.string.release_610))
+        whatsNewList().apply {
             checkWhatsNew(this, BuildConfig.VERSION_CODE)
         }
     }

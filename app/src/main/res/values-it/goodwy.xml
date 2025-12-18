@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_launcher_name_g">Files</string>
-    <string name="storage_used">%1$s di %2$s libero</string>
-    <string name="used">Usato</string>
+    <string name="app_launcher_name_g">File</string>
+    <string name="storage_used">%1$s di %2$s disponibili</string>
     <string name="system">Sistema</string>
     <string name="apps">Applicazioni</string>
-    <string name="manage_storage">Gestire lo storage</string>
+    <string name="manage_storage">Gestisci l\'archiviazione</string>
     <string name="show_folder_icons">Mostra le icone delle cartelle</string>
-    <string name="access_app_ops_service">Per favore concedete alla nostra applicazione l\'accesso Usage, senza il quale non possiamo conoscere le dimensioni di tutte le applicazioni.</string>
+    <string name="access_app_ops_service">Concedi l\'accesso all\'utilizzo della nostra app, senza di esso non possiamo conoscere le dimensioni di tutte le app.</string>
     <string name="show_home_button">Mostra il pulsante Home</string>
     <string name="cannot_be_inserted_into_itself">Un oggetto non può essere inserito in se stesso</string>
     <string name="show_only_filename">Mostra solo il nome del file/cartella</string>
+    <string name="maximum_number_recent_files">Numero massimo di file recenti</string>
 </resources>

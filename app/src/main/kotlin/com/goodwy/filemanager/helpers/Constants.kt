@@ -4,6 +4,8 @@ import com.goodwy.commons.helpers.TAB_FILES
 import com.goodwy.commons.helpers.TAB_RECENT_FILES
 import com.goodwy.commons.helpers.TAB_STORAGE_ANALYSIS
 import com.goodwy.commons.models.FileDirItem
+import com.goodwy.commons.models.Release
+import com.goodwy.filemanager.R
 import com.goodwy.filemanager.models.ListItem
 
 const val MAX_COLUMN_COUNT = 15
@@ -31,6 +33,7 @@ const val DEFAULT_FOLDER = "default_folder"
 const val SHOW_EXPANDED_DETAILS = "show_expanded_details"
 const val SHOW_EXPANDED_DETAILS_PREFIX = "show_expanded_details_storage_"
 const val SHOW_ONLY_FILENAME = "show_only_filename"
+const val QUERY_LIMIT_RECENT = "query_limit_recent"
 
 // default folder
 const val FOLDER_LAST_USED = 0
@@ -62,6 +65,7 @@ const val PRIMARY_VOLUME_NAME_OLD = "external"
 // swiped left action
 const val SWIPE_RIGHT_ACTION = "swipe_right_action"
 const val SWIPE_LEFT_ACTION = "swipe_left_action"
+const val SWIPE_ACTION_NONE = 0
 const val SWIPE_ACTION_DELETE = 2
 const val SWIPE_ACTION_BLOCK = 4 //!! isNougatPlus()
 const val SWIPE_ACTION_CALL = 5
@@ -72,6 +76,12 @@ const val SWIPE_ACTION_MOVE = 9
 const val SWIPE_ACTION_INFO = 10
 const val SWIPE_VIBRATION = "swipe_vibration"
 const val SWIPE_RIPPLE = "swipe_ripple"
+
+// Query limit recent
+const val QUERY_LIMIT_SMALL_VALUE = 20
+const val QUERY_LIMIT_MEDIUM_VALUE = 50
+const val QUERY_LIMIT_NORMAL_VALUE = 100
+const val QUERY_LIMIT_BIG_VALUE = 200
 
 // what else should we count as an audio except "audio/*" mimetype
 val extraAudioMimeTypes = arrayListOf("application/ogg")
@@ -112,4 +122,15 @@ fun getListItemsFromFileDirItems(fileDirItems: ArrayList<FileDirItem>): ArrayLis
         listItems.add(listItem)
     }
     return listItems
+}
+
+fun whatsNewList(): ArrayList<Release> {
+    return arrayListOf<Release>().apply {
+        add(Release(500, R.string.release_500))
+        add(Release(501, R.string.release_501))
+        add(Release(510, R.string.release_510))
+        add(Release(610, R.string.release_610))
+        add(Release(611, R.string.release_611))
+        add(Release(800, R.string.release_800))
+    }
 }

@@ -75,9 +75,4 @@
         android:icon="@drawable/ic_info_vector"
         android:title="@string/about"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/more_apps_from_us"
-        android:title="@string/more_apps_from_us"
-        android:visible="false"
-        app:showAsAction="never" />
 </menu>

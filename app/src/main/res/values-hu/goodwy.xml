@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_launcher_name_g">Fájlok</string>
-    <string name="storage_used">%1$s of %2$s Free</string>
-    <string name="used">Használt</string>
+    <string name="storage_used">%2$-ból %1$s elérhető</string>
     <string name="system">Rendszer</string>
     <string name="apps">Alkalmazások</string>
-    <string name="manage_storage">Tároló kezelése</string>
-    <string name="show_folder_icons">Mappák ikonjainak megjelenítése</string>
-    <string name="access_app_ops_service">Kérem, adjon hozzáférést az alkalmazásunknak Usage hozzáféréshez, enélkül nem tudjuk az összes alkalmazás méretét.</string>
-    <string name="show_home_button">Home gomb megjelenítése</string>
+    <string name="manage_storage">Tárhely kezelése</string>
+    <string name="show_folder_icons">Mappa ikonok megjelenítése</string>
+    <string name="access_app_ops_service">Kérjük, biztosítson hozzáférést az alkalmazásunknak a használathoz, enélkül nem tudjuk az összes alkalmazás méretét.</string>
+    <string name="show_home_button">Kezdőlap gomb megjelenítése</string>
     <string name="cannot_be_inserted_into_itself">Egy objektum nem illeszthető be önmagába</string>
     <string name="show_only_filename">Csak a fájl/mappa nevének megjelenítése</string>
+    <string name="maximum_number_recent_files">Legutóbbi fájlok maximális száma</string>
 </resources>

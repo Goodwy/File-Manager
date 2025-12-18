@@ -6,22 +6,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/settings_toolbar"
+    <com.goodwy.commons.views.MyAppBarLayout
+        android:id="@+id/settings_appbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/color_primary"
-        app:title="@string/settings"
-        app:titleTextAppearance="@style/AppTheme.ActionBar.TitleTextStyle" />
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/settings_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:menu="@menu/menu_settings"
+            app:title="@string/settings"
+            app:titleTextAppearance="@style/AppTheme.ActionBar.TitleTextStyle" />
+    </com.goodwy.commons.views.MyAppBarLayout>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/settings_nested_scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingHorizontal="@dimen/activity_padding_left_right"
-        android:layout_marginTop="?attr/actionBarSize"
         android:fillViewport="true"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:id="@+id/settings_holder"
@@ -29,70 +35,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:id="@+id/settings_purchase_thank_you_holder"
+            <com.goodwy.commons.views.PurchaseThankYouItem
+                android:id="@+id/settingsPurchaseThankYouHolder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:paddingEnd="@dimen/normal_margin"
-                tools:ignore="RtlSymmetry">
-
-                <ImageView
-                    android:id="@+id/purchase_logo"
-                    android:layout_width="@dimen/app_logo"
-                    android:layout_height="@dimen/app_logo"
-                    android:layout_marginStart="@dimen/section_margin"
-                    android:layout_marginTop="@dimen/normal_margin"
-                    android:layout_marginBottom="@dimen/normal_margin"
-                    android:background="@drawable/button_white_bg"
-                    android:elevation="8dp"
-                    android:padding="10dp"
-                    android:src="@drawable/ic_plus_support"
-                    android:tint="@color/color_primary"
-                    android:contentDescription="@string/donate"
-                    tools:ignore="UseAppTint" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/section_margin"
-                    android:layout_toEndOf="@+id/purchase_logo"
-                    android:layout_centerVertical="true">
-
-                    <com.goodwy.commons.views.MyTextView
-                        android:id="@+id/settings_purchase_thank_you"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/action_support_project"/>
-
-                    <com.goodwy.commons.views.MyTextView
-                        android:id="@+id/about_app_version"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/settings_purchase_thank_you"
-                        android:layout_marginTop="@dimen/tiny_margin"
-                        android:alpha="0.6"
-                        android:text="@string/pref_pay_summary"
-                        android:textSize="12sp" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/moreButton"
-                        style="@style/AppTheme.Button.Chip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="20dp"
-                        android:layout_below="@+id/about_app_version"
-                        android:layout_marginTop="@dimen/medium_margin"
-                        android:alpha="0.4"
-                        android:background="@drawable/button_gray_bg"
-                        android:saveEnabled="false"
-                        android:text="@string/learn_more"
-                        android:textSize="10sp"
-                        android:textAllCaps="true"
-                        android:textColor="@color/default_text_color"
-                        tools:ignore="SmallSp" />
-                    <!--style="@style/AppTheme.Button.Chip"-->
-                </RelativeLayout>
-            </RelativeLayout>
+                android:layout_marginTop="@dimen/medium_margin"/>
 
             <TextView
                 android:id="@+id/settings_appearance_label"
@@ -132,17 +79,6 @@
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:id="@+id/settings_material_design_3_holder"
-                        style="@style/SettingsHolderSwitchStyle">
-
-                        <com.goodwy.commons.views.MyMaterialSwitch
-                            android:id="@+id/settings_material_design_3"
-                            style="@style/SettingsSwitchStyle"
-                            android:text="@string/material_design_3"
-                            app:switchPadding="@dimen/bigger_margin" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
                         android:id="@+id/settingsOverflowIconHolder"
                         style="@style/SettingsHolderStyle">
 
@@ -166,6 +102,31 @@
                             android:contentDescription="@string/settings_icon"
                             android:src="@drawable/ic_more_horiz" />
 
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/settingsFloatingButtonStyleHolder"
+                        style="@style/SettingsHolderStyle">
+
+                        <com.goodwy.commons.views.MyTextView
+                            android:id="@+id/settingsFloatingButtonStyleLabel"
+                            style="@style/SettingsTextLabelStyle"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/settingsFloatingButtonStyle"
+                            android:layout_marginEnd="@dimen/normal_margin"
+                            android:text="@string/floating_button_style" />
+
+                        <ImageView
+                            android:id="@+id/settingsFloatingButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="@dimen/settings_margin"
+                            android:clickable="false"
+                            android:contentDescription="@string/floating_button_style"
+                            android:src="@drawable/ic_circle_filled" />
                     </RelativeLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -587,6 +548,26 @@
                     android:orientation="vertical">
 
                     <RelativeLayout
+                        android:id="@+id/settingsQueryLimitRecentHolder"
+                        style="@style/SettingsHolderStyle">
+
+                        <com.goodwy.commons.views.MyTextView
+                            android:id="@+id/settingsQueryLimitRecentLabel"
+                            style="@style/SettingsTextLabelStyle"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/settingsQueryLimitRecent"
+                            android:text="@string/maximum_number_recent_files"/>
+
+                        <com.goodwy.commons.views.MyTextView
+                            android:id="@+id/settingsQueryLimitRecent"
+                            style="@style/SettingsTextValueStyle"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="@dimen/settings_margin"
+                            tools:text="≤50"/>
+                    </RelativeLayout>
+
+                    <RelativeLayout
                         android:id="@+id/settings_show_folder_icon_holder"
                         style="@style/SettingsHolderSwitchStyle">
 
@@ -606,7 +587,26 @@
                             style="@style/SettingsSwitchStyle"
                             android:text="@string/show_dividers"
                             app:switchPadding="@dimen/bigger_margin" />
+                    </RelativeLayout>
 
+                    <RelativeLayout
+                        android:id="@+id/settingsThumbnailsSizeHolder"
+                        style="@style/SettingsHolderStyle">
+
+                        <com.goodwy.commons.views.MyTextView
+                            android:id="@+id/settingsThumbnailsSizeLabel"
+                            style="@style/SettingsTextLabelStyle"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/settingsThumbnailsSize"
+                            android:text="@string/contact_thumbnails_size"/>
+
+                        <com.goodwy.commons.views.MyTextView
+                            android:id="@+id/settingsThumbnailsSize"
+                            style="@style/SettingsTextValueStyle"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="@dimen/settings_margin"
+                            tools:text="@string/medium"/>
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -618,7 +618,6 @@
                             style="@style/SettingsSwitchStyle"
                             android:text="@string/show_only_filename"
                             app:switchPadding="@dimen/bigger_margin" />
-
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -770,6 +769,7 @@
                             android:id="@+id/settings_about_version"
                             style="@style/SettingsTextValueStyle"
                             android:layout_toStartOf="@+id/settingsAboutChevron"
+                            android:maxWidth="@dimen/settings_value_width_long"
                             android:layout_centerVertical="true"
                             tools:text="Version: 1.0.0"/>
 

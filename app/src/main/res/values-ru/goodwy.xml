@@ -2,13 +2,13 @@
 <resources>
     <string name="app_launcher_name_g">Файлы</string>
     <string name="storage_used">Доступно %1$s из %2$s</string>
-    <string name="used">Занято</string>
     <string name="system">Система</string>
     <string name="apps">Приложения</string>
-    <string name="manage_storage">Управлять хранилищем</string>
-    <string name="show_folder_icons">Показывать иконки на папках</string>
-    <string name="access_app_ops_service">Предоставьте приложению доступ к истории использования, без него мы не сможем узнать размер всех приложений.</string>
-    <string name="show_home_button">Показывать кнопку Домой</string>
+    <string name="manage_storage">Управление хранилищем</string>
+    <string name="show_folder_icons">Показывать иконки папок</string>
+    <string name="access_app_ops_service">Пожалуйста, предоставьте нашему приложению доступ к использованию, без него мы не сможем узнать размер всех приложений.</string>
+    <string name="show_home_button">Показать кнопку «Домой»</string>
     <string name="cannot_be_inserted_into_itself">Объект не может быть вставлен сам в себя</string>
-    <string name="show_only_filename">Показать только имя файла/папки</string>
+    <string name="show_only_filename">Показывать только имя файла/папки</string>
+    <string name="maximum_number_recent_files">Максимальное количество последних файлов</string>
 </resources>

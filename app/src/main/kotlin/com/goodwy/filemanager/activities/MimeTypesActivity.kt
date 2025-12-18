@@ -22,6 +22,7 @@ import com.goodwy.filemanager.databinding.ActivityMimetypesBinding
 import com.goodwy.filemanager.dialogs.ChangeSortingDialog
 import com.goodwy.filemanager.dialogs.ChangeViewTypeDialog
 import com.goodwy.filemanager.extensions.config
+import com.goodwy.filemanager.extensions.isPathInHiddenFolder
 import com.goodwy.filemanager.extensions.tryOpenPathIntent
 import com.goodwy.filemanager.helpers.*
 import com.goodwy.filemanager.interfaces.ItemOperationsListener
@@ -40,15 +41,14 @@ class MimeTypesActivity : SimpleActivity(), ItemOperationsListener {
     private var currentVolume = if (isQPlus()) PRIMARY_VOLUME_NAME else PRIMARY_VOLUME_NAME_OLD
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        isMaterialActivity = true
         useChangeAutoTheme = false
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setupOptionsMenu()
         refreshMenuItems()
         binding.apply {
-            updateMaterialActivityViews(mimetypesCoordinator, mimetypesList, useTransparentNavigation = true, useTopSearchMenu = false)
-            setupMaterialScrollListener(mimetypesList, mimetypesToolbar)
+            setupEdgeToEdge(padBottomImeAndSystem = listOf(mimetypesList))
+            setupMaterialScrollListener(binding.mimetypesList, binding.mimetypesAppbar)
         }
 
         currentMimeType = intent.getStringExtra(SHOW_MIMETYPE) ?: return
@@ -82,7 +82,7 @@ class MimeTypesActivity : SimpleActivity(), ItemOperationsListener {
 
     override fun onResume() {
         super.onResume()
-        setupToolbar(binding.mimetypesToolbar, NavigationIcon.Arrow, searchMenuItem = searchMenuItem)
+        setupTopAppBar(binding.mimetypesAppbar, NavigationIcon.Arrow, searchMenuItem = searchMenuItem)
     }
 
     private fun refreshMenuItems() {
@@ -131,10 +131,11 @@ class MimeTypesActivity : SimpleActivity(), ItemOperationsListener {
     override fun selectedPaths(paths: ArrayList<String>) {}
 
     fun searchQueryChanged(text: String) {
-        val searchText = text.trim()
-        lastSearchedText = searchText
+        val normalizedText = text.normalizeString()
+        val searchNormalizedText = normalizedText.trim()
+        lastSearchedText = searchNormalizedText
         when {
-            searchText.isEmpty() -> {
+            searchNormalizedText.isEmpty() -> {
                 binding.apply {
                     mimetypesFastscroller.beVisible()
                     getRecyclerAdapter()?.updateItems(storedItems)
@@ -143,7 +144,7 @@ class MimeTypesActivity : SimpleActivity(), ItemOperationsListener {
                 }
             }
 
-            searchText.length == 1 -> {
+            searchNormalizedText.length == 1 -> {
                 binding.apply {
                     mimetypesFastscroller.beGone()
                     mimetypesPlaceholder.beVisible()
@@ -153,11 +154,13 @@ class MimeTypesActivity : SimpleActivity(), ItemOperationsListener {
 
             else -> {
                 ensureBackgroundThread {
-                    if (lastSearchedText != searchText) {
+                    if (lastSearchedText != searchNormalizedText) {
                         return@ensureBackgroundThread
                     }
 
-                    val listItems = storedItems.filter { it.name.contains(searchText, true) } as ArrayList<ListItem>
+                    val listItems = storedItems.filter {
+                        it.name.normalizeString().contains(searchNormalizedText, true)
+                    } as ArrayList<ListItem>
 
                     runOnUiThread {
                         getRecyclerAdapter()?.updateItems(listItems, text)
@@ -283,7 +286,10 @@ class MimeTypesActivity : SimpleActivity(), ItemOperationsListener {
                 try {
                     val fullMimetype = cursor.getStringValue(MediaStore.Files.FileColumns.MIME_TYPE)?.lowercase(Locale.getDefault()) ?: return@queryCursor
                     val name = cursor.getStringValue(MediaStore.Files.FileColumns.DISPLAY_NAME)
-                    if (!showHidden && name.startsWith(".")) {
+                    val path = cursor.getStringValue(MediaStore.Files.FileColumns.DATA)
+
+                    val isHiddenFile = name.startsWith(".")
+                    if (!showHidden && (isHiddenFile || path.isPathInHiddenFolder())) {
                         return@queryCursor
                     }
 
@@ -292,7 +298,6 @@ class MimeTypesActivity : SimpleActivity(), ItemOperationsListener {
                         return@queryCursor
                     }
 
-                    val path = cursor.getStringValue(MediaStore.Files.FileColumns.DATA)
                     val lastModified = cursor.getLongValue(MediaStore.Files.FileColumns.DATE_MODIFIED) * 1000
 
                     val mimetype = fullMimetype.substringBefore("/")

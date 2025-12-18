@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_launcher_name_g">Fayllar</string>
-    <string name="storage_used">%1$s of %2$s Pulsuz</string>
-    <string name="used">İstifadə olunub</string>
+    <string name="storage_used">%1$s of %2$s mövcuddur</string>
     <string name="system">Sistem</string>
-    <string name="apps">Tətbiqlər</string>
+    <string name="apps">Proqramlar</string>
     <string name="manage_storage">Yaddaşı idarə edin</string>
-    <string name="show_folder_icons">Qovluq nişanlarını göstər</string>
-    <string name="access_app_ops_service">Lütfən, tətbiqimizə İstifadə girişi verin, onsuz biz bütün tətbiqlərin ölçüsünü bilə bilmərik.</string>
-    <string name="show_home_button">Ev düyməsini göstər</string>
-    <string name="cannot_be_inserted_into_itself">Obyekt özünə daxil edilə bilməz</string>
-    <string name="show_only_filename">Yalnız fayl/qovluq adını göstər</string>
+    <string name="show_folder_icons">Qovluq nişanlarını göstərin</string>
+    <string name="access_app_ops_service">Zəhmət olmasa tətbiqimizə İstifadə girişi verin, onsuz biz bütün proqramların ölçüsünü bilə bilmərik.</string>
+    <string name="show_home_button">Əsas səhifə düyməsini göstərin</string>
+    <string name="cannot_be_inserted_into_itself">Bir obyekti özünə daxil etmək olmaz</string>
+    <string name="show_only_filename">Yalnız fayl/qovluq adını göstərin</string>
+    <string name="maximum_number_recent_files">Son faylların maksimum sayı</string>
 </resources>

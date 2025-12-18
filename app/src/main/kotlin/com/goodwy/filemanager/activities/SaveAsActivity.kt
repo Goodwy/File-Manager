@@ -19,7 +19,21 @@ class SaveAsActivity : SimpleActivity() {
         useChangeAutoTheme = false
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        tryInitFileManager()
+    }
 
+    private fun tryInitFileManager() {
+        handleStoragePermission { granted ->
+            if (granted) {
+                saveAsDialog()
+            } else {
+                toast(R.string.no_storage_permissions)
+                finish()
+            }
+        }
+    }
+
+    private fun saveAsDialog() {
         if (intent.action == Intent.ACTION_SEND && intent.extras?.containsKey(Intent.EXTRA_STREAM) == true) {
             FilePickerDialog(this, pickFile = false, showHidden = config.shouldShowHidden(), showFAB = true, showFavoritesButton = true, useAccentColor = true) {
                 val destination = it
@@ -36,10 +50,14 @@ class SaveAsActivity : SimpleActivity() {
                                 }
                             }
 
-                            val source = intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM)
-                            val mimeType = source!!.toString().getMimeType()
+                            val source = intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM)!!
+                            val originalFilename = getFilenameFromContentUri(source)
+                                ?: source.toString().getFilenameFromPath()
+                            val filename = sanitizeFilename(originalFilename)
+                            val mimeType = contentResolver.getType(source)
+                                ?: intent.type?.takeIf { it != "*/*" }
+                                ?: filename.getMimeType()
                             val inputStream = contentResolver.openInputStream(source)
-                            val filename = source.toString().getFilenameFromPath()
 
                             val destinationPath = "$destination/$filename"
                             val outputStream = getFileOutputStreamSync(destinationPath, mimeType, null)!!
@@ -62,6 +80,11 @@ class SaveAsActivity : SimpleActivity() {
 
     override fun onResume() {
         super.onResume()
-        setupToolbar(binding.activitySaveAsToolbar, NavigationIcon.Arrow)
+        setupTopAppBar(binding.activitySaveAsAppbar, NavigationIcon.Arrow)
+    }
+
+    private fun sanitizeFilename(filename: String): String {
+        return filename.replace("[/\\\\<>:\"|?*\u0000-\u001F]".toRegex(), "_")
+            .takeIf { it.isNotBlank() } ?: "unnamed_file"
     }
 }
