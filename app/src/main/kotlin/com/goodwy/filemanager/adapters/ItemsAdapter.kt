@@ -13,6 +13,7 @@ import android.net.Uri
 import android.util.TypedValue
 import android.view.*
 import android.widget.*
+import androidx.appcompat.widget.PopupMenu
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.RecyclerView
@@ -67,6 +68,7 @@ class ItemsAdapter(
     private val isPickMultipleIntent: Boolean,
     private val swipeRefreshLayout: SwipeRefreshLayout?,
     canHaveIndividualViewType: Boolean = true,
+    usePath: String? = null,
     itemClick: (Any) -> Unit,
 ) : MyRecyclerViewAdapter(activity, recyclerView, itemClick), ItemTouchHelperContract,
     RecyclerViewFastScroller.OnPopupTextUpdate {
@@ -83,7 +85,11 @@ class ItemsAdapter(
     private var timeFormat = ""
 
     private val config = activity.config
-    private val viewType = if (canHaveIndividualViewType) {
+    private val viewType = if (usePath != null) {
+        config.getFolderViewType(
+            path = usePath
+        )
+    } else if (canHaveIndividualViewType) {
         config.getFolderViewType(
             path = listItems.firstOrNull { !it.isSectionTitle }?.mPath?.getParentPath().orEmpty()
         )
@@ -1204,6 +1210,13 @@ class ItemsAdapter(
                             (Resources.getSystem().displayMetrics.widthPixels / fileColumnCnt / 2.5).toInt()
                         swipeLeftIconHolder!!.setWidth(width)
                         swipeRightIconHolder!!.setWidth(width)
+                    } else {
+                        val halfScreenWidth = activity.resources.displayMetrics.widthPixels / activity.config.swipeToActionWidth
+                        val swipeWidth = activity.resources.getDimension(com.goodwy.commons.R.dimen.swipe_width)
+                        if (swipeWidth > halfScreenWidth) {
+                            swipeRightIconHolder!!.setWidth(halfScreenWidth)
+                            swipeLeftIconHolder!!.setWidth(halfScreenWidth)
+                        }
                     }
 
                     itemSwipe!!.useHapticFeedback = activity.config.swipeVibration
@@ -1283,7 +1296,7 @@ class ItemsAdapter(
     fun initDrawables() {
         folderDrawable =
             resources.getColoredDrawableWithColor(R.drawable.ic_folder_color, accentColor)
-        folderDrawable.alpha = 180
+        if (!activity.isNewApp()) folderDrawable.alpha = 180
         fileDrawable = resources.getDrawable(R.drawable.ic_file_generic)
         fileDrawables = getFilePlaceholderDrawables(activity)
     }

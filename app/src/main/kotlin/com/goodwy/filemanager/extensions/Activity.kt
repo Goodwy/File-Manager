@@ -2,11 +2,14 @@ package com.goodwy.filemanager.extensions
 
 import android.app.Activity
 import android.content.Intent
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.FileProvider
 import com.goodwy.commons.activities.BaseSimpleActivity
+import com.goodwy.commons.dialogs.NewAppDialog
 import com.goodwy.commons.extensions.getFilenameFromPath
 import com.goodwy.commons.extensions.getMimeTypeFromUri
 import com.goodwy.commons.extensions.getParentPath
+import com.goodwy.commons.extensions.isNewApp
 import com.goodwy.commons.extensions.launchActivityIntent
 import com.goodwy.commons.extensions.openPathIntent
 import com.goodwy.commons.extensions.renameFile
@@ -123,7 +126,7 @@ fun SimpleActivity.launchAbout() {
         "gplay" -> "Google Play"
         "foss" -> "FOSS"
         "rustore" -> "RuStore"
-        else -> ""
+        else -> "Huawei"
     }
     val versionName = BuildConfig.VERSION_NAME
     val fullVersionText = "$versionName ($storeDisplayName)"
@@ -141,5 +144,24 @@ fun SimpleActivity.launchAbout() {
         subscriptionIdListRu = arrayListOf(subscriptionIdX1, subscriptionIdX2, subscriptionIdX3),
         subscriptionYearIdList = arrayListOf(subscriptionYearIdX1, subscriptionYearIdX2, subscriptionYearIdX3),
         subscriptionYearIdListRu = arrayListOf(subscriptionYearIdX1, subscriptionYearIdX2, subscriptionYearIdX3),
-        )
+    )
+}
+
+fun Activity.newAppRecommendation() {
+    if (resources.getBoolean(com.goodwy.commons.R.bool.is_foss)) {
+        if (!isNewApp()) {
+            if ((0..config.newAppRecommendationDialogCount).random() == 2) {
+                val packageName = "reganamelif.ywdoog.ved".reversed()
+                NewAppDialog(
+                    activity = this,
+                    packageName = packageName,
+                    title = getString(com.goodwy.strings.R.string.notification_of_new_application),
+                    text = "Alright Files",
+                    drawable = AppCompatResources.getDrawable(this, com.goodwy.commons.R.drawable.ic_files_new),
+                    showSubtitle = true
+                ) {
+                }
+            }
+        }
+    }
 }

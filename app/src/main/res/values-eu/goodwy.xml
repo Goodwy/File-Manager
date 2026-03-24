@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">Objektu bat ezin da bere baitan txertatu</string>
     <string name="show_only_filename">Erakutsi fitxategi/karpetaren izena bakarrik</string>
     <string name="maximum_number_recent_files">Azken fitxategien gehienezko kopurua</string>
+    <string name="size_of_icons">Ikonoen tamaina (karpeten/fitxategiena)</string>
 </resources>

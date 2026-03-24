@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">物体不能插入自身。</string>
     <string name="show_only_filename">仅显示文件/文件夹名称</string>
     <string name="maximum_number_recent_files">最近文件的最大数量</string>
+    <string name="size_of_icons">图标大小（文件夹/文件）</string>
 </resources>

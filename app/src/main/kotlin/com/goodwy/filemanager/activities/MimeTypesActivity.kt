@@ -360,7 +360,14 @@ class MimeTypesActivity : SimpleActivity(), ItemOperationsListener {
         }
 
         storedItems = items
-        ItemsAdapter(this as SimpleActivity, storedItems, this, binding.mimetypesList, false, null) {
+        ItemsAdapter(
+            this as SimpleActivity,
+            storedItems,
+            this,
+            binding.mimetypesList,
+            false,
+            null
+        ) {
             tryOpenPathIntent((it as ListItem).path, false)
         }.apply {
             setupZoomListener(zoomListener)

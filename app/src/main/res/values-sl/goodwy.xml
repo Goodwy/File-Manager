@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">Predmeta ni mogoče vstaviti samega sebe</string>
     <string name="show_only_filename">Prikaži samo ime datoteke/mape</string>
     <string name="maximum_number_recent_files">Največje število nedavnih datotek</string>
+    <string name="size_of_icons">Velikost ikon (map/datotek)</string>
 </resources>

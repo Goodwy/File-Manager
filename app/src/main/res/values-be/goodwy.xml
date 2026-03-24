@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">Аб\'ект нельга ўставіць у сябе</string>
     <string name="show_only_filename">Паказваць толькі назву файла/тэчкі</string>
     <string name="maximum_number_recent_files">Максімальная колькасць нядаўніх файлаў</string>
+    <string name="size_of_icons">Памер значкоў (папак/файлаў)</string>
 </resources>

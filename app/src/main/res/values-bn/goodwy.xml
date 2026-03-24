@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">কোনও বস্তু নিজের মধ্যে ঢোকানো যাবে না</string>
     <string name="show_only_filename">শুধুমাত্র ফাইল/ফোল্ডারের নাম দেখান</string>
     <string name="maximum_number_recent_files">সাম্প্রতিক ফাইলের সর্বাধিক সংখ্যা</string>
+    <string name="size_of_icons">আইকনের আকার (ফোল্ডার/ফাইলের)</string>
 </resources>

@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">لا يمكن إدراج الكائن في نفسه</string>
     <string name="show_only_filename">إظهار اسم الملف/المجلد فقط</string>
     <string name="maximum_number_recent_files">الحد الأقصى لعدد الملفات الأخيرة</string>
+    <string name="size_of_icons">حجم الأيقونات (للمجلدات/الملفات)</string>
 </resources>

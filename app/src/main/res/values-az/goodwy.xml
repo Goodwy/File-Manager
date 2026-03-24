@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">Bir obyekti özünə daxil etmək olmaz</string>
     <string name="show_only_filename">Yalnız fayl/qovluq adını göstərin</string>
     <string name="maximum_number_recent_files">Son faylların maksimum sayı</string>
+    <string name="size_of_icons">Nişanların ölçüsü (qovluqların/faylların)</string>
 </resources>

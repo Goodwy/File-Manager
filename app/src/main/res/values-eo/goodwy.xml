@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">Objekto ne povas esti enigita en sin mem</string>
     <string name="show_only_filename">Montri nur dosiernomon/dosierujon</string>
     <string name="maximum_number_recent_files">Maksimuma nombro de lastatempaj dosieroj</string>
+    <string name="size_of_icons">Grandeco de ikonoj (de dosierujoj/dosieroj)</string>
 </resources>

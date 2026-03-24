@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">کسی چیز کو اپنے اندر نہیں ڈالا جا سکتا</string>
     <string name="show_only_filename">صرف فائل/فولڈر کا نام دکھائیں۔</string>
     <string name="maximum_number_recent_files">حالیہ فائلوں کی زیادہ سے زیادہ تعداد</string>
+    <string name="size_of_icons">شبیہیں کا سائز (فولڈرز/فائلوں کا)</string>
 </resources>

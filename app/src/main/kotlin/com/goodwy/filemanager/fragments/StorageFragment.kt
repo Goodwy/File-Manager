@@ -21,7 +21,6 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.children
 import androidx.core.view.isVisible
@@ -44,15 +43,15 @@ import com.goodwy.filemanager.extensions.getAllVolumeNames
 import com.goodwy.filemanager.helpers.*
 import com.goodwy.filemanager.interfaces.ItemOperationsListener
 import com.goodwy.filemanager.models.ListItem
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 
-
-class StorageFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment<MyViewPagerFragment.StorageInnerBinding>(context, attributeSet),
-    ItemOperationsListener {
+class StorageFragment(
+    context: Context,
+    attributeSet: AttributeSet
+) : MyViewPagerFragment<MyViewPagerFragment.StorageInnerBinding>(context, attributeSet), ItemOperationsListener {
     //private val SIZE_DIVIDER = 100000
     private var allDeviceListItems = ArrayList<ListItem>()
     private var lastSearchedText = ""
@@ -313,7 +312,8 @@ class StorageFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
         try {
             context.queryCursor(uri, projection) { cursor ->
                 try {
-                    val mimeType = cursor.getStringValue(MediaStore.Files.FileColumns.MIME_TYPE)?.lowercase(Locale.getDefault())
+                    val mimeType =
+                        cursor.getStringValue(MediaStore.Files.FileColumns.MIME_TYPE)?.lowercase(Locale.getDefault())
                     val size = cursor.getLongValue(MediaStore.Files.FileColumns.SIZE)
                     if (mimeType == null) {
                         if (size > 0 && size != 4096L) {
@@ -370,7 +370,8 @@ class StorageFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
             if (storageVolume.isPrimary) {
                 // internal storage
                 volumeName = if (isQPlus()) PRIMARY_VOLUME_NAME else PRIMARY_VOLUME_NAME_OLD
-                val storageStatsManager = context.getSystemService(AppCompatActivity.STORAGE_STATS_SERVICE) as StorageStatsManager
+                val storageStatsManager =
+                    context.getSystemService(AppCompatActivity.STORAGE_STATS_SERVICE) as StorageStatsManager
                 val uuid = StorageManager.UUID_DEFAULT
                 totalStorageSpace = storageStatsManager.getTotalBytes(uuid)
                 freeStorageSpace = storageStatsManager.getFreeBytes(uuid)
@@ -393,10 +394,12 @@ class StorageFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
             post {
                 volumes[volumeName]?.apply {
                     getSizes(volumeName)
-                    totalSpace.text = String.format(context.getString(R.string.storage_used), freeStorageSpace.formatSizeThousand(), totalStorageSpace.formatSizeThousand())
+                    totalSpace.text =
+                        String.format(context.getString(R.string.storage_used), freeStorageSpace.formatSizeThousand(), totalStorageSpace.formatSizeThousand())
 
                     val appsSizeL = if (storageVolume.isPrimary) appsSizeLong else 0
-                    val fileSizeSystem = totalStorageSpace - freeStorageSpace - appsSizeL - fileSizeImages - fileSizeVideos - fileSizeAudios - fileSizeDocuments - fileSizeArchives - fileSizeOthers
+                    val fileSizeSystem =
+                        totalStorageSpace - freeStorageSpace - appsSizeL - fileSizeImages - fileSizeVideos - fileSizeAudios - fileSizeDocuments - fileSizeArchives - fileSizeOthers
                     val widthMax = mainStorageProgressbar.width
 
                     if (storageVolume.isPrimary) {

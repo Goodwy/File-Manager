@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">ஒரு பொருளைத் தன்னுள் செருக முடியாது.</string>
     <string name="show_only_filename">கோப்பு/கோப்புறை பெயரை மட்டும் காட்டு</string>
     <string name="maximum_number_recent_files">சமீபத்திய கோப்புகளின் அதிகபட்ச எண்ணிக்கை</string>
+    <string name="size_of_icons">ஐகான்களின் அளவு (கோப்புறைகள்/கோப்புகளின்)</string>
 </resources>

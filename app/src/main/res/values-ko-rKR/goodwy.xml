@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">객체는 자기 자신에 삽입될 수 없습니다.</string>
     <string name="show_only_filename">파일/폴더 이름만 표시</string>
     <string name="maximum_number_recent_files">최근 파일의 최대 개수</string>
+    <string name="size_of_icons">폴더/파일 아이콘 크기</string>
 </resources>

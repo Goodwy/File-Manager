@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">Un objecte no es pot inserir en si mateix</string>
     <string name="show_only_filename">Mostra només el nom del fitxer/carpeta</string>
     <string name="maximum_number_recent_files">Nombre màxim de fitxers recents</string>
+    <string name="size_of_icons">Mida de les icones (de carpetes/fitxers)</string>
 </resources>

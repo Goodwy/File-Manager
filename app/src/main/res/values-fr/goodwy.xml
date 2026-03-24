@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">Un objet ne peut pas être inséré dans lui-même.</string>
     <string name="show_only_filename">Afficher uniquement le nom du fichier/dossier</string>
     <string name="maximum_number_recent_files">Nombre maximal de fichiers récents</string>
+    <string name="size_of_icons">Taille des icônes (des dossiers/fichiers)</string>
 </resources>

@@ -34,6 +34,7 @@ import com.goodwy.filemanager.dialogs.ChangeViewTypeDialog
 import com.goodwy.filemanager.dialogs.InsertFilenameDialog
 import com.goodwy.filemanager.extensions.config
 import com.goodwy.filemanager.extensions.launchAbout
+import com.goodwy.filemanager.extensions.newAppRecommendation
 import com.goodwy.filemanager.extensions.tryOpenPathIntent
 import com.goodwy.filemanager.fragments.ItemsFragment
 import com.goodwy.filemanager.fragments.MyViewPagerFragment
@@ -42,6 +43,7 @@ import com.goodwy.filemanager.fragments.StorageFragment
 import com.goodwy.filemanager.helpers.FOLDER_HOME
 import com.goodwy.filemanager.helpers.FOLDER_INTERNAL
 import com.goodwy.filemanager.helpers.MAX_COLUMN_COUNT
+import com.goodwy.filemanager.helpers.RECENTS_FRAGMENT_PATH
 import com.goodwy.filemanager.helpers.RootHelpers
 import com.goodwy.filemanager.helpers.whatsNewList
 import com.goodwy.filemanager.interfaces.ItemOperationsListener
@@ -91,7 +93,10 @@ class MainActivity : SimpleActivity() {
         storeStateVariables()
         setupTabs()
 
-        binding.mainMenu.updateTitle(getString(R.string.app_launcher_name_g))
+        binding.mainMenu.apply {
+            updateTitle(getAppLauncherName())
+            searchBeVisibleIf(config.showSearchBar)
+        }
         setupEdgeToEdge(
             padBottomImeAndSystem = listOf(binding.mainTabsHolder)
         )
@@ -151,6 +156,8 @@ class MainActivity : SimpleActivity() {
         }
         binding.mainViewPager.setPageTransformer(true, animation)
         binding.mainViewPager.setPagingEnabled(!config.useSwipeToAction)
+
+        if (mHasStoragePermission) newAppRecommendation()
     }
 
     override fun onPause() {
@@ -639,13 +646,21 @@ class MainActivity : SimpleActivity() {
                     it?.refreshFragment()
                 }
             }
-        } else {
-            if (config.viewType == VIEW_TYPE_GRID) config.viewType = VIEW_TYPE_LIST else config.viewType = VIEW_TYPE_GRID
+        } else if (getCurrentFragment() is RecentsFragment) {
+            val recentsViewType = config.getFolderViewType(path = RECENTS_FRAGMENT_PATH)
+            val recentsViewTypeNew = if (recentsViewType == VIEW_TYPE_GRID) VIEW_TYPE_LIST else VIEW_TYPE_GRID
+            config.saveFolderViewType(RECENTS_FRAGMENT_PATH, recentsViewTypeNew)
+
             setViewTypeIcon()
-            getAllFragments().forEach {
-                it?.refreshFragment()
-            }
+            getCurrentFragment()?.refreshFragment()
         }
+//        } else {
+//            if (config.viewType == VIEW_TYPE_GRID) config.viewType = VIEW_TYPE_LIST else config.viewType = VIEW_TYPE_GRID
+//            setViewTypeIcon()
+//            getAllFragments().forEach {
+//                it?.refreshFragment()
+//            }
+//        }
     }
 
     private fun tryToggleTemporarilyShowHidden() {

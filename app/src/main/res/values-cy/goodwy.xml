@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">Ni ellir mewnosod gwrthrych ynddo\'i hun</string>
     <string name="show_only_filename">Dangos enw ffeil/ffolder yn unig</string>
     <string name="maximum_number_recent_files">Uchafswm nifer o ffeiliau diweddar</string>
+    <string name="size_of_icons">Maint eiconau (ffolderi/ffeiliau)</string>
 </resources>

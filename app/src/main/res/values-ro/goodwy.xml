@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">Un obiect nu poate fi inserat în sine</string>
     <string name="show_only_filename">Afișează doar numele fișierului/folderului</string>
     <string name="maximum_number_recent_files">Numărul maxim de fișiere recente</string>
+    <string name="size_of_icons">Dimensiunea pictogramelor (ale folderelor/fișierelor)</string>
 </resources>

@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">Suatu objek tidak dapat dimasukkan ke dalam dirinya sendiri</string>
     <string name="show_only_filename">Tampilkan hanya nama file/folder</string>
     <string name="maximum_number_recent_files">Jumlah maksimum file terbaru</string>
+    <string name="size_of_icons">Ukuran ikon (folder/file)</string>
 </resources>

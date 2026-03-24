@@ -34,6 +34,7 @@ const val SHOW_EXPANDED_DETAILS = "show_expanded_details"
 const val SHOW_EXPANDED_DETAILS_PREFIX = "show_expanded_details_storage_"
 const val SHOW_ONLY_FILENAME = "show_only_filename"
 const val QUERY_LIMIT_RECENT = "query_limit_recent"
+const val RECENTS_FRAGMENT_PATH = "recents_fragment_path"
 
 // default folder
 const val FOLDER_LAST_USED = 0
@@ -131,6 +132,6 @@ fun whatsNewList(): ArrayList<Release> {
         add(Release(510, R.string.release_510))
         add(Release(610, R.string.release_610))
         add(Release(611, R.string.release_611))
-        add(Release(800, R.string.release_800))
+        add(Release(810, R.string.release_810))
     }
 }

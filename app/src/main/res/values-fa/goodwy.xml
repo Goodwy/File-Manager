@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">یک شیء را نمی‌توان در خودش جای داد</string>
     <string name="show_only_filename">فقط نام فایل/پوشه را نمایش بده</string>
     <string name="maximum_number_recent_files">حداکثر تعداد فایل‌های اخیر</string>
+    <string name="size_of_icons">اندازه آیکون‌ها (پوشه‌ها/فایل‌ها)</string>
 </resources>

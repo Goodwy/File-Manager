@@ -77,7 +77,6 @@ class SettingsActivity : SimpleActivity() {
 
         setupPurchaseThankYou()
         setupCustomizeColors()
-        setupOverflowIcon()
         setupFloatingButtonStyle()
 
         setupDefaultFolder()
@@ -95,6 +94,7 @@ class SettingsActivity : SimpleActivity() {
         setupShowHomeButton()
 
         setupUseSwipeToAction()
+        setupSwipeWidth()
         setupSwipeVibration()
         setupSwipeRipple()
         setupSwipeRightAction()
@@ -109,12 +109,15 @@ class SettingsActivity : SimpleActivity() {
         setupFileDeletionPasswordProtection()
         setupEnableRootAccess()
 
+        setupOverflowIcon()
+        setupShowSearchBar()
+        setupChangeColourTopBar()
+
         setupQueryLimitRecent()
         setupShowFolderIcon()
         setupShowDividers()
         setupThumbnailsSize()
         setupShowOnlyFilename()
-        setupChangeColourTopBar()
 
         setupTipJar()
         setupAbout()
@@ -129,6 +132,7 @@ class SettingsActivity : SimpleActivity() {
                 settingsSwipeGesturesLabel,
                 settingsFileOperationsLabel,
                 settingsSecurityLabel,
+                settingsTopAppBarLabel,
                 settingsListViewLabel,
                 settingsOtherLabel
             ).forEach {
@@ -144,6 +148,7 @@ class SettingsActivity : SimpleActivity() {
                 settingsSwipeGesturesHolder,
                 settingsFileOperationsHolder,
                 settingsSecurityHolder,
+                settingsTopAppBarHolder,
                 settingsListViewHolder,
                 settingsOtherHolder
             ).forEach {
@@ -443,8 +448,43 @@ class SettingsActivity : SimpleActivity() {
         }
     }
 
+    private fun setupSwipeWidth() = binding.apply {
+        settingsSwipeWidthHolder.beVisibleIf(config.useSwipeToAction)
+        settingsSwipeWidth.text = getSwipeWidthText(config.swipeToActionWidth)
+        settingsSwipeWidthHolder.setOnClickListener {
+            val items = arrayListOf(
+                RadioItem(2, "1/2"),
+                RadioItem(3, "1/3"),
+                RadioItem(4, "1/4"),
+                RadioItem(5, "1/5"),
+            )
+
+            RadioGroupIconDialog(
+                this@SettingsActivity,
+                items,
+                config.swipeToActionWidth,
+                R.string.swipe_width,
+                defaultItemId = 2
+            ) {
+                config.swipeToActionWidth = it as Int
+                config.needRestart = true
+                settingsSwipeWidth.text = getSwipeWidthText(config.swipeToActionWidth)
+            }
+        }
+    }
+
+    private fun getSwipeWidthText(swipeWidth: Int): String {
+        return when (swipeWidth) {
+            3 -> "1/3"
+            4 -> "1/4"
+            5 -> "1/5"
+            else -> "1/2"
+        }
+    }
+
     private fun updateSwipeToActionVisible() {
         binding.apply {
+            settingsSwipeWidthHolder.beVisibleIf(config.useSwipeToAction)
             settingsSwipeVibrationHolder.beVisibleIf(config.useSwipeToAction)
             settingsSwipeRippleHolder.beVisibleIf(config.useSwipeToAction)
             settingsSwipeRightActionHolder.beVisibleIf(config.useSwipeToAction)
@@ -717,7 +757,7 @@ class SettingsActivity : SimpleActivity() {
         val pro = isPro()
         settingsThumbnailsSizeHolder.beVisibleIf(config.showContactThumbnails)
         settingsThumbnailsSizeHolder.alpha = if (pro) 1f else 0.4f
-        settingsThumbnailsSizeLabel.text = addLockedLabelIfNeeded(R.string.contact_thumbnails_size, pro)
+        settingsThumbnailsSizeLabel.text = addLockedLabelIfNeeded(R.string.size_of_icons, pro)
         settingsThumbnailsSize.text = getThumbnailsSizeText()
         settingsThumbnailsSizeHolder.setOnClickListener {
             if (pro) {
@@ -728,7 +768,7 @@ class SettingsActivity : SimpleActivity() {
                     RadioItem(FONT_SIZE_EXTRA_LARGE, getString(R.string.extra_large), CONTACT_THUMBNAILS_SIZE_EXTRA_LARGE)
                 )
 
-                RadioGroupDialog(this@SettingsActivity, items, config.contactThumbnailsSize, R.string.contact_thumbnails_size) {
+                RadioGroupDialog(this@SettingsActivity, items, config.contactThumbnailsSize, R.string.size_of_icons) {
                     config.contactThumbnailsSize = it as Int
                     settingsThumbnailsSize.text = getThumbnailsSizeText()
                     config.needRestart = true
@@ -762,6 +802,15 @@ class SettingsActivity : SimpleActivity() {
         }
     }
 
+    private fun setupShowSearchBar() = binding.apply {
+        settingsShowSearchBar.isChecked = config.showSearchBar
+        settingsShowSearchBarHolder.setOnClickListener {
+            settingsShowSearchBar.toggle()
+            config.showSearchBar = settingsShowSearchBar.isChecked
+            config.needRestart = true
+        }
+    }
+
     private fun setupChangeColourTopBar() {
         binding.apply {
             settingsChangeColourTopBar.isChecked = config.changeColourTopBar
@@ -790,7 +839,7 @@ class SettingsActivity : SimpleActivity() {
             "gplay" -> "Google Play"
             "foss" -> "FOSS"
             "rustore" -> "RuStore"
-            else -> ""
+            else -> "Huawei"
         }
         val versionName = BuildConfig.VERSION_NAME
         val fullVersionText = "Version: $versionName ($storeDisplayName)"

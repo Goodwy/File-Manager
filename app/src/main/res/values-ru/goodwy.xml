@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">Объект не может быть вставлен сам в себя</string>
     <string name="show_only_filename">Показывать только имя файла/папки</string>
     <string name="maximum_number_recent_files">Максимальное количество последних файлов</string>
+    <string name="size_of_icons">Размер значков (папок/файлов)</string>
 </resources>

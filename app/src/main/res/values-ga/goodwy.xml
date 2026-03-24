@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">Ní féidir réad a chur isteach ann féin</string>
     <string name="show_only_filename">Taispeáin ainm comhaid/fillteáin amháin</string>
     <string name="maximum_number_recent_files">Uasmhéid na gcomhad le déanaí</string>
+    <string name="size_of_icons">Méid na ndeilbhíní (fillteán/comhad)</string>
 </resources>

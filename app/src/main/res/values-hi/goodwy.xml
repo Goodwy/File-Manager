@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">किसी वस्तु को स्वयं में सम्मिलित नहीं किया जा सकता</string>
     <string name="show_only_filename">केवल फ़ाइल/फ़ोल्डर का नाम दिखाएँ</string>
     <string name="maximum_number_recent_files">हाल की फ़ाइलों की अधिकतम संख्या</string>
+    <string name="size_of_icons">फ़ोल्डरों/फ़ाइलों के आइकनों का आकार</string>
 </resources>

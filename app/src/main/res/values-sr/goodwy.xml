@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">Објекат се не може уметнути у себе</string>
     <string name="show_only_filename">Прикажи само име датотеке/фасцикле</string>
     <string name="maximum_number_recent_files">Максималан број недавно објављених датотека</string>
+    <string name="size_of_icons">Величина икона (фасцикли/датотека)</string>
 </resources>

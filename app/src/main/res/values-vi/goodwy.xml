@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">Không thể chèn một đối tượng vào chính nó</string>
     <string name="show_only_filename">Chỉ hiển thị tên tệp/thư mục</string>
     <string name="maximum_number_recent_files">Số lượng tệp gần đây tối đa</string>
+    <string name="size_of_icons">Kích thước biểu tượng (của thư mục/tệp tin)</string>
 </resources>

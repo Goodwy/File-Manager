@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">Ένα αντικείμενο δεν μπορεί να εισαχθεί στον εαυτό του</string>
     <string name="show_only_filename">Εμφάνιση μόνο ονόματος αρχείου/φακέλου</string>
     <string name="maximum_number_recent_files">Μέγιστος αριθμός πρόσφατων αρχείων</string>
+    <string name="size_of_icons">Μέγεθος εικονιδίων (φακέλων/αρχείων)</string>
 </resources>

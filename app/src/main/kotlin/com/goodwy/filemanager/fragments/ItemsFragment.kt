@@ -170,7 +170,14 @@ class ItemsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
                 binding.breadcrumbs.updateFontSize(context!!.getTextSize(), true)
             }
 
-            ItemsAdapter(activity as SimpleActivity, storedItems, this, binding.itemsList, isPickMultipleIntent, binding.itemsSwipeRefresh) {
+            ItemsAdapter(
+                activity as SimpleActivity,
+                storedItems,
+                this,
+                binding.itemsList,
+                isPickMultipleIntent,
+                binding.itemsSwipeRefresh
+            ) {
                 if ((it as? ListItem)?.isSectionTitle == true) {
                     openDirectory(it.mPath)
                     searchClosed()

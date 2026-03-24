@@ -79,32 +79,6 @@
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:id="@+id/settingsOverflowIconHolder"
-                        style="@style/SettingsHolderStyle">
-
-                        <com.goodwy.commons.views.MyTextView
-                            android:id="@+id/settingsOverflowIconLabel"
-                            style="@style/SettingsTextLabelStyle"
-                            android:layout_alignParentStart="true"
-                            android:layout_centerVertical="true"
-                            android:layout_toStartOf="@+id/settingsOverflowIcon"
-                            android:layout_marginEnd="@dimen/normal_margin"
-                            android:text="@string/overflow_icon" />
-
-                        <ImageView
-                            android:id="@+id/settingsOverflowIcon"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginEnd="@dimen/settings_margin"
-                            android:clickable="false"
-                            android:contentDescription="@string/settings_icon"
-                            android:src="@drawable/ic_more_horiz" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
                         android:id="@+id/settingsFloatingButtonStyleHolder"
                         style="@style/SettingsHolderStyle">
 
@@ -366,7 +340,7 @@
             <TextView
                 android:id="@+id/settingsSwipeGesturesLabel"
                 style="@style/SettingsSectionLabelStyle"
-                android:text="@string/swipe_gestures"
+                android:text="@string/swipe_gestures_and_actions"
                 tools:textColor="@color/primary"/>
 
             <androidx.cardview.widget.CardView
@@ -410,6 +384,26 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             app:switchPadding="@dimen/bigger_margin" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/settings_swipe_width_holder"
+                        style="@style/SettingsHolderStyle">
+
+                        <com.goodwy.commons.views.MyTextView
+                            android:id="@+id/settings_swipe_width_label"
+                            style="@style/SettingsTextLabelStyle"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/settings_swipe_width"
+                            android:text="@string/swipe_width" />
+
+                        <com.goodwy.commons.views.MyTextView
+                            android:id="@+id/settings_swipe_width"
+                            style="@style/SettingsTextValueStyle"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="@dimen/settings_margin"
+                            tools:text="1/2" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -530,6 +524,73 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
+                android:id="@+id/settingsTopAppBarLabel"
+                style="@style/SettingsSectionLabelStyle"
+                android:text="@string/top_app_bar"
+                tools:textColor="@color/primary"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/settingsTopAppBarHolder"
+                style="@style/SettingsSectionHolder"
+                app:cardCornerRadius="@dimen/activity_margin"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/settingsOverflowIconHolder"
+                        style="@style/SettingsHolderStyle">
+
+                        <com.goodwy.commons.views.MyTextView
+                            android:id="@+id/settingsOverflowIconLabel"
+                            style="@style/SettingsTextLabelStyle"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/settingsOverflowIcon"
+                            android:layout_marginEnd="@dimen/normal_margin"
+                            android:text="@string/overflow_icon" />
+
+                        <ImageView
+                            android:id="@+id/settingsOverflowIcon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="@dimen/settings_margin"
+                            android:clickable="false"
+                            android:contentDescription="@string/settings_icon"
+                            android:src="@drawable/ic_more_horiz" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/settingsShowSearchBarHolder"
+                        style="@style/SettingsHolderSwitchStyle">
+
+                        <com.goodwy.commons.views.MyMaterialSwitch
+                            android:id="@+id/settingsShowSearchBar"
+                            style="@style/SettingsSwitchStyle"
+                            android:text="@string/show_search_bar"
+                            app:switchPadding="@dimen/bigger_margin" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/settingsChangeColourTopBarHolder"
+                        style="@style/SettingsHolderSwitchStyle">
+
+                        <com.goodwy.commons.views.MyMaterialSwitch
+                            android:id="@+id/settingsChangeColourTopBar"
+                            style="@style/SettingsSwitchStyle"
+                            android:text="@string/change_top_bar_colour_when_scrolling"
+                            app:switchPadding="@dimen/bigger_margin" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
                 android:id="@+id/settingsListViewLabel"
                 style="@style/SettingsSectionLabelStyle"
                 android:text="@string/list_view"
@@ -599,7 +660,7 @@
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:layout_toStartOf="@+id/settingsThumbnailsSize"
-                            android:text="@string/contact_thumbnails_size"/>
+                            android:text="@string/size_of_icons"/>
 
                         <com.goodwy.commons.views.MyTextView
                             android:id="@+id/settingsThumbnailsSize"
@@ -617,17 +678,6 @@
                             android:id="@+id/settingsShowOnlyFilename"
                             style="@style/SettingsSwitchStyle"
                             android:text="@string/show_only_filename"
-                            app:switchPadding="@dimen/bigger_margin" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/settingsChangeColourTopBarHolder"
-                        style="@style/SettingsHolderSwitchStyle">
-
-                        <com.goodwy.commons.views.MyMaterialSwitch
-                            android:id="@+id/settingsChangeColourTopBar"
-                            style="@style/SettingsSwitchStyle"
-                            android:text="@string/change_top_bar_colour_when_scrolling"
                             app:switchPadding="@dimen/bigger_margin" />
                     </RelativeLayout>
                 </LinearLayout>

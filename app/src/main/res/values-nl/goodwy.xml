@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">Een object kan niet in zichzelf worden ingevoegd</string>
     <string name="show_only_filename">Alleen bestands-/mapnaam weergeven</string>
     <string name="maximum_number_recent_files">Maximaal aantal recente bestanden</string>
+    <string name="size_of_icons">Grootte van pictogrammen (van mappen/bestanden)</string>
 </resources>

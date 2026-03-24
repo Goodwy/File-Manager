@@ -33,6 +33,7 @@ import com.goodwy.filemanager.databinding.RecentsFragmentBinding
 import com.goodwy.filemanager.extensions.config
 import com.goodwy.filemanager.extensions.isPathInHiddenFolder
 import com.goodwy.filemanager.helpers.MAX_COLUMN_COUNT
+import com.goodwy.filemanager.helpers.RECENTS_FRAGMENT_PATH
 import com.goodwy.filemanager.interfaces.ItemOperationsListener
 import com.goodwy.filemanager.models.ListItem
 import java.io.File
@@ -74,7 +75,7 @@ class RecentsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
                 filesIgnoringSearch = recents
                 addItems(recents, false)
 
-                if (context != null && currentViewType != context!!.config.getFolderViewType("")) {
+                if (context != null && currentViewType != context!!.config.getFolderViewType(RECENTS_FRAGMENT_PATH)) {
                     setupLayoutManager()
                 }
             }
@@ -86,7 +87,16 @@ class RecentsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
             return
         }
 
-        ItemsAdapter(activity as SimpleActivity, recents, this, binding.recentsList, isPickMultipleIntent, binding.recentsSwipeRefresh, false) {
+        ItemsAdapter(
+            activity = activity as SimpleActivity,
+            listItems = recents,
+            listener = this,
+            recyclerView = binding.recentsList,
+            isPickMultipleIntent = isPickMultipleIntent,
+            swipeRefreshLayout = binding.recentsSwipeRefresh,
+            canHaveIndividualViewType = false,
+            usePath = RECENTS_FRAGMENT_PATH
+        ) {
             clickedPath((it as FileDirItem).path)
         }.apply {
             setupZoomListener(zoomListener)
@@ -118,7 +128,7 @@ class RecentsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
     }
 
     private fun setupLayoutManager() {
-        if (context!!.config.getFolderViewType("") == VIEW_TYPE_GRID) {
+        if (context!!.config.getFolderViewType(RECENTS_FRAGMENT_PATH) == VIEW_TYPE_GRID) {
             currentViewType = VIEW_TYPE_GRID
             setupGridLayoutManager()
         } else {
@@ -144,7 +154,7 @@ class RecentsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
     }
 
     private fun initZoomListener() {
-        if (context?.config?.getFolderViewType("") == VIEW_TYPE_GRID) {
+        if (context?.config?.getFolderViewType(RECENTS_FRAGMENT_PATH) == VIEW_TYPE_GRID) {
             val layoutManager = binding.recentsList.layoutManager as MyGridLayoutManager
             zoomListener = object : MyRecyclerView.MyZoomListener {
                 override fun zoomIn() {

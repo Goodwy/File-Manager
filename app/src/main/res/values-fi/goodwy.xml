@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">Objektia ei voi lisätä itseensä</string>
     <string name="show_only_filename">Näytä vain tiedoston/kansion nimi</string>
     <string name="maximum_number_recent_files">Viimeisimpien tiedostojen enimmäismäärä</string>
+    <string name="size_of_icons">Kuvakkeiden koko (kansioiden/tiedostojen)</string>
 </resources>

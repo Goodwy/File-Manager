@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">לא ניתן להכניס אובייקט לתוך עצמו</string>
     <string name="show_only_filename">הצג רק שם קובץ/תיקייה</string>
     <string name="maximum_number_recent_files">מספר מקסימלי של קבצים אחרונים</string>
+    <string name="size_of_icons">גודל האייקונים (של תיקיות/קבצים)</string>
 </resources>

@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">Objektas negali būti įterptas į save patį</string>
     <string name="show_only_filename">Rodyti tik failo / aplanko pavadinimą</string>
     <string name="maximum_number_recent_files">Didžiausias neseniai peržiūrėtų failų skaičius</string>
+    <string name="size_of_icons">Piktogramų dydis (aplankų / failų)</string>
 </resources>

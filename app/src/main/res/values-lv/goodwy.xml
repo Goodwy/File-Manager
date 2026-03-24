@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">Objektu nevar ievietot pats sevī</string>
     <string name="show_only_filename">Rādīt tikai faila/mapes nosaukumu</string>
     <string name="maximum_number_recent_files">Maksimālais nesen atvērto failu skaits</string>
+    <string name="size_of_icons">Ikonu izmērs (mapēm/failiem)</string>
 </resources>

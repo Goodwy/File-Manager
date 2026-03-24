@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">Objekat se ne može umetnuti u sebe samog</string>
     <string name="show_only_filename">Prikaži samo naziv datoteke/mape</string>
     <string name="maximum_number_recent_files">Maksimalan broj nedavnih datoteka</string>
+    <string name="size_of_icons">Veličina ikona (foldera/datoteka)</string>
 </resources>

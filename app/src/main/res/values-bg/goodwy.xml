@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">Обект не може да бъде вмъкнат в себе си</string>
     <string name="show_only_filename">Показване само на името на файла/папката</string>
     <string name="maximum_number_recent_files">Максимален брой скорошни файлове</string>
+    <string name="size_of_icons">Размер на иконите (на папки/файлове)</string>
 </resources>

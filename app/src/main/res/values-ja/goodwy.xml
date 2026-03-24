@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">オブジェクトをそれ自身に挿入することはできません</string>
     <string name="show_only_filename">ファイル名/フォルダ名のみ表示</string>
     <string name="maximum_number_recent_files">最近保存したファイルの最大数</string>
+    <string name="size_of_icons">アイコンのサイズ（フォルダ/ファイル）</string>
 </resources>

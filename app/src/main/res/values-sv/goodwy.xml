@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">Ett objekt kan inte infogas i sig självt</string>
     <string name="show_only_filename">Visa endast fil-/mappnamn</string>
     <string name="maximum_number_recent_files">Maximalt antal nya filer</string>
+    <string name="size_of_icons">Storlek på ikoner (för mappar/filer)</string>
 </resources>

@@ -1,26 +1,26 @@
 [versions]
 #jetbrains
-kotlin = "2.2.21"
+kotlin = "2.3.10"
 #Detekt
 detekt = "1.23.8"
-detektCompose = "0.4.27"
+detektCompose = "0.4.28"
 #AndroidX
-androidx-swiperefreshlayout = "1.1.0"
+androidx-swiperefreshlayout = "1.2.0"
 androidx-documentfile = "1.1.0"
 #Other
 autofittextview = "0.2.1"
-gestureviews = "2.8.3"
+gestureviews = "2.9.0"
 rootshell = "bc7e5d398e"
 roottools = "965c154e20"
-zip4j = "2.11.5"
+zip4j = "2.11.6"
 #Goodwy
-right-commons = "5c55d3f6cc"
-androidx-lifecycle = "2.9.4"
+right-commons = "0986e93969"
+androidx-lifecycle = "2.10.0"
 rxAnimation = "2.1.1"
 rxJava3 = "3.1.5"
 swipeToActionLayout = "bd1eb3c8a3"
 #Gradle
-gradlePlugins-agp = "8.11.1"
+gradlePlugins-agp = "9.0.1"
 #build
 app-build-compileSDKVersion = "36"
 app-build-targetSDK = "36"
@@ -60,5 +60,4 @@ lifecycle = [
 ]
 [plugins]
 android = { id = "com.android.application", version.ref = "gradlePlugins-agp" }
-kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }

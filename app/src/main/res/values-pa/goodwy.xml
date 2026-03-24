@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">ਇੱਕ ਵਸਤੂ ਆਪਣੇ ਆਪ ਵਿੱਚ ਨਹੀਂ ਪਾਈ ਜਾ ਸਕਦੀ।</string>
     <string name="show_only_filename">ਸਿਰਫ਼ ਫਾਈਲ/ਫੋਲਡਰ ਨਾਮ ਦਿਖਾਓ</string>
     <string name="maximum_number_recent_files">ਹਾਲੀਆ ਫਾਈਲਾਂ ਦੀ ਵੱਧ ਤੋਂ ਵੱਧ ਗਿਣਤੀ</string>
+    <string name="size_of_icons">ਆਈਕਾਨਾਂ ਦਾ ਆਕਾਰ (ਫੋਲਡਰਾਂ/ਫਾਈਲਾਂ ਦਾ)</string>
 </resources>

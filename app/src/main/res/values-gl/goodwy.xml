@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">Un obxecto non se pode inserir en si mesmo</string>
     <string name="show_only_filename">Mostrar só o nome do ficheiro/cartafol</string>
     <string name="maximum_number_recent_files">Número máximo de ficheiros recentes</string>
+    <string name="size_of_icons">Tamaño das iconas (de cartafoles/ficheiros)</string>
 </resources>

@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">Bir nesne kendi içine yerleştirilemez</string>
     <string name="show_only_filename">Yalnızca dosya/klasör adını göster</string>
     <string name="maximum_number_recent_files">Son dosyaların maksimum sayısı</string>
+    <string name="size_of_icons">Klasör/dosya simgelerinin boyutu</string>
 </resources>

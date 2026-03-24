@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">Um objeto não pode ser inserido em si mesmo.</string>
     <string name="show_only_filename">Mostrar apenas o nome do arquivo/pasta</string>
     <string name="maximum_number_recent_files">Número máximo de arquivos recentes</string>
+    <string name="size_of_icons">Tamanho dos ícones (de pastas/arquivos)</string>
 </resources>

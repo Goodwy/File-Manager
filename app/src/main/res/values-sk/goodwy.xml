@@ -11,4 +11,5 @@
     <string name="cannot_be_inserted_into_itself">Objekt nie je možné vložiť do seba samého</string>
     <string name="show_only_filename">Zobraziť iba názov súboru/priečinka</string>
     <string name="maximum_number_recent_files">Maximálny počet nedávnych súborov</string>
+    <string name="size_of_icons">Veľkosť ikon (priečinkov/súborov)</string>
 </resources>
