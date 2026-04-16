@@ -14,7 +14,7 @@ rootshell = "bc7e5d398e"
 roottools = "965c154e20"
 zip4j = "2.11.6"
 #Goodwy
-right-commons = "0986e93969"
+right-commons = "326c7bff23"
 androidx-lifecycle = "2.10.0"
 rxAnimation = "2.1.1"
 rxJava3 = "3.1.5"
