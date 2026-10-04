@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">向上滑動操作</string>
+    <string name="swipe_down_action">向下滑動操作</string>
+    <string name="held_vertical_swipe_summary">長按一個項目，然後向上或向下滑動。未完成滑動就鬆手可選取該項目。</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">மேல்நோக்கி ஸ்வைப் செயல்</string>
+    <string name="swipe_down_action">கீழ்நோக்கி ஸ்வைப் செயல்</string>
+    <string name="held_vertical_swipe_summary">ஒரு உருப்படியைத் தொட்டுப் பிடித்து, பின்னர் மேலே அல்லது கீழே ஸ்வைப் செய்யவும். தேர்ந்தெடுக்க, ஸ்வைப்பை முடிக்காமல் விரலை விடவும்.</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">إجراء السحب لأعلى</string>
+    <string name="swipe_down_action">إجراء السحب لأسفل</string>
+    <string name="held_vertical_swipe_summary">المس عنصرًا مع الاستمرار، ثم اسحب لأعلى أو لأسفل. ارفع إصبعك دون إكمال السحب لتحديده.</string>
+</resources>

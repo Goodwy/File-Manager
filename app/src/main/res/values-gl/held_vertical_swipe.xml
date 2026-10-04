@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">Acción ao deslizar cara arriba</string>
+    <string name="swipe_down_action">Acción ao deslizar cara abaixo</string>
+    <string name="held_vertical_swipe_summary">Mantén premido un elemento e logo desliza cara arriba ou abaixo. Solta sen completar o xesto para seleccionalo.</string>
+</resources>

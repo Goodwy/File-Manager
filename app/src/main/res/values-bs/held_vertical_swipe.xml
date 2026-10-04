@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">Radnja pri prevlačenju prema gore</string>
+    <string name="swipe_down_action">Radnja pri prevlačenju prema dolje</string>
+    <string name="held_vertical_swipe_summary">Dodirnite i zadržite stavku, zatim prevucite prema gore ili dolje. Otpustite bez dovršavanja prevlačenja da biste je odabrali.</string>
+</resources>

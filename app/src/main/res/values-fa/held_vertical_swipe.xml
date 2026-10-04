@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">عمل کشیدن به بالا</string>
+    <string name="swipe_down_action">عمل کشیدن به پایین</string>
+    <string name="held_vertical_swipe_summary">یک مورد را لمس کنید و نگه دارید، سپس به بالا یا پایین بکشید. برای انتخاب آن، بدون کامل کردن حرکت انگشت را بردارید.</string>
+</resources>

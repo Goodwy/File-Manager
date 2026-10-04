@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">Yuxarı sürüşdürmə əməliyyatı</string>
+    <string name="swipe_down_action">Aşağı sürüşdürmə əməliyyatı</string>
+    <string name="held_vertical_swipe_summary">Elementə toxunub saxlayın, sonra yuxarı və ya aşağı sürüşdürün. Seçmək üçün sürüşdürməni tamamlamadan barmağınızı qaldırın.</string>
+</resources>

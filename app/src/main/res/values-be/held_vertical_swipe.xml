@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">Дзеянне пры правядзенні ўверх</string>
+    <string name="swipe_down_action">Дзеянне пры правядзенні ўніз</string>
+    <string name="held_vertical_swipe_summary">Націсніце і ўтрымлівайце элемент, затым правядзіце ўверх ці ўніз. Каб выбраць яго, адпусціце палец, не завяршаючы жэст.</string>
+</resources>

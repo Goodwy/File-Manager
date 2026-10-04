@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">위로 스와이프 동작</string>
+    <string name="swipe_down_action">아래로 스와이프 동작</string>
+    <string name="held_vertical_swipe_summary">항목을 길게 누른 다음 위나 아래로 스와이프하세요. 스와이프를 완료하지 않고 손을 떼면 항목이 선택됩니다.</string>
+</resources>

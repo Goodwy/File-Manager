@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">മുകളിലേക്ക് സ്വൈപ്പ് ചെയ്യുമ്പോഴുള്ള പ്രവർത്തനം</string>
+    <string name="swipe_down_action">താഴേക്ക് സ്വൈപ്പ് ചെയ്യുമ്പോഴുള്ള പ്രവർത്തനം</string>
+    <string name="held_vertical_swipe_summary">ഒരു ഇനം തൊട്ടുപിടിക്കുക, തുടർന്ന് മുകളിലേക്കോ താഴേക്കോ സ്വൈപ്പ് ചെയ്യുക. തിരഞ്ഞെടുക്കാൻ സ്വൈപ്പ് പൂർത്തിയാക്കാതെ വിരൽ വിടുക.</string>
+</resources>

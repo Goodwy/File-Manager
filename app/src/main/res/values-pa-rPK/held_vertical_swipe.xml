@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">اُتے سوائپ کرن دی کارروائی</string>
+    <string name="swipe_down_action">تھلے سوائپ کرن دی کارروائی</string>
+    <string name="held_vertical_swipe_summary">اک آئٹم نوں چھوہ کے دبا کے رکھو، فیر اُتے یا تھلے سوائپ کرو۔ چنݨ لئی سوائپ پورا کیتے بغیر اُنگل چُک لو۔</string>
+</resources>

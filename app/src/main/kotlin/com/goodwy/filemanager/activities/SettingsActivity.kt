@@ -99,6 +99,7 @@ class SettingsActivity : SimpleActivity() {
         setupSwipeRipple()
         setupSwipeRightAction()
         setupSwipeLeftAction()
+        setupVerticalSwipeActions()
 
         setupShowHidden()
         setupKeepLastModified()
@@ -489,6 +490,9 @@ class SettingsActivity : SimpleActivity() {
             settingsSwipeRippleHolder.beVisibleIf(config.useSwipeToAction)
             settingsSwipeRightActionHolder.beVisibleIf(config.useSwipeToAction)
             settingsSwipeLeftActionHolder.beVisibleIf(config.useSwipeToAction)
+            settingsSwipeUpActionHolder.beVisibleIf(config.useSwipeToAction)
+            settingsSwipeDownActionHolder.beVisibleIf(config.useSwipeToAction)
+            settingsVerticalSwipeSummary.beVisibleIf(config.useSwipeToAction)
         }
     }
 
@@ -521,6 +525,7 @@ class SettingsActivity : SimpleActivity() {
                 RadioItem(SWIPE_ACTION_DELETE, getString(R.string.delete), icon = R.drawable.ic_delete_outline),
                 RadioItem(SWIPE_ACTION_MOVE, getString(R.string.move_to), icon = R.drawable.ic_move_vector),
                 RadioItem(SWIPE_ACTION_COPY, getString(R.string.copy_to), icon = R.drawable.ic_copy_vector),
+                RadioItem(SWIPE_ACTION_SHARE, getString(R.string.share), icon = R.drawable.ic_share_vector),
                 RadioItem(SWIPE_ACTION_INFO, getString(R.string.properties), icon = R.drawable.ic_info_vector),
                 RadioItem(SWIPE_ACTION_NONE, getString(com.goodwy.commons.R.string.nothing)),
             )
@@ -547,6 +552,7 @@ class SettingsActivity : SimpleActivity() {
                     RadioItem(SWIPE_ACTION_DELETE, getString(R.string.delete), icon = R.drawable.ic_delete_outline),
                     RadioItem(SWIPE_ACTION_MOVE, getString(R.string.move_to), icon = R.drawable.ic_move_vector),
                     RadioItem(SWIPE_ACTION_COPY, getString(R.string.copy_to), icon = R.drawable.ic_copy_vector),
+                    RadioItem(SWIPE_ACTION_SHARE, getString(R.string.share), icon = R.drawable.ic_share_vector),
                     RadioItem(SWIPE_ACTION_INFO, getString(R.string.properties), icon = R.drawable.ic_info_vector),
                     RadioItem(SWIPE_ACTION_NONE, getString(com.goodwy.commons.R.string.nothing)),
                 )
@@ -568,12 +574,46 @@ class SettingsActivity : SimpleActivity() {
         }
     }
 
-    private fun getSwipeActionText(left: Boolean) = getString(
-        when (if (left) config.swipeLeftAction else config.swipeRightAction) {
+    private fun setupVerticalSwipeActions() = binding.apply {
+        settingsSwipeUpAction.text = getSwipeActionText(config.swipeUpAction)
+        settingsSwipeDownAction.text = getSwipeActionText(config.swipeDownAction)
+        settingsSwipeUpActionHolder.setOnClickListener {
+            showVerticalSwipeActionPicker(true)
+        }
+        settingsSwipeDownActionHolder.setOnClickListener {
+            showVerticalSwipeActionPicker(false)
+        }
+    }
+
+    private fun showVerticalSwipeActionPicker(up: Boolean) {
+        val items = arrayListOf(
+            RadioItem(SWIPE_ACTION_DELETE, getString(R.string.delete), icon = R.drawable.ic_delete_outline),
+            RadioItem(SWIPE_ACTION_MOVE, getString(R.string.move_to), icon = R.drawable.ic_move_vector),
+            RadioItem(SWIPE_ACTION_COPY, getString(R.string.copy_to), icon = R.drawable.ic_copy_vector),
+            RadioItem(SWIPE_ACTION_SHARE, getString(R.string.share), icon = R.drawable.ic_share_vector),
+            RadioItem(SWIPE_ACTION_INFO, getString(R.string.properties), icon = R.drawable.ic_info_vector),
+            RadioItem(SWIPE_ACTION_NONE, getString(com.goodwy.commons.R.string.nothing)),
+        )
+        val action = if (up) config.swipeUpAction else config.swipeDownAction
+        val title = if (up) R.string.swipe_up_action else R.string.swipe_down_action
+        RadioGroupIconDialog(this, items, action, title) {
+            val selectedAction = it as Int
+            if (up) config.swipeUpAction = selectedAction else config.swipeDownAction = selectedAction
+            config.needRestart = true
+            setupVerticalSwipeActions()
+        }
+    }
+
+    private fun getSwipeActionText(left: Boolean) =
+        getSwipeActionText(if (left) config.swipeLeftAction else config.swipeRightAction)
+
+    private fun getSwipeActionText(action: Int) = getString(
+        when (action) {
             SWIPE_ACTION_DELETE -> R.string.delete
             SWIPE_ACTION_MOVE -> R.string.move_to
             SWIPE_ACTION_INFO -> R.string.properties
             SWIPE_ACTION_COPY -> R.string.copy_to
+            SWIPE_ACTION_SHARE -> R.string.share
             else -> R.string.nothing
         }
     )

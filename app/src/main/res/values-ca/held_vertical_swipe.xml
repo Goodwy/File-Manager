@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">Acció en lliscar amunt</string>
+    <string name="swipe_down_action">Acció en lliscar avall</string>
+    <string name="held_vertical_swipe_summary">Manteniu premut un element i després llisqueu amunt o avall. Deixeu anar sense completar el gest per seleccionar-lo.</string>
+</resources>

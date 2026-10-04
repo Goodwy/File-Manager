@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">ऊपर स्वाइप करने की कार्रवाई</string>
+    <string name="swipe_down_action">नीचे स्वाइप करने की कार्रवाई</string>
+    <string name="held_vertical_swipe_summary">किसी आइटम को छूकर दबाए रखें, फिर ऊपर या नीचे स्वाइप करें। उसे चुनने के लिए स्वाइप पूरा किए बिना उंगली हटा लें।</string>
+</resources>

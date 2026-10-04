@@ -44,6 +44,8 @@ import com.goodwy.filemanager.extensions.*
 import com.goodwy.filemanager.helpers.*
 import com.goodwy.filemanager.interfaces.ItemOperationsListener
 import com.goodwy.filemanager.models.ListItem
+import com.goodwy.filemanager.views.HeldVerticalSwipeLayout
+import com.goodwy.filemanager.views.HeldVerticalSwipeTracker
 import com.stericson.RootTools.RootTools
 import me.thanel.swipeactionview.SwipeActionView
 import me.thanel.swipeactionview.SwipeDirection
@@ -1001,6 +1003,7 @@ class ItemsAdapter(
                     itemIcon?.apply {
                         setOnClickListener { holder.viewClicked(listItem) } //if (selectedKeys.isEmpty()) holder.viewLongClicked() else holder.viewClicked(listItem)
                         setOnLongClickListener {
+                            if (heldVerticalSwipe?.deferLongPress() == true) return@setOnLongClickListener true
                             showPopupMenu(itemName!!, listItem)
                             true
                         }
@@ -1220,6 +1223,23 @@ class ItemsAdapter(
                     }
 
                     itemSwipe!!.useHapticFeedback = activity.config.swipeVibration
+                    heldVerticalSwipe?.configure(
+                        key = listItem.path,
+                        up = verticalSwipePreview(activity.config.swipeUpAction),
+                        down = verticalSwipePreview(activity.config.swipeDownAction),
+                        vibration = activity.config.swipeVibration,
+                        swipe = { direction ->
+                            val action = if (direction == HeldVerticalSwipeTracker.Direction.Up) {
+                                activity.config.swipeUpAction
+                            } else {
+                                activity.config.swipeDownAction
+                            }
+                            if (action != SWIPE_ACTION_NONE) {
+                                finishActMode()
+                                swipeAction(action, listItem.path)
+                            }
+                        }
+                    )
                     itemSwipe!!.swipeGestureListener = object : SwipeGestureListener {
                         override fun onSwipedLeft(swipeActionView: SwipeActionView): Boolean {
                             if (!isGrid) swipeLeftIcon!!.slideLeftReturn(swipeLeftIconHolder!!)
@@ -1467,6 +1487,8 @@ class ItemsAdapter(
         val chevron: ImageView?
         val divider: ImageView?
         val itemSwipe: SwipeActionView?
+        val heldVerticalSwipe: HeldVerticalSwipeLayout?
+            get() = root as? HeldVerticalSwipeLayout
         val itemHolder: ConstraintLayout?
         val swipeLeftIconHolder: RelativeLayout?
         val swipeRightIconHolder: RelativeLayout?
@@ -1655,11 +1677,21 @@ class ItemsAdapter(
         swipeRefreshLayout?.isRefreshing = false
     }
 
+    private fun verticalSwipePreview(action: Int): HeldVerticalSwipeLayout.ActionPreview? {
+        if (action == SWIPE_ACTION_NONE) return null
+        return HeldVerticalSwipeLayout.ActionPreview(
+            swipeActionImageResource(action),
+            swipeActionColor(action),
+            properPrimaryColor.getContrastColor()
+        )
+    }
+
     private fun swipeActionImageResource(swipeAction: Int): Int {
         return when (swipeAction) {
             SWIPE_ACTION_DELETE -> R.drawable.ic_delete_outline
             SWIPE_ACTION_MOVE -> R.drawable.ic_move_vector
             SWIPE_ACTION_INFO -> R.drawable.ic_info_vector
+            SWIPE_ACTION_SHARE -> R.drawable.ic_share_vector
             else -> R.drawable.ic_copy_vector
         }
     }
@@ -1669,6 +1701,7 @@ class ItemsAdapter(
             SWIPE_ACTION_DELETE -> resources.getColor(R.color.red_missed, activity.theme)
             SWIPE_ACTION_MOVE -> resources.getColor(R.color.swipe_purple, activity.theme)
             SWIPE_ACTION_INFO -> resources.getColor(R.color.yellow_ios, activity.theme)
+            SWIPE_ACTION_SHARE -> resources.getColor(R.color.green_ios, activity.theme)
             else -> resources.getColor(R.color.primary, activity.theme)
         }
     }
@@ -1678,12 +1711,19 @@ class ItemsAdapter(
             SWIPE_ACTION_DELETE -> swipedDelete(path)
             SWIPE_ACTION_MOVE -> swipedCopyMoveTo(false, path)
             SWIPE_ACTION_INFO -> swipeShowProperties(path)
+            SWIPE_ACTION_SHARE -> swipedShare(path)
             else -> swipedCopyMoveTo(true, path)
         }
     }
 
     private fun swipeShowProperties(path: String) {
         PropertiesDialog(activity, path, config.shouldShowHidden())
+    }
+
+    private fun swipedShare(path: String) {
+        val paths = ArrayList<String>()
+        addFileUris(path, paths)
+        activity.sharePaths(paths)
     }
 
     private fun swipedCopyMoveTo(isCopyOperation: Boolean, path: String) {

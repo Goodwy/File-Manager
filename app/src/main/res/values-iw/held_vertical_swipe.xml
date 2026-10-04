@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">פעולת החלקה למעלה</string>
+    <string name="swipe_down_action">פעולת החלקה למטה</string>
+    <string name="held_vertical_swipe_summary">יש לגעת בפריט ולהחזיק, ואז להחליק למעלה או למטה. כדי לבחור בו, יש לשחרר בלי להשלים את ההחלקה.</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">ਉੱਪਰ ਸਵਾਈਪ ਕਰਨ ਦੀ ਕਾਰਵਾਈ</string>
+    <string name="swipe_down_action">ਹੇਠਾਂ ਸਵਾਈਪ ਕਰਨ ਦੀ ਕਾਰਵਾਈ</string>
+    <string name="held_vertical_swipe_summary">ਕਿਸੇ ਆਈਟਮ ਨੂੰ ਛੂਹ ਕੇ ਦਬਾਈ ਰੱਖੋ, ਫਿਰ ਉੱਪਰ ਜਾਂ ਹੇਠਾਂ ਸਵਾਈਪ ਕਰੋ। ਚੁਣਨ ਲਈ ਸਵਾਈਪ ਪੂਰਾ ਕੀਤੇ ਬਿਨਾਂ ਉਂਗਲ ਹਟਾ ਲਵੋ।</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">Действие при плъзгане нагоре</string>
+    <string name="swipe_down_action">Действие при плъзгане надолу</string>
+    <string name="held_vertical_swipe_summary">Докоснете и задръжте елемент, след което плъзнете нагоре или надолу. За да го изберете, отпуснете, без да завършвате плъзгането.</string>
+</resources>

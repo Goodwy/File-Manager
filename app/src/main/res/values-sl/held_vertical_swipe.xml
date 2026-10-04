@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">Dejanje pri podrsanju navzgor</string>
+    <string name="swipe_down_action">Dejanje pri podrsanju navzdol</string>
+    <string name="held_vertical_swipe_summary">Dotaknite se elementa in ga pridržite, nato podrsajte navzgor ali navzdol. Za izbiro spustite prst, ne da bi dokončali podrsanje.</string>
+</resources>

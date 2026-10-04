@@ -467,6 +467,55 @@
                             android:layout_marginEnd="@dimen/settings_margin"
                             tools:text="@string/delete" />
                     </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/settingsSwipeUpActionHolder"
+                        style="@style/SettingsHolderSwitchStyle">
+
+                        <com.goodwy.commons.views.MyTextView
+                            android:id="@+id/settingsSwipeUpActionLabel"
+                            style="@style/SettingsTextLabelStyle"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/settingsSwipeUpAction"
+                            android:text="@string/swipe_up_action" />
+
+                        <com.goodwy.commons.views.MyTextView
+                            android:id="@+id/settingsSwipeUpAction"
+                            style="@style/SettingsTextValueStyle"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="@dimen/settings_margin"
+                            tools:text="@string/nothing" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/settingsSwipeDownActionHolder"
+                        style="@style/SettingsHolderSwitchStyle">
+
+                        <com.goodwy.commons.views.MyTextView
+                            android:id="@+id/settingsSwipeDownActionLabel"
+                            style="@style/SettingsTextLabelStyle"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/settingsSwipeDownAction"
+                            android:text="@string/swipe_down_action" />
+
+                        <com.goodwy.commons.views.MyTextView
+                            android:id="@+id/settingsSwipeDownAction"
+                            style="@style/SettingsTextValueStyle"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="@dimen/settings_margin"
+                            tools:text="@string/nothing" />
+                    </RelativeLayout>
+
+                    <com.goodwy.commons.views.MyTextView
+                        android:id="@+id/settingsVerticalSwipeSummary"
+                        style="@style/SettingsTextSummaryStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/bigger_margin"
+                        android:layout_marginEnd="@dimen/bigger_margin"
+                        android:layout_marginBottom="@dimen/bigger_margin"
+                        android:text="@string/held_vertical_swipe_summary" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

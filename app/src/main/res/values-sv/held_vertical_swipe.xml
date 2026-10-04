@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">Åtgärd vid svep uppåt</string>
+    <string name="swipe_down_action">Åtgärd vid svep nedåt</string>
+    <string name="held_vertical_swipe_summary">Tryck och håll på ett objekt och svep sedan uppåt eller nedåt. Släpp utan att slutföra svepet för att välja det.</string>
+</resources>

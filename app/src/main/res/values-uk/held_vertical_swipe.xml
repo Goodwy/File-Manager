@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">Дія при проведенні вгору</string>
+    <string name="swipe_down_action">Дія при проведенні вниз</string>
+    <string name="held_vertical_swipe_summary">Натисніть і утримуйте елемент, потім проведіть угору або вниз. Щоб вибрати його, відпустіть палець, не завершуючи жест.</string>
+</resources>

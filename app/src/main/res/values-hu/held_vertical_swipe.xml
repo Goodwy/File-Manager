@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">Felfelé húzás művelete</string>
+    <string name="swipe_down_action">Lefelé húzás művelete</string>
+    <string name="held_vertical_swipe_summary">Érintsen meg hosszan egy elemet, majd húzza felfelé vagy lefelé. A kijelöléshez engedje el a húzás befejezése nélkül.</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">Üles pühkimise toiming</string>
+    <string name="swipe_down_action">Alla pühkimise toiming</string>
+    <string name="held_vertical_swipe_summary">Puudutage üksust pikalt, seejärel pühkige üles või alla. Valimiseks vabastage sõrm pühkimist lõpetamata.</string>
+</resources>

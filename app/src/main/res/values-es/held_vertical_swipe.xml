@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">Acción al deslizar hacia arriba</string>
+    <string name="swipe_down_action">Acción al deslizar hacia abajo</string>
+    <string name="held_vertical_swipe_summary">Mantén pulsado un elemento y luego desliza hacia arriba o abajo. Suelta sin completar el gesto para seleccionarlo.</string>
+</resources>

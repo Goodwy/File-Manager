@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">Gweithred wrth lithro i fyny</string>
+    <string name="swipe_down_action">Gweithred wrth lithro i lawr</string>
+    <string name="held_vertical_swipe_summary">Cyffyrddwch ag eitem a daliwch, yna llithrwch i fyny neu i lawr. Rhyddhewch heb gwblhau’r ystum i’w dewis.</string>
+</resources>

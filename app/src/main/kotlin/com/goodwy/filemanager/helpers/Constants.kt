@@ -66,6 +66,8 @@ const val PRIMARY_VOLUME_NAME_OLD = "external"
 // swiped left action
 const val SWIPE_RIGHT_ACTION = "swipe_right_action"
 const val SWIPE_LEFT_ACTION = "swipe_left_action"
+const val SWIPE_UP_ACTION = "swipe_up_action"
+const val SWIPE_DOWN_ACTION = "swipe_down_action"
 const val SWIPE_ACTION_NONE = 0
 const val SWIPE_ACTION_DELETE = 2
 const val SWIPE_ACTION_BLOCK = 4 //!! isNougatPlus()
@@ -75,6 +77,7 @@ const val SWIPE_ACTION_EDIT = 7
 const val SWIPE_ACTION_COPY = 8
 const val SWIPE_ACTION_MOVE = 9
 const val SWIPE_ACTION_INFO = 10
+const val SWIPE_ACTION_SHARE = 11
 const val SWIPE_VIBRATION = "swipe_vibration"
 const val SWIPE_RIPPLE = "swipe_ripple"
 

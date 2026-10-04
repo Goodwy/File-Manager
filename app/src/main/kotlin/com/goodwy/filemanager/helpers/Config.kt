@@ -178,6 +178,14 @@ class Config(context: Context) : BaseConfig(context) {
         get() = prefs.getInt(SWIPE_LEFT_ACTION, SWIPE_ACTION_DELETE)
         set(swipeLeftAction) = prefs.edit().putInt(SWIPE_LEFT_ACTION, swipeLeftAction).apply()
 
+    var swipeUpAction: Int
+        get() = prefs.getInt(SWIPE_UP_ACTION, SWIPE_ACTION_NONE)
+        set(swipeUpAction) = prefs.edit { putInt(SWIPE_UP_ACTION, swipeUpAction) }
+
+    var swipeDownAction: Int
+        get() = prefs.getInt(SWIPE_DOWN_ACTION, SWIPE_ACTION_NONE)
+        set(swipeDownAction) = prefs.edit { putInt(SWIPE_DOWN_ACTION, swipeDownAction) }
+
     var swipeVibration: Boolean
         get() = prefs.getBoolean(SWIPE_VIBRATION, true)
         set(swipeVibration) = prefs.edit().putBoolean(SWIPE_VIBRATION, swipeVibration).apply()

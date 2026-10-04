@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">Akce při přejetí nahoru</string>
+    <string name="swipe_down_action">Akce při přejetí dolů</string>
+    <string name="held_vertical_swipe_summary">Podržte prst na položce a poté přejeďte nahoru nebo dolů. Chcete-li ji vybrat, uvolněte prst bez dokončení přejetí.</string>
+</resources>

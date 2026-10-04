@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">উপরে সোয়াইপের কাজ</string>
+    <string name="swipe_down_action">নিচে সোয়াইপের কাজ</string>
+    <string name="held_vertical_swipe_summary">একটি আইটেম স্পর্শ করে ধরে রাখুন, তারপর উপরে বা নিচে সোয়াইপ করুন। নির্বাচন করতে সোয়াইপ সম্পূর্ণ না করে আঙুল সরিয়ে নিন।</string>
+</resources>

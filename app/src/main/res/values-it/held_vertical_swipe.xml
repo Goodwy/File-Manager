@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">Azione scorrimento verso l’alto</string>
+    <string name="swipe_down_action">Azione scorrimento verso il basso</string>
+    <string name="held_vertical_swipe_summary">Tieni premuto un elemento, poi scorri verso l’alto o il basso. Rilascia senza completare il gesto per selezionarlo.</string>
+</resources>

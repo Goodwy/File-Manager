@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">Ylös pyyhkäisyn toiminto</string>
+    <string name="swipe_down_action">Alas pyyhkäisyn toiminto</string>
+    <string name="held_vertical_swipe_summary">Kosketa kohdetta pitkään ja pyyhkäise sitten ylös tai alas. Valitse kohde vapauttamalla kosketus suorittamatta pyyhkäisyä loppuun.</string>
+</resources>
