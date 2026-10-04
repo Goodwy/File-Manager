@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">Darbība, pavelkot uz augšu</string>
+    <string name="swipe_down_action">Darbība, pavelkot uz leju</string>
+    <string name="held_vertical_swipe_summary">Pieskarieties vienumam un turiet, pēc tam pavelciet uz augšu vai leju. Lai to atlasītu, atlaidiet, nepabeidzot vilkšanu.</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">Handling ved sveip opp</string>
+    <string name="swipe_down_action">Handling ved sveip ned</string>
+    <string name="held_vertical_swipe_summary">Trykk og hold på et element, og sveip deretter opp eller ned. Slipp uten å fullføre sveipet for å velge det.</string>
+</resources>

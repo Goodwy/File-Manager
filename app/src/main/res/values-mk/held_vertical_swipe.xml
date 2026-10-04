@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">Дејство при повлекување нагоре</string>
+    <string name="swipe_down_action">Дејство при повлекување надолу</string>
+    <string name="held_vertical_swipe_summary">Допрете и задржете ставка, па повлечете нагоре или надолу. Отпуштете без да го завршите повлекувањето за да ја изберете.</string>
+</resources>

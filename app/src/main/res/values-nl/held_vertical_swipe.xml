@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">Actie bij omhoog vegen</string>
+    <string name="swipe_down_action">Actie bij omlaag vegen</string>
+    <string name="held_vertical_swipe_summary">Houd een item ingedrukt en veeg daarna omhoog of omlaag. Laat los zonder de veeg te voltooien om het item te selecteren.</string>
+</resources>

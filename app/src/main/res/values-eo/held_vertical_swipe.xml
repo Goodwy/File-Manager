@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">Ago ĉe ŝovo supren</string>
+    <string name="swipe_down_action">Ago ĉe ŝovo malsupren</string>
+    <string name="held_vertical_swipe_summary">Tuŝu kaj tenu eron, poste ŝovu supren aŭ malsupren. Liberigu sen fini la ŝovon por elekti ĝin.</string>
+</resources>

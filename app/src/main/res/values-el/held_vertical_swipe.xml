@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">Ενέργεια σάρωσης προς τα πάνω</string>
+    <string name="swipe_down_action">Ενέργεια σάρωσης προς τα κάτω</string>
+    <string name="held_vertical_swipe_summary">Πατήστε παρατεταμένα ένα στοιχείο και μετά σύρετε προς τα πάνω ή κάτω. Αφήστε το χωρίς να ολοκληρώσετε τη σάρωση για να το επιλέξετε.</string>
+</resources>

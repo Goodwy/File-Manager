@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">Akcia pri potiahnutí nahor</string>
+    <string name="swipe_down_action">Akcia pri potiahnutí nadol</string>
+    <string name="held_vertical_swipe_summary">Podržte prst na položke a potom potiahnite nahor alebo nadol. Ak ju chcete vybrať, uvoľnite prst bez dokončenia potiahnutia.</string>
+</resources>

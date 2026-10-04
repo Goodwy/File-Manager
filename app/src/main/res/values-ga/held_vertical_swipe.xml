@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">Gníomh svaidhpeála suas</string>
+    <string name="swipe_down_action">Gníomh svaidhpeála síos</string>
+    <string name="held_vertical_swipe_summary">Brúigh agus coinnigh mír, ansin svaidhpeáil suas nó síos. Scaoil gan an svaidhpeáil a chríochnú chun í a roghnú.</string>
+</resources>

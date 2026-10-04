@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">Action du balayage vers le haut</string>
+    <string name="swipe_down_action">Action du balayage vers le bas</string>
+    <string name="held_vertical_swipe_summary">Maintenez un élément appuyé, puis balayez vers le haut ou le bas. Relâchez sans terminer le geste pour le sélectionner.</string>
+</resources>

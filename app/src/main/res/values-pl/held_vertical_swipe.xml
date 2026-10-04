@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">Działanie po przesunięciu w górę</string>
+    <string name="swipe_down_action">Działanie po przesunięciu w dół</string>
+    <string name="held_vertical_swipe_summary">Dotknij i przytrzymaj element, a następnie przesuń w górę lub w dół. Aby go zaznaczyć, puść bez ukończenia gestu.</string>
+</resources>

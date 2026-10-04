@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">Действие при смахивании вверх</string>
+    <string name="swipe_down_action">Действие при смахивании вниз</string>
+    <string name="held_vertical_swipe_summary">Нажмите и удерживайте элемент, затем проведите вверх или вниз. Чтобы выбрать его, отпустите палец, не завершая жест.</string>
+</resources>

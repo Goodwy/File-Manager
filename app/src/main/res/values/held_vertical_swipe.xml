@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">Swipe up action</string>
+    <string name="swipe_down_action">Swipe down action</string>
+    <string name="held_vertical_swipe_summary">Touch and hold an item, then swipe up or down. Release without completing a swipe to select it.</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">การทำงานเมื่อปัดขึ้น</string>
+    <string name="swipe_down_action">การทำงานเมื่อปัดลง</string>
+    <string name="held_vertical_swipe_summary">แตะรายการค้างไว้แล้วปัดขึ้นหรือลง หากต้องการเลือกรายการ ให้ปล่อยนิ้วโดยไม่ปัดจนสุด</string>
+</resources>

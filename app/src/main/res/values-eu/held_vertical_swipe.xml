@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">Gorantz irristatzean egin beharrekoa</string>
+    <string name="swipe_down_action">Beherantz irristatzean egin beharrekoa</string>
+    <string name="held_vertical_swipe_summary">Eduki elementu bat sakatuta, eta irristatu gorantz edo beherantz. Hautatzeko, askatu irristatzea osatu gabe.</string>
+</resources>

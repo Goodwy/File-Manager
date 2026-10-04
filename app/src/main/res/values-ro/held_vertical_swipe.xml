@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="swipe_up_action">Acțiune la glisarea în sus</string>
+    <string name="swipe_down_action">Acțiune la glisarea în jos</string>
+    <string name="held_vertical_swipe_summary">Atingeți și țineți apăsat un element, apoi glisați în sus sau în jos. Eliberați fără a finaliza glisarea pentru a-l selecta.</string>
+</resources>
